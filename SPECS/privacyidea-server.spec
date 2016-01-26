@@ -30,7 +30,10 @@ BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-
 
 %install
 mkdir -p $RPM_BUILD_ROOT/etc/privacyidea
-cp  $RPM_SOURCE_DIR/pi.cfg $RPM_BUILD_ROOT/etc/privacyidea
+mkdir -p $RPM_BUILD_ROOT/etc/httpd/conf.d/
+cp $RPM_SOURCE_DIR/pi.cfg $RPM_BUILD_ROOT/etc/privacyidea
+cp $RPM_SOURCE_DIR/privacyideaapp.wsgi $RPM_BUILD_ROOT/etc/privacyidea
+cp $RPM_SOURCE_DIR/privacyidea.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -73,6 +76,11 @@ pi-manage db stamp 4f32a4e1bf33 -d /opt/privacyidea/lib/privacyidea/migrations >
 # Upgrade the database
 pi-manage db upgrade -d /opt/privacyidea/lib/privacyidea/migrations > /dev/null
 
+###################################################
+# The webserver
+mkdir -p /var/run/wsgi
+mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable
+mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable
 
 %changelog
 * Tue Jan 26 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10dev5-1
