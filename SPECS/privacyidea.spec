@@ -21,7 +21,7 @@ BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-
  privacyIDEA: identity, multifactor authentication, authorization.
  This package contains the python module for privacyIDEA. If you want
  to run it in a productive webserver you might want to install
- privacyidea-nginx or privacyidea-apache2.
+ privacyidea-server.
  privacyIDEA is an open solution for strong two-factor authentication.
  privacyIDEA aims to not bind you to any decision of the authentication protocol
  or it does not dictate you where your user information should be stored.
