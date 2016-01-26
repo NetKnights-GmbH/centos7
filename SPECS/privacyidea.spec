@@ -1,6 +1,6 @@
 %define source_name privacyIDEA
 %define name privacyidea
-%define version 2.10dev5
+%define version %{getenv:PI_VERSION} 
 %define unmangled_version %{version}
 %define unmangled_version %{version}
 %define release 1
