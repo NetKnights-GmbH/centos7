@@ -40,6 +40,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 /etc/privacyidea
+/etc/httpd/conf.d/
 
 %post
 USERNAME=privacyidea
