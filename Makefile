@@ -5,8 +5,8 @@ info:
 	@echo "clean"
 
 buildrpm:
-	rpmbuild -ba SPECS/privacyidea.spec
-	rpmbuild -ba SPECS/privacyidea-server.spec
+	PI_VERSION=${PI_VERSION} rpmbuild -ba SPECS/privacyidea.spec
+	PI_VERSION=${PI_VERSION} rpmbuild -ba SPECS/privacyidea-server.spec
 
 repo:
 	mkdir -p repository/centos/7/
