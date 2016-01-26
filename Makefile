@@ -11,7 +11,7 @@ buildrpm:
 repo:
 	mkdir -p repository/centos/7/
 	cp -r RPMS/* repository/centos/7/
-	(cd repository/centos/7/noarch/; createrepo .)
+	(cd repository/centos/7/x86_64/; createrepo .)
 	tar -zcf repository.tgz repository
 
 clean:
