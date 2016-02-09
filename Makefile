@@ -1,4 +1,4 @@
-PI_VERSION=2.10dev5
+PI_VERSION=2.10
 info:
 	@echo "buildrpm"
 	@echo "repo"
