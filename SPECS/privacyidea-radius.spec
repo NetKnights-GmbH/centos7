@@ -58,4 +58,5 @@ curl %{source2} -o $RPM_BUILD_ROOT/etc/privacyidea/dictionary.netknights
 * Thu Jan 27 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10dev5-1
 - initial RPM packaging
 
-
+* Thu Feb 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10
+- packaging of release 2.10

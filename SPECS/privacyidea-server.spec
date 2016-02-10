@@ -87,4 +87,5 @@ mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable
 * Tue Jan 26 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10dev5-1
 - initial RPM packaging
 
-
+* Thu Feb 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10
+- packaging of release 2.10

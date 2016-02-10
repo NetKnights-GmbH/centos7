@@ -57,4 +57,13 @@ rm -rf $RPM_BUILD_ROOT
 * Tue Jan 26 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10dev5-1
 - initial RPM packaging
 
+* Thu Feb 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10
+- User Registration: A user may register himself and thus create
+  his new user account.
+- Password Reset: Using a recovery token a user may issue a
+  password reset without bothering the administrator or the help desk.
+- Enrollment Wizard for easy user token enrollment
+- SMTP Servers: Define several system wide SMTP settings and use
+  these for Email token, SMTP SMS Provider, registration process,
+  or password reset.
 
