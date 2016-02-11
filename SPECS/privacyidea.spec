@@ -54,9 +54,6 @@ rm -rf $RPM_BUILD_ROOT
 /opt/privacyidea
 
 %changelog
-* Tue Jan 26 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10dev5-1
-- initial RPM packaging
-
 * Thu Feb 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10
 - User Registration: A user may register himself and thus create
   his new user account.
@@ -66,4 +63,7 @@ rm -rf $RPM_BUILD_ROOT
 - SMTP Servers: Define several system wide SMTP settings and use
   these for Email token, SMTP SMS Provider, registration process,
   or password reset.
+
+* Tue Jan 26 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10dev5-1
+- initial RPM packaging
 
