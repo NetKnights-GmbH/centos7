@@ -1,0 +1,53 @@
+server privacyidea {
+	listen {
+		type = auth
+		ipaddr = *
+		port = 0
+		limit {
+			max_connections = 16
+			lifetime = 0
+			idle_timeout = 30
+		}
+	}
+	listen {
+		ipaddr = *
+		port = 0
+		type = acct
+		limit {
+		}
+	}
+	authorize {
+		preprocess
+		digest
+		suffix
+		ntdomain
+		files
+		expiration
+		logintime
+		pap
+		update control {
+			Auth-Type := Perl
+		}
+	}
+	authenticate {
+		Auth-Type Perl {
+			perl
+		}
+		digest
+	}
+	preacct {
+		suffix
+		files
+	}
+	accounting {
+		detail
+	}
+	session {
+	}
+	post-auth {
+	}
+	pre-proxy {
+	}
+	post-proxy {
+	}
+}

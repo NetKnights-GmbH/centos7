@@ -47,14 +47,21 @@ curl %{source0} -o $RPM_BUILD_ROOT/usr/lib/privacyidea/privacyidea_radius.pm
 mkdir -p $RPM_BUILD_ROOT/etc/privacyidea
 curl %{source1} -o $RPM_BUILD_ROOT/etc/privacyidea/rlm_perl.ini
 curl %{source2} -o $RPM_BUILD_ROOT/etc/privacyidea/dictionary.netknights
+mkdir -p $RPM_BUILD_ROOT/etc/raddb/sites-available/
+cp $RPM_SOURCE_DIR/privacyidea-radius-site $RPM_BUILD_ROOT/etc/raddb/sites-available/privacyidea
+
 
 %clean
 
 %files
 /usr/lib/privacyidea
 /etc/privacyidea
+/etc/raddb/sites-available/
 
 %changelog
+* Wed Apr 13 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.11-1
+- Adding radius config
+
 * Thu Feb 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10
 - packaging of release 2.10
 
