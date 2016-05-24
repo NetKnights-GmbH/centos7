@@ -54,6 +54,36 @@ rm -rf $RPM_BUILD_ROOT
 /opt/privacyidea
 
 %changelog
+* Tue May 24 2016 Corneluis Kölbel <cornelius.koelbel@netknights.it> 2.12
+- Event Handler Framework #360
+- local CA connector can enroll certificates
+  for users. Users can download PKCS12 file. #383
+- Add and edit users in LDAP resolvers #372
+- Hardware Security Module support via PKCS11
+- Time dependent policies #358
+
+- Enhancements
+- Policy for web UI enrollment wizard #402
+- Realm dropdown box at login screen #400
+- Apply user policy settings #390
+- Improve QR Code for TOTP token enrollment #384
+- Add documentation for enrollment wizard #381
+- Improve pi-manage backup to use pymysql #375
+- Use X-Forwarded-For HTTP header as client IP #356
+- Add meta-package privacyidea-mysql #376
+
+- Fixes
+- Adduser honors resolver setting in policy #403
+- Add documentation for SPASS token #399
+- Hide enrollment link (WebUI) is user can not enroll #398
+- Fix getSerial for TOTP tokens #393
+- Fix system config checkboxes #378
+- Allow a realm to be remove from a token #363
+- Improve the date handling in emails #352
+- Sending test emails #350
+- Authentication with active token not possible if
+  the user has a disabled token #339
+
 * Thu Feb 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10
 - User Registration: A user may register himself and thus create
   his new user account.
