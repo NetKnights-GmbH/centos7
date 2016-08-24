@@ -56,7 +56,7 @@ cp $RPM_SOURCE_DIR/privacyidea-radius-site $RPM_BUILD_ROOT/etc/raddb/sites-avail
 %files
 /usr/lib/privacyidea
 /etc/privacyidea
-/etc/raddb/sites-available/
+/etc/raddb/sites-available/*
 
 %changelog
 * Wed Apr 13 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.11-1

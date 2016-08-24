@@ -37,7 +37,7 @@ rm -fr /opt/privacyidea
 virtualenv /opt/privacyidea
 source /opt/privacyidea/bin/activate
 pip install privacyidea==%{version}
-pip install pymysql
+pip install pymysql==0.6.6
 pip install pymysql_sa
 # No Auth Modules in the base package
 rm -fr /opt/privacyidea/lib/python2.7/site-packages/authmodules
@@ -54,6 +54,52 @@ rm -rf $RPM_BUILD_ROOT
 /opt/privacyidea
 
 %changelog
+* Wed Aug 24 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.14
+  Features
+  * Import PGP encrypted seed files
+  * Allow UserNotification for user actions
+  * Allow UserNotification on validate/check events,
+    to notify the user on a failed authentication or
+    a locked token.
+
+  Enhancements
+  * Add thread ID in REST API Response
+  * Performance improvement: Cache LDAP Requests #473
+  * Performance improvement: Optimize resolver iteration #474
+  * Add "Check OTP only" in WebUI
+  * Improve "get serial by OTP" in WebUI
+  * Add script to get serial by OTP
+
+  Fixes
+  * Restrict GET /user for corresponding admins #460
+
+* Thu Jun 30 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.13
+- Features
+- Allow central definition of SMS gateways
+  to be used with tokens. #392
+- User SMS for User Notificaton Event Handler. #435
+- Add PIN change setting for each token. #429
+- Force PIN change in web UI. #432
+
+- Enhancements
+- Performence enhancements
+  speed up loading of audit log in web UI.
+  avoid double loadin of tokens and audit entries in web UI. #436
+- Additional log level (enhanced Debug) to even log passwords in
+  debug mode.
+- Add new logo. #430
+- Add quick actions in the token list: reset failcounter,
+  toggle active. #426
+- REST API returns OTP length on successful authentication. #407
+- Add intelligent OverrideAuthorizationClient system setting,
+  that allows defined proxies to reset the client IP. #395
+
+- Fixes
+- Display token count in web UI. #437
+- Use correct default_tokentype in token enrollment. #427
+- Fix HOTP resync problems. #412
+
+
 * Tue May 24 2016 Corneluis Kölbel <cornelius.koelbel@netknights.it> 2.12
 - Event Handler Framework #360
 - local CA connector can enroll certificates
