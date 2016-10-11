@@ -54,6 +54,28 @@ rm -rf $RPM_BUILD_ROOT
 /opt/privacyidea
 
 %changelog
+* Tue Oct 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.15
+  Features
+  * Client Overview. Display the type of the requesting
+    authenticating clients (#489)
+  * Support for NitroKey OTP mode (admin client)
+
+  Enhancements
+  * Performance enhancements using Caching singletons for
+    Config, Realm, Resolver and Policies
+  * Allow configuration of the registration email text (#494)
+  * Return SAML attributes only in case of successful
+    authentication (#500)
+  * Policy "reset_all_user_tokens" allow to reset all
+    failcounters on successful authentication (#471)
+  * Client rewrite mapping also checks for
+    X-Forwarded-For (#395, #495)
+
+  Fixes
+  * Fixing RemoteUser fails to display WebUI (#499)
+  * String comparison in HOSTS resolver (#484)
+
+
 * Wed Aug 24 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.14
   Features
   * Import PGP encrypted seed files
