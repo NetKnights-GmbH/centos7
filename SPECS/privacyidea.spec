@@ -54,6 +54,29 @@ rm -rf $RPM_BUILD_ROOT
 /opt/privacyidea
 
 %changelog
+* Fri Dec 02 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.16.1
+  Featurs
+  * Add HSM support via AES keys (#534)
+  * Improved Event Handler for flexible notification (#511)
+  * Signed subscription files for adding and checking
+    for extra functionality during authentication request (#502)
+
+  Enhancements
+  * Allow additional filter attributes in the Audit Log (#519)
+  * Show or hide realms in the login dialog via policy (#517)
+  * Improve UI if admin is not allowed for certain actions (#516, #512)
+  * Disable OTP PIN during enrollment via policy (#439)
+  * Allow automatic sending of registration code via email (#514)
+
+  Fixes
+  * Allow compatibility with ldap3 >= 2.0.7 (#533 #535)
+  * Fix problem with Notification when no tokenowner is available (#528)
+  * Fix confusion of client HTTP parameters (#529)
+  * Fix enabled flag with certain database types (#527)
+  * Catch error in case of faulty overrideClient definition (#526)
+  * Truncate Audit lines, that are too long for the DB table (#525)
+
+
 * Tue Oct 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.15
   Features
   * Client Overview. Display the type of the requesting
