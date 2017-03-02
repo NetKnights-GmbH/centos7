@@ -55,6 +55,9 @@ rm -rf $RPM_BUILD_ROOT
 /opt/privacyidea
 
 %changelog
+* Thu Mar 02 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.18
+  *
+
 * Tue Jan 10 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.17
   Features
   * Token Handler. Using the token handler the administrator
