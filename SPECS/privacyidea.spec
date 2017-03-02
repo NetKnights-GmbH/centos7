@@ -36,7 +36,8 @@ BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-
 rm -fr /opt/privacyidea
 virtualenv /opt/privacyidea
 source /opt/privacyidea/bin/activate
-pip install privacyidea==%{version} || true
+pip install --upgrade pip
+pip install privacyidea==%{version}
 pip install pymysql==0.7.2
 pip install pymysql_sa
 pip install jinja2==2.8.1
