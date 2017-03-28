@@ -1,4 +1,4 @@
-PI_VERSION=2.18dev4
+PI_VERSION=2.18.1
 info:
 	@echo "buildrpm"
 	@echo "repo"
