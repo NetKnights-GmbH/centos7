@@ -15,7 +15,7 @@ URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      x86_64
 
-BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-devel, openssl-devel, python-virtualenv, gcc
+BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-devel, openssl-devel, python-virtualenv, gcc, createrepo
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
