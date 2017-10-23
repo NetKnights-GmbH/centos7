@@ -14,7 +14,7 @@ License:        AGPLv3
 URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      x86_64
-Requires:	privacyidea, mariadb-server, httpd, mod_wsgi, mod_ssl
+Requires:	privacyidea, mariadb-server, httpd, mod_wsgi, mod_ssl, rng-tools
 
 BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-devel, openssl-devel
 
@@ -34,6 +34,11 @@ mkdir -p $RPM_BUILD_ROOT/etc/httpd/conf.d/
 cp $RPM_SOURCE_DIR/pi.cfg $RPM_BUILD_ROOT/etc/privacyidea
 cp $RPM_SOURCE_DIR/privacyideaapp.wsgi $RPM_BUILD_ROOT/etc/privacyidea
 cp $RPM_SOURCE_DIR/privacyidea.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/
+##################################################
+# Get the NetKnights public key and other configs
+curl https://raw.githubusercontent.com/privacyidea/privacyidea/master/deploy/privacyidea/NetKnights.pem -o $RPM_BUILD_ROOT/etc/privacyidea/NetKnights.pem
+curl https://raw.githubusercontent.com/privacyidea/privacyidea/master/deploy/privacyidea/dictionary -o $RPM_BUILD_ROOT/etc/privacyidea/dictionary
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -82,6 +87,27 @@ pi-manage db upgrade -d /opt/privacyidea/lib/privacyidea/migrations > /dev/null
 mkdir -p /var/run/wsgi
 mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable
 mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable
+
+##################################################
+# Adapt pi.cfg
+if [ !$(grep "^PI_PEPPER" /etc/privacyidea/pi.cfg) ]; then
+    # PEPPER does not exist, yet
+    PEPPER="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c24)"
+    echo "PI_PEPPER = '$PEPPER'" >> /etc/privacyidea/pi.cfg
+fi
+if [ !$(grep "^SECRET_KEY" /etc/privacyidea/pi.cfg || true) ]; then
+    # SECRET_KEY does not exist, yet
+    SECRET="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c24)"
+    echo "SECRET_KEY = '$SECRET'" >> /etc/privacyidea/pi.cfg
+fi
+
+######################################################
+# Create PGP key
+mkdir -p /etc/privacyidea/gpg
+rngd -r /dev/urandom
+pi-manage create_pgp_keys || true
+chown -R $USERNAME /etc/privacyidea/gpg
+killall -9 rngd
 
 %changelog
 %include %{_topdir}/changelog-server.inc
