@@ -1,4 +1,8 @@
-PI_VERSION=2.19.1
+ifndef VERSION
+        $(error VERSION not set. Set VERSION to build like VERSION=v2.19.1)
+endif
+PI_VERSION=${VERSION}
+
 info:
 	@echo "buildrpm"
 	@echo "repo"
