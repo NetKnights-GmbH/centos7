@@ -1,5 +1,6 @@
 ifndef VERSION
-        $(error VERSION not set. Set VERSION to build like VERSION=v2.19.1)
+        $(error VERSION not set. Set VERSION to build like VERSION=2.19.1)
+	$(error This is a VERSION number in pypi repository, no github tag!)
 endif
 PI_VERSION=${VERSION}
 
