@@ -85,8 +85,8 @@ pi-manage db upgrade -d /opt/privacyidea/lib/privacyidea/migrations > /dev/null
 ###################################################
 # The webserver
 mkdir -p /var/run/wsgi
-mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable
-mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable
+mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable || true
+mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable || true
 
 ##################################################
 # Adapt pi.cfg
