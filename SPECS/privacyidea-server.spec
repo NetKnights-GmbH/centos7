@@ -49,13 +49,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 USERNAME=privacyidea
-useradd -r $USERNAME -m || true
+useradd -r $USERNAME -m 2&>1 || true > /dev/null
 mkdir -p /var/log/privacyidea
 mkdir -p /var/lib/privacyidea
 touch /var/log/privacyidea/privacyidea.log
 source /opt/privacyidea/bin/activate
-pi-manage create_enckey || true > /dev/null
-pi-manage create_audit_keys || true > /dev/null
+pi-manage create_enckey 2>&1 || true > /dev/null
+pi-manage create_audit_keys 2>&1 || true > /dev/null
 chown -R $USERNAME /var/log/privacyidea
 chown -R $USERNAME /var/lib/privacyidea
 chown -R $USERNAME /etc/privacyidea
@@ -67,35 +67,43 @@ chgrp root /etc/privacyidea/pi.cfg
 chmod 640 /etc/privacyidea/pi.cfg
 #####################################################
 # Create database
-if [ !$(grep "^SQLALCHEMY_DATABASE_URI" /etc/privacyidea/pi.cfg || true) ]; then
-	service mariadb restart
+if [ -z "$(grep ^SQLALCHEMY_DATABASE_URI /etc/privacyidea/pi.cfg)" ]; then
 	NPW="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c12)"
-	mysql -e "create database pi;" || true
+	# might not run
+	systemctl start mariadb
+	# check if pi database exists
+	mysql pi -e quit
+	if [ $? -ne 0 ]; then
+	    # create the new database if it does not exist
+            mysql -e "create database pi;" || true
+	else
+	    echo "Database already exists. Good."
+	fi 
         mysql -e "grant all privileges on pi.* to 'pi'@'localhost' identified by '$NPW';"
         echo "SQLALCHEMY_DATABASE_URI = 'pymysql://pi:$NPW@localhost/pi'" >> /etc/privacyidea/pi.cfg
+	pi-manage createdb 2>&1 || true > /dev/null
 fi
-pi-manage createdb || true > /dev/null
 ####################################################
 # Update DB
 # Set the version to the first PI 2.0 version
-pi-manage db stamp 4f32a4e1bf33 -d /opt/privacyidea/lib/privacyidea/migrations > /dev/null
+pi-manage db stamp 4f32a4e1bf33 -d /opt/privacyidea/lib/privacyidea/migrations 2>&1 > /dev/null
 # Upgrade the database
-pi-manage db upgrade -d /opt/privacyidea/lib/privacyidea/migrations > /dev/null
+pi-manage db upgrade -d /opt/privacyidea/lib/privacyidea/migrations 2>&1 > /dev/null
 
 ###################################################
 # The webserver
 mkdir -p /var/run/wsgi
-mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable || true
-mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable || true
+mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable 2>&1 || true > /dev/null
+mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable 2&>1 || true > /dev/null
 
 ##################################################
 # Adapt pi.cfg
-if [ !$(grep "^PI_PEPPER" /etc/privacyidea/pi.cfg) ]; then
+if [ -z "$(grep ^PI_PEPPER /etc/privacyidea/pi.cfg)" ]; then
     # PEPPER does not exist, yet
     PEPPER="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c24)"
     echo "PI_PEPPER = '$PEPPER'" >> /etc/privacyidea/pi.cfg
 fi
-if [ !$(grep "^SECRET_KEY" /etc/privacyidea/pi.cfg || true) ]; then
+if [ -z "$(grep ^SECRET_KEY /etc/privacyidea/pi.cfg)" ]; then
     # SECRET_KEY does not exist, yet
     SECRET="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c24)"
     echo "SECRET_KEY = '$SECRET'" >> /etc/privacyidea/pi.cfg
