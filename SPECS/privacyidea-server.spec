@@ -3,10 +3,10 @@
 %define version %{getenv:PI_VERSION} 
 %define unmangled_version %{version}
 %define unmangled_version %{version}
-%define release 1
+%define release 2
 Name:           %{name}
 Version:        %{version}
-Release:        1%{?dist}
+Release:        %{release}%{?dist}
 Summary:        two-factor authentication server
 
 Group:          Applications/System
@@ -14,7 +14,7 @@ License:        AGPLv3
 URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      x86_64
-Requires:	privacyidea, mariadb-server, httpd, mod_wsgi, mod_ssl, rng-tools
+Requires:	privacyidea, mariadb-server, httpd, mod_wsgi, mod_ssl, rng-tools, psmisc
 
 BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-devel, openssl-devel
 
@@ -44,8 +44,8 @@ curl https://raw.githubusercontent.com/privacyidea/privacyidea/master/deploy/pri
 rm -rf $RPM_BUILD_ROOT
 
 %files
-/etc/privacyidea
-/etc/httpd/conf.d/
+%config /etc/privacyidea
+%config /etc/httpd/conf.d/
 
 %post
 USERNAME=privacyidea
