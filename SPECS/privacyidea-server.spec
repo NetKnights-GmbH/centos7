@@ -44,7 +44,7 @@ curl https://raw.githubusercontent.com/privacyidea/privacyidea/master/deploy/pri
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%config /etc/privacyidea
+%config(noreplace) /etc/privacyidea
 %config /etc/httpd/conf.d/
 
 %post
