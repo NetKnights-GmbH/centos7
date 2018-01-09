@@ -6,7 +6,8 @@ PI_VERSION=${VERSION}
 
 info:
 	@echo "buildrpm"
-	@echo "repo"
+	@echo "make-repo"
+	@echo "push-repo"
 	@echo "clean"
 
 buildrpm:
