@@ -14,6 +14,7 @@ buildrpm:
 	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea.spec
 	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-server.spec
 	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-radius.spec
+	rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-cx-oracle.spec 
 
 make-repo:
 	mkdir -p repository/centos/7/
