@@ -1,3 +1,210 @@
+* Version 2.22.4, 2018-07-31
+
+  Fixes in Server:
+  * Fix the get_token_type to no issue an SQL request for token searches
+  * Optimize HSM aeshsm.py module
+
+* Version 2.22.3, 2018-06-25
+
+  Fixes in Server:
+  * Fix the pskc export and import of pw token types (#1011)
+
+* Version 2.22.2, 2018-05-29
+
+  Fixes in WebUI:
+  * Fix the missing scrollbar in all remaining cases.
+
+  Fixes in Server:
+  * Avoid cast problems with Oracle token DB when saving
+    integer values to string columns.
+
+* Version 2.22.1, 2018-04-20
+
+  Fixes in WebUI:
+  * Allow to display the messages of several C/R tokens (#995, #1004)
+  * Use ng-if instead of ng-show to avoid errors in the javascript console (#963)
+  * Remove reference to not-used system.addons.js to avoid errors in the javascript console
+  * Remove reference to not-used system.addons.html to avoid errors in the javascript console
+  * Use ng-src instead of src to avoid errors in the javascript console
+  * Avoid request to /false is image is not existing - avoid error in the javascript console
+  * Fix handling of U2F token in the WebUI login
+  * Require serial number in the assignment form (#1011)
+  * Fix PIN comparison in token enroll and token assign (#1010)
+  * Fix the empty username in token enroll or assign (#918)
+
+  Fixes in Server:
+  * Add check for serial number present (#1011)
+  * Fix validation of OCRA and TiQR token (#1008)
+  * Add retry to cope with HSM issues (#1003)
+  * Fix unicode in resolverconf database table with Oracle (#999)
+
+
+* Version 2.22, 2018-03-27
+
+  Features:
+  * Add automatic offline refill for Offline OTP tokens (#839)
+  * Return realm and resolver of the user and allow mapping
+    group membership to the RADIUS protocol (#896)
+  * Add new tokenkind (hardware, software, virtual) for all tokens (#828)
+  * Support Vasco tokens via Import and via Web Enrollment (#904, #903, #891)
+  * Add arbitrary tokeninfo field to authorization policy (#873)
+  * New SMPP SMS provider (#878)
+  * New event handler Counter for counting events for statistics and monitoring (#951)
+
+  Enhancements:
+  * Enhance the statistics possibilities in WebUI (#950)
+  * Allow reencryption of the database by importing PSKC to
+    a new database (#940)
+  * Allow token janitor to export "PW" token type to PSKC (#942)
+  * Also export and import the counter values of HOTP/TOTP to PSKC (#943)
+  * SMS token can dynamically read phone number from user source (#932)
+  * Email token can dynamically read email address from user source (#932)
+  * Add policy to ignore the validity of a U2F attestation certificate (#926)
+  * Improve the speed of the LinOTP migration script to cope with tens of
+    thousands of tokens (#914)
+  * pi-manage can create API tokens with a chosen validity time (#931)
+  * Allow user to set token description for HOTP and TOTP tokens 
+    during enrollment (#928) (Thanks to Taylor Chase for this contribution!)
+  * Add timeout to SMTP server configuration (#919)
+  * Allow complex email templates for email tokens (#684)
+  * LDAP resolver now supports arbitrary multivalue attributes (#881)
+  * Allow Event Handler to match failing authentication (#971)
+
+  Fixes:
+  * Several fixes in LDAP resolver to cope with ldap3/pyasn1 version issues and
+    other issues (#911, #980, #982, #887)
+  * Skip misguiding LDAP error "AttributeError NonType" in log file (#948)
+  * Add missing validity time in /validate/check response for email tokens (#946)
+    (Thanks to Kleber Rocha/klinux for this contribution!)
+  * Fix the handling of the SMS expiration date (#937)
+  * Fix serial length in the audit table to match the serial length in the token table (#929)
+    (Thanks to Salvo Rapisarda for this contribution!)
+  * Fix Mail content sent by email token is rendered as attachment (#915)
+  * Fix Editing SMTP Server definition clears the password (#923)
+  * Fix pi-manage backup crash (Thanks to Pavol Ipoth for this contribution!)
+
+
+* Version 2.21.4, 2018-01-24
+
+  Fixes:
+  * HTTP Timeout of HTTP SMS Gateway (#889)
+  * Remove console.log from webui
+
+
+* Version 2.21.1, 2018-01-09
+
+  Fixes:
+  * Allow to use TLS1.1 and TLS1.2 for LDAP Resolver (#876)
+
+* Version 2.21, 2017-12-20
+
+  Features:
+
+   * Allow export of tokens to PKSC file (#790)
+   * Implement two-step enrollment of HOTP/TOTP tokens (#797, #863, #865, #866)
+   * Allow WebUI customization via policies (#795)
+
+  Enhancements:
+
+   * Add script to decrypt safeword tokens
+   * Allow using tags in the tokenissuer of smartphone tokens
+   * Try to re-establish lost HSM connections (#787)
+   * Allow to rotate audit log based on multiple conditions (#780, #833)
+   * Add dry-run option to audit log rotation (#801)
+   * Allow dots in realm names (#808)
+   * Mark empty but required fields in WebUI (#810)
+   * Display success information after PIN is set (#822)
+   * Add further tags to the user notification event handler (#824)
+   * Add number of users to the subscription view (#800)
+   * Add HTTP/HTTPS proxy settings to HTTP SMS Provider (#835)
+   * Federation Handler allows to forward the authorization token (#838)
+   * Use token janitor to export a user list (#852)
+   * Use HSM for random key generation if possible (#783)
+   * HTTP SMS Provider now takes TIMEOUT parameter into account
+   * Allow to configure length of generated serial numbers (#583)
+
+  Fixes:
+
+   * Fix handling of only_realm option in token event handler (#809)
+   * Fix scrollbar issues in WebUI (#806, #823)
+   * Fix OTP counter of offline token (#840)
+   * Fix conflicts between check_tokentype and passthru policies (#846)
+   * Properly reset tab tile after session has been locked (#850)
+   * Fix handling of fixed key size during enrollment (#820)
+   * Make sure that only active policies are honored (#825)
+   * Fix various bugs with non-ASCII data (#754)
+   * Fix failcounter_clear_timeout (#831)
+   * Only remove apache host definitions on first installation (#834)
+
+* Version 2.20.1, 2017-10-30
+
+  Fixes:
+   * /token/init allows to pass otpkey AND genkey=false (#793)
+   * Cast date to string, to fix audit search for postgresql (#786)
+   * Optimize the LDAP Resolver Redundancy to avoid LdapServerPoolExhaustedErrors (#802)
+   * Preset default realm in token enrollment (#804)
+   * Fix PassOnNoUser and PassOnNoToken (#798)
+   * Fix genkey=0 error during token enrollment (#793)
+
+* Version 2.20, 2017-09-27
+
+  Features:
+
+   * New Token-Type OCRA and DisplayTAN to support 
+     transaction signing for online banking (#767)
+   * Federation Handler allows to forward authentication
+     requests and other REST API requests to a child
+     privacyIDEA system (#711)
+   * Improved Subscription Handling 
+   * Allow to login with multiple loginnames (#713)
+   * Authentication Cache policy (#729)
+
+  Enhancements:
+
+   * !!!NOTE!!! following policies now also honor the resolvers,
+    which they did not previously:
+    (AUTH, challenge_response), (AUTH, otppin), 
+    (AUTHZ, auth_max_success), (AUTHZ, auth_max_fail),
+    (AUTHZ, last_auth), (WEBUI, login_mode),
+    (ENROLL,losttoken_pw_contents), (ENROLL,losttoken_validity),
+    (ENROLL, losttoken_pw_len) (#736)
+   * User can regenerate the QR Code during enrollment
+     of smartphone app (#766)
+   * Administrator can define remote privacyIDEA servers
+     centrally (#711)
+   * Events can now be ordered. This is important for the
+     federation handling (#711)
+   * Specify the hash algorithm that is used to save 
+     SQL users passwords (#745)
+   * Add welcome dialog for administrator (#716)
+   * Allow creating oracle DB (#752)
+   * Event Handler can use timestamps and time offsets in
+     conditions (#741)
+   * Use challenge/response token to unlock the screen of 
+     the web UI (#702)
+   * Support multiple challenge/response token at the same
+     time (#722)
+   * GPG keys are generated during package installation and
+     show the GPG key in the import dialog (#742)
+   * Failcounter clearing timeout in UI (#719)
+   * Allow to send challenge data (like banking transaction) in
+     email text and SMS text.
+
+  Fixes:
+
+   * Set default loglevel from DEBUG to INFO (#765)
+   * Fixed PIN logging, which could lead to exceptions
+   * Fixed unicode handling in log messages
+   * Make LDAP Resolver work with utf8 (#738)
+   * User can only choose hash algo according to policy (#723)
+   * Add time period 30/60s to rollout URI (#744)
+   * Fix deprecation warning for flask_migrate (#734)
+   * Allow multiple tries for challenge/response (#708)
+   * Fix problem with certificate serial number (#737)
+
+
+
+
 * Sun Jul 02 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.19.1
 
   Version 2.19.1, 2017-07-02
