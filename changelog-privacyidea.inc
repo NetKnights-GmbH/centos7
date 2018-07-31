@@ -1,15 +1,16 @@
-* Version 2.22.4, 2018-07-31
+* Tue Jul 31 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.22.4
 
   Fixes in Server:
   * Fix the get_token_type to no issue an SQL request for token searches
   * Optimize HSM aeshsm.py module
 
-* Version 2.22.3, 2018-06-25
+* Mon Jun 25 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.22.3
+
 
   Fixes in Server:
   * Fix the pskc export and import of pw token types (#1011)
 
-* Version 2.22.2, 2018-05-29
+* Tue May 29 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.22.2
 
   Fixes in WebUI:
   * Fix the missing scrollbar in all remaining cases.
@@ -18,7 +19,7 @@
   * Avoid cast problems with Oracle token DB when saving
     integer values to string columns.
 
-* Version 2.22.1, 2018-04-20
+* Fri Apr 20 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.22.1
 
   Fixes in WebUI:
   * Allow to display the messages of several C/R tokens (#995, #1004)
@@ -39,7 +40,7 @@
   * Fix unicode in resolverconf database table with Oracle (#999)
 
 
-* Version 2.22, 2018-03-27
+* Tue Mar 27 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.22
 
   Features:
   * Add automatic offline refill for Offline OTP tokens (#839)
@@ -84,19 +85,19 @@
   * Fix pi-manage backup crash (Thanks to Pavol Ipoth for this contribution!)
 
 
-* Version 2.21.4, 2018-01-24
+* Wed Jan 24 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.21.4
 
   Fixes:
   * HTTP Timeout of HTTP SMS Gateway (#889)
   * Remove console.log from webui
 
 
-* Version 2.21.1, 2018-01-09
+* Tue Jan 09 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.21.1 
 
   Fixes:
   * Allow to use TLS1.1 and TLS1.2 for LDAP Resolver (#876)
 
-* Version 2.21, 2017-12-20
+* Tue Dec 20 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.21
 
   Features:
 
@@ -136,7 +137,7 @@
    * Fix failcounter_clear_timeout (#831)
    * Only remove apache host definitions on first installation (#834)
 
-* Version 2.20.1, 2017-10-30
+* Tue Oct 30 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.20.1 
 
   Fixes:
    * /token/init allows to pass otpkey AND genkey=false (#793)
@@ -146,7 +147,7 @@
    * Fix PassOnNoUser and PassOnNoToken (#798)
    * Fix genkey=0 error during token enrollment (#793)
 
-* Version 2.20, 2017-09-27
+* Tue Sep 27 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.20
 
   Features:
 
