@@ -97,7 +97,7 @@
   Fixes:
   * Allow to use TLS1.1 and TLS1.2 for LDAP Resolver (#876)
 
-* Tue Dec 20 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.21
+* Wed Dec 20 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.21
 
   Features:
 
@@ -137,7 +137,7 @@
    * Fix failcounter_clear_timeout (#831)
    * Only remove apache host definitions on first installation (#834)
 
-* Tue Oct 30 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.20.1 
+* Mon Oct 30 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.20.1 
 
   Fixes:
    * /token/init allows to pass otpkey AND genkey=false (#793)
@@ -147,7 +147,7 @@
    * Fix PassOnNoUser and PassOnNoToken (#798)
    * Fix genkey=0 error during token enrollment (#793)
 
-* Tue Sep 27 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.20
+* Wed Sep 27 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.20
 
   Features:
 
