@@ -36,6 +36,7 @@ make-repo:
 
 push-repo:
 	(cd repository;	rsync -vr centos root@lancelot:/srv/www/rpmrepo/)
+	(cd repository;	rsync -vr centos-devel root@lancelot:/srv/www/rpmrepo/)
 
 clean:
 	rm -fr repository
