@@ -6,7 +6,7 @@
 %define release 1
 Name:           %{name}
 Version:        %{version}
-Release:        1%{?dist}
+Release:        %{release}%{?dist}
 Summary:        two-factor authentication system e.g. for OTP devices
 
 Group:          Applications/System
@@ -42,6 +42,9 @@ pip install pymysql==0.7.2
 pip install pymysql_sa
 pip install jinja2==2.8.1
 pip install Pillow==2.9.0
+#pip install ldap3==2.5.0
+#pip install pyasn1==0.4.2
+
 # No Auth Modules in the base package
 rm -fr /opt/privacyidea/lib/python2.7/site-packages/authmodules
 rm -fr /opt/privacyidea/lib/privacyidea/authmodules
