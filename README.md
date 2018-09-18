@@ -5,3 +5,6 @@ make will fetch this version from the python package index.
 E.g. You can build a devel repo like this:
 
     VERSION=2.23 make clean buildrpm fill-devel-repo make-repo
+
+.. Note: Sometimes a new package can not be found. You should then
+   clear the pip cache in ~/.cache/pip/
