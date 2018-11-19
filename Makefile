@@ -5,10 +5,11 @@ endif
 PI_VERSION=${VERSION}
 
 info:
-	@echo "buildrpm"
-	@echo "make-repo"
-	@echo "push-repo"
-	@echo "clean"
+	@echo "buildrpm          - build a new RPM from python package index"
+	@echo "fill-devel-repo   - put the newly built packages into the local DEVEL repo"
+	@echo "fill-release-repo - put the newly built packages into the local release repo"
+	@echo "make-repo         - fetch existing repo and build a new local repository with new packages"
+	@echo "push-repo         - push the devel and productive repo to lancelot"
 
 buildrpm:
 	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea.spec
