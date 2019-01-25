@@ -12,9 +12,9 @@ info:
 	@echo "push-repo         - push the devel and productive repo to lancelot"
 
 buildrpm:
-	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea.spec
-	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-server.spec
-	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-radius.spec
+	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" --sign -ba SPECS/privacyidea.spec
+	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" --sign -ba SPECS/privacyidea-server.spec
+	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" --sign -ba SPECS/privacyidea-radius.spec
 
 buildoracle:
 	rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-cx-oracle.spec 
