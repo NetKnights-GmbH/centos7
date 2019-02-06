@@ -3,7 +3,7 @@
 %define version %{getenv:PI_VERSION} 
 %define unmangled_version %{version}
 %define unmangled_version %{version}
-%define release 2
+%define release 1
 Name:           %{name}
 Version:        %{version}
 Release:        %{release}%{?dist}
