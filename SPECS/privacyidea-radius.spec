@@ -40,8 +40,8 @@ Requires:      freeradius, freeradius-perl
 %install
 # Create git repo
 mkdir -p $RPM_BUILD_ROOT/git
-git clone ${gitsource} $RPM_BUILD_ROOT/git
-(cd $RPM_BUIILD_ROOT/git; git checkout ${version})
+git clone %{gitsource} $RPM_BUILD_ROOT/git
+cd $RPM_BUILD_ROOT/git; git checkout v%{version}
 mkdir -p $RPM_BUILD_ROOT/usr/lib/privacyidea
 cp $RPM_BUILD_ROOT/git/privacyidea_radius.pm $RPM_BUILD_ROOT/usr/lib/privacyidea/privacyidea_radius.pm
 mkdir -p $RPM_BUILD_ROOT/etc/privacyidea
@@ -49,6 +49,7 @@ cp $RPM_BUILD_ROOT/git/rlm_perl.ini $RPM_BUILD_ROOT/etc/privacyidea/rlm_perl.ini
 cp $RPM_BUILD_ROOT/git/dictionary.netknights $RPM_BUILD_ROOT/etc/privacyidea/dictionary.netknights
 mkdir -p $RPM_BUILD_ROOT/etc/raddb/sites-available/
 cp $RPM_SOURCE_DIR/privacyidea-radius-site $RPM_BUILD_ROOT/etc/raddb/sites-available/privacyidea
+rm $RPM_BUILD_ROOT/git -fr
 
 
 %clean
