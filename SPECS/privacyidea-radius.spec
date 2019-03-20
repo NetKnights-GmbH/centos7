@@ -3,9 +3,7 @@
 %define version %{getenv:PI_VERSION}
 %define unmangled_version %{version}
 %define unmangled_version %{version}
-%define source0  https://raw.githubusercontent.com/privacyidea/FreeRADIUS/master/privacyidea_radius.pm
-%define source1 https://raw.githubusercontent.com/privacyidea/FreeRADIUS/master/rlm_perl.ini
-%define source2 https://raw.githubusercontent.com/privacyidea/FreeRADIUS/master/dictionary.netknights
+%define gitsource https://github.com/privacyidea/FreeRADIUS.git
 %define release 1
 Name:           %{name}
 Version:        %{version}
@@ -18,10 +16,9 @@ URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      noarch
 
-BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-devel, openssl-devel
+BuildRequires: libxml2-devel, freetype-devel, libxslt-devel, zlib-devel, openssl-devel
 Requires:      freeradius, freeradius-perl
 
-#Source0:       %{source0}
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -41,12 +38,15 @@ Requires:      freeradius, freeradius-perl
 %build
 
 %install
-#rm -fr $RPM_BUILD_ROOT/usr/lib/privacyidea
+# Create git repo
+mkdir -p $RPM_BUILD_ROOT/git
+git clone ${gitsource} $RPM_BUILD_ROOT/git
+(cd $RPM_BUIILD_ROOT/git; git checkout ${version})
 mkdir -p $RPM_BUILD_ROOT/usr/lib/privacyidea
-curl %{source0} -o $RPM_BUILD_ROOT/usr/lib/privacyidea/privacyidea_radius.pm
+cp $RPM_BUILD_ROOT/git/privacyidea_radius.pm $RPM_BUILD_ROOT/usr/lib/privacyidea/privacyidea_radius.pm
 mkdir -p $RPM_BUILD_ROOT/etc/privacyidea
-curl %{source1} -o $RPM_BUILD_ROOT/etc/privacyidea/rlm_perl.ini
-curl %{source2} -o $RPM_BUILD_ROOT/etc/privacyidea/dictionary.netknights
+cp $RPM_BUILD_ROOT/git/rlm_perl.ini $RPM_BUILD_ROOT/etc/privacyidea/rlm_perl.ini
+cp $RPM_BUILD_ROOT/git/dictionary.netknights $RPM_BUILD_ROOT/etc/privacyidea/dictionary.netknights
 mkdir -p $RPM_BUILD_ROOT/etc/raddb/sites-available/
 cp $RPM_SOURCE_DIR/privacyidea-radius-site $RPM_BUILD_ROOT/etc/raddb/sites-available/privacyidea
 
