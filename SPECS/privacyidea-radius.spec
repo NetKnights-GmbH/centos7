@@ -7,7 +7,7 @@
 %define release 1
 Name:           %{name}
 Version:        %{version}
-Release:        1%{?dist}
+Release:        %{release}%{?dist}
 Summary:        privacyIDEA RADIUS plugin
 
 Group:          Applications/System
@@ -56,8 +56,8 @@ rm $RPM_BUILD_ROOT/git -fr
 
 %files
 /usr/lib/privacyidea
-/etc/privacyidea
-/etc/raddb/sites-available/*
+%config /etc/privacyidea
+%config /etc/raddb/sites-available/*
 
 %changelog
 
