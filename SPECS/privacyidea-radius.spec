@@ -48,6 +48,7 @@ mkdir -p $RPM_BUILD_ROOT/etc/privacyidea
 cp $RPM_BUILD_ROOT/git/rlm_perl.ini $RPM_BUILD_ROOT/etc/privacyidea/rlm_perl.ini
 cp $RPM_BUILD_ROOT/git/dictionary.netknights $RPM_BUILD_ROOT/etc/privacyidea/dictionary.netknights
 mkdir -p $RPM_BUILD_ROOT/etc/raddb/sites-available/
+mkdir -p $RPM_BUILD_ROOT/etc/raddb/mods-available/
 cp $RPM_SOURCE_DIR/privacyidea-radius-site $RPM_BUILD_ROOT/etc/raddb/sites-available/privacyidea
 cp $RPM_SOURCE_DIR/privacyidea-mods-perl $RPM_BUILD_ROOT/etc/raddb/mods-available/piperl
 rm $RPM_BUILD_ROOT/git -fr
@@ -59,6 +60,8 @@ rm $RPM_BUILD_ROOT/git -fr
 /usr/lib/privacyidea
 %config /etc/privacyidea
 %config /etc/raddb/sites-available/*
+%config /etc/raddb/mods-available/*
+
 
 %changelog
 
