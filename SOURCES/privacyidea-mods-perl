@@ -1,0 +1,4 @@
+perl piperl {
+	filename = /usr/lib/privacyidea/privacyidea_radius.pm
+}
+

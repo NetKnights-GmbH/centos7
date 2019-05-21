@@ -26,12 +26,12 @@ server privacyidea {
 		logintime
 		pap
 		update control {
-			Auth-Type := Perl
+			Auth-Type := piPerl
 		}
 	}
 	authenticate {
-		Auth-Type Perl {
-			perl
+		Auth-Type piPerl {
+			piperl
 		}
 		digest
 	}
