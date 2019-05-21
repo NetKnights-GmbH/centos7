@@ -14,7 +14,6 @@ info:
 buildrpm:
 	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" --sign -ba SPECS/privacyidea.spec
 	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" --sign -ba SPECS/privacyidea-server.spec
-	make buildradius
 
 buildradius:
 	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" --sign -ba SPECS/privacyidea-radius.spec

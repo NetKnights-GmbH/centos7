@@ -4,6 +4,7 @@
 %define unmangled_version %{version}
 %define unmangled_version %{version}
 %define release 1
+%global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
 Name:           %{name}
 Version:        %{version}
 Release:        %{release}%{?dist}
@@ -38,13 +39,7 @@ virtualenv /opt/privacyidea
 source /opt/privacyidea/bin/activate
 pip install --upgrade pip
 pip install privacyidea==%{version}
-pip install pymysql==0.7.2
-pip install pymysql_sa
-pip install jinja2==2.8.1
-pip install Pillow==2.9.0
-#pip install ldap3==2.5.0
-#pip install pyasn1==0.4.2
-
+pip install -r /opt/privacyidea/lib/privacyidea/requirements.txt
 # No Auth Modules in the base package
 rm -fr /opt/privacyidea/lib/python2.7/site-packages/authmodules
 rm -fr /opt/privacyidea/lib/privacyidea/authmodules
