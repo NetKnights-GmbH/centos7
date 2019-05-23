@@ -1,3 +1,6 @@
+* Thu May 23 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.0.1
+- Run with privacyIDEA 3.0.1
+
 * Thu Nov 16 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.20.1-2
 - Fix upgrade: Do not revert changes in pi.cfg
 

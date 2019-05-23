@@ -1,3 +1,24 @@
+* Thu May 23 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.0.1
+
+  Fixes:
+  * Fix PUSH token issues:
+    * Add logic checking to setup of PUSH token (#1592)
+    * Remove double enrollment notification of PUSH token in WebUI (#1598)
+    * Fix to allow spaces in Firebase configuration (#1599)
+    * Add support for iOS Firebase configuration (#1608)
+    * Fix to allow PUSH token enrollment, even with Label-policy (#1589)
+    * Fix to mark PUSH token challenge answered in the database (#1584)
+  * Fix the validity period of the registration token (#1587)
+  * Beautify the vertical alignment in the Web UI top menu (#1559)
+  * Fix user cache configuration read - defaults to 0 (#1596)
+  * Remove links in audit log for normal users (#1497)
+  * Check UI rights for user resolvers (#1496)
+  * Fix placeholder in realm dropdown in login dialog (#1498)
+  * Fix enckey creation in Python 3 (#1594)
+  * Allow the usage if "browserLanguage" in custom templates (#1620)
+  * Open all accordions when searching for policy action (#1558)
+  * Fix to hide support links also in menu (#1626)
+
 * Thu Sep 06 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.23.1
 
   Features:
