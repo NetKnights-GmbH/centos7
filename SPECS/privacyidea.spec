@@ -3,8 +3,9 @@
 %define version %{getenv:PI_VERSION} 
 %define unmangled_version %{version}
 %define unmangled_version %{version}
-%define release 1
-%global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
+%define release 2
+# Skip the postinstall scripts, otherwise Pillow will fail.
+%global __os_install_post %{nil}
 Name:           %{name}
 Version:        %{version}
 Release:        %{release}%{?dist}
