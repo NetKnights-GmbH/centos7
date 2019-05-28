@@ -16,7 +16,7 @@ URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      noarch
 
-BuildRequires: libxml2-devel, freetype-devel, libxslt-devel, zlib-devel, openssl-devel
+BuildRequires: git
 Requires:      freeradius, freeradius-perl, perl-LWP-Protocol-https, freeradius-utils
 
 
@@ -41,7 +41,7 @@ Requires:      freeradius, freeradius-perl, perl-LWP-Protocol-https, freeradius-
 # Create git repo
 mkdir -p $RPM_BUILD_ROOT/git
 git clone %{gitsource} $RPM_BUILD_ROOT/git
-cd $RPM_BUILD_ROOT/git; git checkout v%{version}
+(cd $RPM_BUILD_ROOT/git; git checkout v%{version})
 mkdir -p $RPM_BUILD_ROOT/usr/lib/privacyidea
 cp $RPM_BUILD_ROOT/git/privacyidea_radius.pm $RPM_BUILD_ROOT/usr/lib/privacyidea/privacyidea_radius.pm
 mkdir -p $RPM_BUILD_ROOT/etc/privacyidea

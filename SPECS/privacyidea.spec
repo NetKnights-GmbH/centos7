@@ -1,11 +1,12 @@
 %define source_name privacyIDEA
 %define name privacyidea
-%define version %{getenv:PI_VERSION} 
+%define version %{getenv:PI_VERSION}
 %define unmangled_version %{version}
 %define unmangled_version %{version}
 %define release 2
-# Skip the postinstall scripts, otherwise Pillow will fail.
-%global __os_install_post %{nil}
+# Somehow stripping the '.comment' section from the Pillow libraries breaks the strip-tool,
+# so we skip stripping and byte-compile in the postinstall scripts, otherwise Pillow will fail.
+%global __os_install_post %(echo '%{__os_install_post}' | sed -re 's!/usr/lib[^[:space:]]*/((brp-python-bytecompile)|(brp-strip-comment-note))[[:space:]].*$!!g')
 Name:           %{name}
 Version:        %{version}
 Release:        %{release}%{?dist}
@@ -18,7 +19,7 @@ Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      x86_64
 AutoReqProv:	no
 
-BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-devel, openssl-devel, python-virtualenv, gcc, createrepo
+BuildRequires: python-virtualenv
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -40,9 +41,9 @@ rm -fr /opt/privacyidea
 virtualenv /opt/privacyidea
 source /opt/privacyidea/bin/activate
 pip install --upgrade pip
+pip install -r https://raw.githubusercontent.com/privacyidea/privacyidea/v%{version}/requirements.txt
 pip install privacyidea==%{version}
 pip install pymysql_sa
-pip install -r /opt/privacyidea/lib/privacyidea/requirements.txt
 # No Auth Modules in the base package
 rm -fr /opt/privacyidea/lib/python2.7/site-packages/authmodules
 rm -fr /opt/privacyidea/lib/privacyidea/authmodules

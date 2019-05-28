@@ -1,6 +1,6 @@
 %define source_name privacyIDEA
 %define name privacyidea-server
-%define version %{getenv:PI_VERSION} 
+%define version %{getenv:PI_VERSION}
 %define unmangled_version %{version}
 %define unmangled_version %{version}
 %define release 1
@@ -16,7 +16,7 @@ Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      x86_64
 Requires:	privacyidea, mariadb-server, httpd, mod_wsgi, mod_ssl, rng-tools, psmisc
 
-BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-devel, openssl-devel
+BuildRequires: curl
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -78,7 +78,7 @@ if [ -z "$(grep ^SQLALCHEMY_DATABASE_URI /etc/privacyidea/pi.cfg)" ]; then
             mysql -e "create database pi;" || true
 	else
 	    echo "Database already exists. Good."
-	fi 
+	fi
         mysql -e "grant all privileges on pi.* to 'pi'@'localhost' identified by '$NPW';"
         echo "SQLALCHEMY_DATABASE_URI = 'pymysql://pi:$NPW@localhost/pi'" >> /etc/privacyidea/pi.cfg
 	pi-manage createdb 2>&1 || true > /dev/null

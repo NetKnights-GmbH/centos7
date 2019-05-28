@@ -6,20 +6,26 @@ PI_VERSION=${VERSION}
 
 info:
 	@echo "buildrpm          - build a new RPM from python package index"
+	@echo "signrpm           - sign the RPMs"
 	@echo "fill-devel-repo   - put the newly built packages into the local DEVEL repo"
 	@echo "fill-release-repo - put the newly built packages into the local release repo"
 	@echo "make-repo         - fetch existing repo and build a new local repository with new packages"
 	@echo "push-repo         - push the devel and productive repo to lancelot"
 
-buildrpm:
-	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" --sign -ba SPECS/privacyidea.spec
-	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" --sign -ba SPECS/privacyidea-server.spec
+buildrpm: buildpi buildradius buildoracle
+
+buildpi:
+	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea.spec
+	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-server.spec
 
 buildradius:
-	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" --sign -ba SPECS/privacyidea-radius.spec
+	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-radius.spec
 
 buildoracle:
-	rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-cx-oracle.spec 
+	rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-cx-oracle.spec
+
+signrpm: buildrpm
+	find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
 
 fill-release-repo:
 	mkdir -p repository/centos/7/
