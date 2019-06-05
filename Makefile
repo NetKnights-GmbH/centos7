@@ -1,6 +1,9 @@
+# Makefile for building CentOS RPMs
+
 ifndef VERSION
-        $(error VERSION not set. Set VERSION to build like VERSION=2.19.1)
-	$(error This is a VERSION number in pypi repository, no github tag!)
+  error_text = "VERSION not set. Set VERSION to build like VERSION=2.19.1!\
+                This is a github tag (without leading 'v')!"
+  $(error $(error_text))
 endif
 PI_VERSION=${VERSION}
 
@@ -12,9 +15,7 @@ info:
 	@echo "make-repo         - fetch existing repo and build a new local repository with new packages"
 	@echo "push-repo         - push the devel and productive repo to lancelot"
 
-buildrpm: buildpi buildradius buildoracle
-
-buildpi:
+buildrpm:
 	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea.spec
 	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-server.spec
 
@@ -24,18 +25,19 @@ buildradius:
 buildoracle:
 	rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-cx-oracle.spec
 
-signrpm: buildrpm
+signrpm:
 	find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
 
-fill-release-repo:
+fill-release-repo: signrpm
 	mkdir -p repository/centos/7/
 	cp -r RPMS/* repository/centos/7/
 
-fill-devel-repo:
+fill-devel-repo: signrpm
 	mkdir -p repository/centos-devel/7/
 	cp -r RPMS/* repository/centos-devel/7/
 
 make-repo:
+	mkdir -p repository
 	# Fetch old packages
 	(cd repository; rsync -vr root@lancelot:/srv/www/rpmrepo/ .)
 	(cd repository/centos/7/x86_64/; createrepo .)
