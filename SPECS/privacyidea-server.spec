@@ -120,5 +120,10 @@ pi-manage create_pgp_keys || true
 chown -R $USERNAME /etc/privacyidea/gpg
 killall -9 rngd
 
+# Create symlinks for the easy life of the admin
+ln -sf /opt/privacyidea/bin/pi-manage /usr/bin/
+ln -sf /opt/privacyidea/bin/privacyidea-diag /usr/bin/
+ln -sf /opt/privacyidea/bin/privacyidea-token-janitor /usr/bin/
+
 %changelog
 %include %{_topdir}/changelog-server.inc
