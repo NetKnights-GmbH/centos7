@@ -54,6 +54,12 @@ cp $RPM_SOURCE_DIR/privacyidea-mods-perl $RPM_BUILD_ROOT/etc/raddb/mods-availabl
 rm $RPM_BUILD_ROOT/git -fr
 
 
+%post
+# Activate the piperl RADIUS module
+cd /etc/raddb/mods-enabled/
+ln -s ../mods-available/piperl .
+systemctl restart radiusd
+
 %clean
 
 %files
