@@ -85,10 +85,8 @@ if [ -z "$(grep ^SQLALCHEMY_DATABASE_URI /etc/privacyidea/pi.cfg)" ]; then
 fi
 ####################################################
 # Update DB
-# Set the version to the first PI 2.0 version
-pi-manage db stamp 4f32a4e1bf33 -d /opt/privacyidea/lib/privacyidea/migrations 2>&1 > /dev/null
 # Upgrade the database
-pi-manage db upgrade -d /opt/privacyidea/lib/privacyidea/migrations 2>&1 > /dev/null
+/opt/privacyidea/bin/privacyidea-schema-upgrade /opt/privacyidea/lib/privacyidea/migrations 2>&1 > /dev/null
 
 ###################################################
 # The webserver
