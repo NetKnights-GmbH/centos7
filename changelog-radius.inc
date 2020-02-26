@@ -1,3 +1,13 @@
+* Wed Feb 26 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3
+
+- Allow multiple same reply attributes
+
+* Fri Aug 30 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.2
+
+- Remove default examples from rlm_perl.ini
+- Fix a failure if config file is missing
+- provide an extra perl module configuration, to avoid config clashes
+
 * Thu May 23 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.1
 - Add timing to log file
 - return RLM_MODULE_NOTFOUND in case the user is not found
