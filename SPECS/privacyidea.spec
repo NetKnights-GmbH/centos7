@@ -41,7 +41,7 @@ virtualenv /opt/privacyidea
 source /opt/privacyidea/bin/activate
 pip install --upgrade pip setuptools
 pip install privacyidea==%{version}
-#pip install pymysql_sa
+pip install pymysql_sa
 pip install -r /opt/privacyidea/lib/privacyidea/requirements.txt
 # No Auth Modules in the base package
 rm -fr /opt/privacyidea/lib/python2.7/site-packages/authmodules
