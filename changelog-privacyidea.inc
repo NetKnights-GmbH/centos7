@@ -1,3 +1,239 @@
+* Wed May 06 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3.2
+
+  Fixes:
+    * Fix restricted audit log for helpdesk users (#2181)
+
+* Wed Apr 29 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3.1
+  
+  Fixes:
+    * Fix broken U2F support (#2157)
+    * Fix creation of PGP keys with pi-maange (#2165)
+
+* Sun Apr 05 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3
+
+  Features:
+    * New token type: WebAuthn/FIDO2 token is initially supported by privacyIDEA (#1468)
+    * New token type: Indexed Secret token allows user
+      to authenticate with a pre-known secret that can be
+      initialized from the user store. (#1986)
+    * New Event Handler Module: Logging module enables custom event-driven logging (#1580)
+
+  Enhancements:
+    * Event Handler:
+      * The OTP token QR code can now be added not only inline but also as an attachment
+        to email notifications (#1226)
+    * Policies:
+      * Added a policy to define the allowed characters for PINs (#2051)
+      * Add policies to limit the number of destinct tokentypes per user (#1375)
+      * Improved distinction between the username of the administrator
+        and the username of the user. Add an admin username to policies. (#1867)
+        Thus allowing:
+        * User attribute conditions in admin policies
+        * default settings for hashlib and otplen for HOTP and TOTP token
+         and default timestep for TOTP token can now be dependent on
+         admin user and for which user the admin does the enrollment
+        * Enrollment settings for push tokens can distinguish better
+         between admin users and user
+        * Random PIN settings can be user dependent
+    * WebUI
+      * Added the option to filter tokens by tokenrealm (#545)
+      * Prior to enrollment of soft tokens, such as HOTP, TOTP and PUSH the user is
+        offered with a QR codes to direct him to the Authenticator App stores (#1919).
+      * Adding version hashes to WebUI components to avoid working with outdated
+        templates (#1871)
+      * Updated bootstrap and AngularJS (#830)
+      * Rework policy matching (#1691 #2024 #2038)
+    * Documentation
+      * The documentation was restructured and updated (#1967 #1981 #1504 #2049 #2089 #2090).
+    * Tools
+      * Added a migration script to update the database schema from 2.23.5 to 3.2.2 (#2040)
+    * Misc
+      * Added the remote serial to the tokeninfo of a remote token to better track
+        authenticated devices (#2031)
+      * Use dictConfig instead of fileConfig to read configurations (#2059)
+      * Support logging configuration file in YAML format (#2080)
+      * Support custom audit logger names (#2106)
+
+  Fixes:
+    * Fix unauthorized statistics view (#1238)
+    * Fix a bug which caused an exception during PSKC key file container import (#1915)
+    * Fix link on privacyIDEA logo in the WebUI when no user is logged in (#1944)
+    * Updated CA files in testdata which were about to expire (#1960)
+    * Fix API endpoints to avoid redirects (#1999)
+    * Fix url_decode padding before it could cause any issues (#2000)
+    * Initialize rtype in user_object correctly (#2007)
+    * Fix an inconsistency of start_tls with postgres SQL (#2025)
+    * Fix wrong type splitting of questionnaire token (#2026)
+    * Fix a bug which could cause missing audit entries when using the
+      ContainerAudit module (#2029)
+    * Fix a bug which prevented defining an SQL resolver without a password (#2030)
+    * Fix missing "position" argument on event import with pi-manage (#2036)
+    * Fix timing issues in tests (#2041)
+    * Fix documentation (#2049)
+    * Fix sorting token table by column (#2111)
+
+* Fri Jan 17 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.2.2
+
+  Fixes:
+  * Fix Popen calls like with pi-manage backup restore
+  * Fix retrieving the correct database for restore
+  * Fix caconnectorread policy
+
+* Tue Dec 31 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.2.1
+
+  Fixes:
+  * Fix the wording and translation of the lost token scenario
+
+* Mon Dec 02 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.2
+
+  Features:
+  * New Event Handler: RequestMangler to modify request attributes (#1810)
+  * New Event Handler: ResponseMangler to modify the response data (#1138)
+  * New Audit Module to write to a file (#1072)
+  * New Container Audit Module to write to several audit modules at once (#1072)
+  * Applications can use the API with predefined asymmetric JWT (#1773)
+
+  Enhancements:
+  * Authentication:
+    * Add endpoint /validate/polltransaction for an improved workflow
+      for out-of-band challenges-responses like PUSH token (#1838)
+    * Allow registration token to work as challenge/response (#1897)
+    * RADIUS token also uses timeout and retries (#1931)
+    * Improve the handling of splitAtSign, so that a multi-realm
+      setup will be more consistent (#1808)
+    * Use authentication and authorization policies also for the
+      /auth endpoint (#1722, #1537)
+  * Policies and events:
+    * Allow HTTP AGENT and any arbitrary HTTP header in extended policy conditions (#1425)
+    * Allow HTTP AGENT as condition for event handlers (#1260)
+    * Event Handlers can match for the rollout_state (#1801)
+    * Add write-to-file action to the notification handler (#717)
+    * Allow user endpoints to trigger events (#1822)
+  * Management:
+    * Allow help desk to trigger a token PIN reset without actually seeing the PIN (#1196)
+    * Allow "file:" syntax in email notification handler (#1939)
+    * Allow more sophisticated Proxy settings for the OverrideClient settings (#1868)
+    * LinOTP migration script to work with LDAP mixed endian notation (#1883)
+    * triggerchallenge also writes the serial of the triggered token
+      to the audit log (#1862)
+    * Allow a dash ("-") in policy names (#1813)
+    * The token janitor can return a list of users with tokens (#1705)
+    * Restrict OTP length, hash and timestep also in admin policies (#1566)
+  * User experience:
+    * Clean up event handler view and put handler and
+      position in extra columns (#1920)
+    * Improve the serial number checking for disallowed characters (#1826)
+    * The event handler list can be sorted and filtered (#1818)
+    * The policy list can be sorted and filtered (#1817)
+    * Show disallowed policy name characters in the UI (#1674)
+    * Ask before deleting a hardware token (#954)
+  * Performance:
+    * Improve performance by reading event handlers only if the
+      configuration has changed (#1823)
+    * Store statistics data like event counters per node to improve
+      HA and replication performance (#1819)
+    * Improve performance of the pre-auth event handler (#1686)
+
+  Fixes:
+  * Delete entries from database tables, when the parent object
+    is deleted (fixed for machineresolverconfig, resolverconfig,
+    eventhandleroption) (#1927)
+  * Comply to new pyredis parameters for apache auth module (#1925)
+  * Fix filename parameter of HostMachineResolver (#1912)
+  * Fix JSON content detection for endpoints like /validate/radiuscheck (#1850)
+  * Fix integer UID with PostgreSQL databases (#1825)
+  * Make the policy creation at the command line with pi-manage more
+    consistent (#1807)
+
+* Fri Nov 15 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.1.2
+
+  Fixes:
+  * Fix the missing phone number field for SMS token, when a user
+    wants to enroll an SMS token. (#1929)
+
+* Wed Sep 25 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.1.1  
+
+  Fixes:
+  * Fix the wrong token_type key in the audit log which caused the tokentype
+    to not be contained in the audit (#1846)
+
+* Wed Sep 04 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.1
+
+  Features:
+  * Allow user attributes in policy conditions (#1645)
+  * Assign tokens and set old PIN during migration (#1619)
+  * Admins can only see tokens within the realm they are allowed to manage (#1713)
+    **Note**: During update a policy "pi-update-policy-b9131d0686eb" is added, which
+    gives admins the previous read rights on tokens.
+  * Add adminread policies for policies, events, resolvers, system, machineresolvers,
+    smtpserver, radiusserver, privacyidea server, periodic tasks, smsgateways. (#1495)
+    **Note**: During update a policy "pi-update-policy-3d7f8b29cbb1" is added, which
+    gives read rights to all admins to provide backward compatibility
+
+  Enhancements:
+  * Authentication and Challenge Response:
+    * RADIUS token supports a single AccessChallenge with the remote RADIUS server (#1790)
+    * Improving Push token performance by reusing still valid access token (#1795)
+    * Improving TiQR token: It returns the remaining attemps after a wrong PIN is given (#1777)
+    * Improving TiQR token: Make TiQR info URL configurable (#1782)
+    * Enhance validate check logic in regards to serials and user names (#1768)
+    * User may now have several TiQR tokens at the same time (#1739)
+    * Do not increase fail counter when *checking* for an answered challenge (#1697)
+    * Allow additional token specific checks when answering challenge response (#1695)
+    * Endpoint GET /token/challenges also takes transaction_id (#1689)
+    * Push token can delay the response of /validate/check, so that there is no need 
+      to query the server to check if the push notification has been answered (#1583)
+  * User experience:
+    * Improve user experience when enrolling Yubikeys via ykpersonalize - Automatically 
+      removing whitespaces (#1735)
+    * Allow user to change the token description (#1717)
+    * Customize Web UI page title (#1624, #1243)
+    * *search_on_enter* also applies to audit log (#1493)
+    * Allow a welcome message in the Web UI if the user has no token (#1074)
+    * Do not display token configuration hints in the UI to normal users (#1789)
+  * Management:
+    * Event handlers allow rollout_state as condition (#1801)
+    * Add script to export OTP counters (#1728)
+    * Allow many additional tags in email notifications: serial, user, givenname,
+      surname, username, userrealm, tokentype, recipient_givenname, recipient_surname,
+      time, date (#1703)
+    * Improve diagnostics script by adding SQLAlchemy URL (#1667)
+    * Add resolver conditions to several policy checks (#1646)
+    * /auth entries in the audit log now also fill in resolver and serial (#1593)
+    * `pi-manage backup` also backs up the FreeRADIUS configuration (#1575)
+    * Allow event handlers on /auth endpoint (#1567)
+    * Allow to force a PIN on tokens in the privacyIDEA Authenticator App (#1295)
+    * New policy *max_active_tokens_per_user* (#1241)
+    * Add image url to the otpauth QR code, allow images in e.g. FreeOTP (#1228)
+    * Add MAC to PSKC token export (#1663)
+  * Performance:
+    * Make the serverpool in LDAP resolver persistant improving redundancy performance (#1396)
+
+  Fixes:
+  * Improve the stability of the schema-update-script (#1760)
+  * Rearrange update order in migration scripts (#1733)
+  * Adapt privacyidea-token-janitor to run with the TokenOwner table (#1709)
+  * Reordering decorators and policy checks to avoid unnecessary error messages (#1751)
+  * Fix user enrollment for tokens that require certain read rights for RADIUS and 
+    certificates by adding additional endpoint /system/names/... (#1749, #1748)
+  * Use same transaction ID for all user tokens even with a  TiQR token (#1723)
+  * Improve challenge response to also check the matching of the transaction ID
+    right at the beginning (#1699)
+  * Add event API requests to Audit log (#1600)
+  * Fix configuring pre-eventhandler with empty condition makes authentication fail (#1658) 
+  * Improve UI by changing the cursor on all clickable elements (#1725)
+  * Web UI: Focus the filter entry field in tables, when the filter is activated (#1661)
+  * Fix some broken links in UI (#1610)
+  * Fix double listing in policy list (#1132)
+  * Remove additional empty line in audit log in case of an error (#1707)
+  * Fix enrollment of certificate tokens under Python 3 (#1799)
+
+* Mon Jun 17 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.0.2
+  
+  Fixes:
+  * Fix creation of table tokenover and update with PostgreSQL DB
+  * Fix user assignment migration with non-ascii characters in userid
+
 * Thu May 23 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.0.1
 
   Fixes:
