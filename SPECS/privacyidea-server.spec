@@ -48,6 +48,7 @@ rm -rf $RPM_BUILD_ROOT
 %config /etc/httpd/conf.d/
 
 %post
+rm -rf /opt/privacyidea/lib/python2.7/site-packages/ecdsa/six*
 USERNAME=privacyidea
 useradd -r $USERNAME -m 2>&1 || true > /dev/null
 mkdir -p /var/log/privacyidea
