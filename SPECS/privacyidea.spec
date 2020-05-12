@@ -56,6 +56,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 /opt/privacyidea
 
+%posttrans
+rm -rf /opt/privacyidea/lib/python2.7/site-packages/ecdsa/six*
+
 %changelog
 
 %include %{_topdir}/changelog-privacyidea.inc
