@@ -14,7 +14,7 @@ License:        AGPLv3
 URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      x86_64
-Requires:	privacyidea-%{version}, mariadb-server, httpd, mod_wsgi, mod_ssl, shadow-utils
+Requires:	privacyidea >= %{version}, mariadb-server, httpd, mod_wsgi, mod_ssl, shadow-utils
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
