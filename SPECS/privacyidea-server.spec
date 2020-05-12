@@ -1,6 +1,6 @@
 %define source_name privacyIDEA
 %define name privacyidea-server
-%define version %{getenv:PI_VERSION} 
+%define version %{getenv:PI_VERSION}
 %define unmangled_version %{version}
 %define unmangled_version %{version}
 %define release 1
@@ -14,9 +14,7 @@ License:        AGPLv3
 URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      x86_64
-Requires:	privacyidea = %{version}, mariadb-server, httpd, mod_wsgi, mod_ssl, rng-tools, psmisc
-
-BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-devel, openssl-devel
+Requires:	privacyidea-%{version}, mariadb-server, httpd, mod_wsgi, mod_ssl, shadow-utils
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -50,13 +48,13 @@ rm -rf $RPM_BUILD_ROOT
 %post
 rm -rf /opt/privacyidea/lib/python2.7/site-packages/ecdsa/six*
 USERNAME=privacyidea
-useradd -r $USERNAME -m 2>&1 || true > /dev/null
+getent passwd $USERNAME >/dev/null || useradd -r $USERNAME -m 2>&1 || true > /dev/null
 mkdir -p /var/log/privacyidea
 mkdir -p /var/lib/privacyidea
 touch /var/log/privacyidea/privacyidea.log
 source /opt/privacyidea/bin/activate
-pi-manage create_enckey 2>&1 || true > /dev/null
-pi-manage create_audit_keys 2>&1 || true > /dev/null
+pi-manage create_enckey 2>&1 || true
+pi-manage create_audit_keys 2>&1 || true
 chown -R $USERNAME /var/log/privacyidea
 chown -R $USERNAME /var/lib/privacyidea
 chown -R $USERNAME /etc/privacyidea
@@ -79,7 +77,7 @@ if [ -z "$(grep ^SQLALCHEMY_DATABASE_URI /etc/privacyidea/pi.cfg)" ]; then
             mysql -e "create database pi;" || true
 	else
 	    echo "Database already exists. Good."
-	fi 
+  fi
         mysql -e "grant all privileges on pi.* to 'pi'@'localhost' identified by '$NPW';"
         echo "SQLALCHEMY_DATABASE_URI = 'pymysql://pi:$NPW@localhost/pi'" >> /etc/privacyidea/pi.cfg
 	pi-manage createdb 2>&1 || true > /dev/null
@@ -110,14 +108,17 @@ if [ -z "$(grep ^SECRET_KEY /etc/privacyidea/pi.cfg)" ]; then
     SECRET="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c24)"
     echo "SECRET_KEY = '$SECRET'" >> /etc/privacyidea/pi.cfg
 fi
+if [ -n "$(grep '^SQLALCHEMY_DATABASE_URI\s*=\s*.\(py\)\?mysql:.*$' /etc/privacyidea/pi.cfg)" ]; then
+    #  We found an old mysql config file
+    sed -i -e s/"\(^SQLALCHEMY_DATABASE_URI\s*=\s*.\)\(py\)\?mysql:\(.*\)$"/"\1mysql+pymysql:\3"/g /etc/privacyidea/pi.cfg
+    echo "# The SQLALCHEMY_DATABASE_URI was updated during the update to privacyIDEA %{version}" >> /etc/privacyidea/pi.cfg
+fi
 
 ######################################################
 # Create PGP key
 mkdir -p /etc/privacyidea/gpg
-rngd -r /dev/urandom
 pi-manage create_pgp_keys || true
 chown -R $USERNAME /etc/privacyidea/gpg
-killall -9 rngd
 
 # Create symlinks for the easy life of the admin
 ln -sf /opt/privacyidea/bin/pi-manage /usr/bin/

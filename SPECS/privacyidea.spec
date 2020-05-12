@@ -1,6 +1,6 @@
 %define source_name privacyIDEA
 %define name privacyidea
-%define version %{getenv:PI_VERSION} 
+%define version %{getenv:PI_VERSION}
 %define unmangled_version %{version}
 %define unmangled_version %{version}
 %define release 1
@@ -18,7 +18,7 @@ Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      x86_64
 AutoReqProv:	no
 
-BuildRequires: libxml2-devel, freetype-devel, python-devel, libxslt-devel, zlib-devel, openssl-devel, python-virtualenv, gcc, createrepo, postgresql-devel
+BuildRequires: python-virtualenv
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -41,7 +41,6 @@ virtualenv /opt/privacyidea
 source /opt/privacyidea/bin/activate
 pip install --upgrade pip setuptools
 pip install privacyidea==%{version}
-pip install pymysql_sa
 pip install -r /opt/privacyidea/lib/privacyidea/requirements.txt
 # No Auth Modules in the base package
 rm -fr /opt/privacyidea/lib/python2.7/site-packages/authmodules
