@@ -46,7 +46,7 @@ rm -rf $RPM_BUILD_ROOT
 %config /etc/httpd/conf.d/
 
 %post
-rm -rf /opt/privacyidea/lib/python2.7/site-packages/ecdsa/six*
+rm -rf /opt/privacyidea/lib/python2.7/site-packages/ecdsa/six* 2>&1 > /dev/null
 USERNAME=privacyidea
 getent passwd $USERNAME >/dev/null || useradd -r $USERNAME -m 2>&1 || true > /dev/null
 mkdir -p /var/log/privacyidea
@@ -64,6 +64,24 @@ chmod 600 /etc/privacyidea/private.pem
 # pi-manage
 chgrp root /etc/privacyidea/pi.cfg
 chmod 640 /etc/privacyidea/pi.cfg
+
+##################################################
+# Adapt pi.cfg
+if [ -z "$(grep ^PI_PEPPER /etc/privacyidea/pi.cfg)" ]; then
+    # PEPPER does not exist, yet
+    PEPPER="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c24)"
+    echo "PI_PEPPER = '$PEPPER'" >> /etc/privacyidea/pi.cfg
+fi
+if [ -z "$(grep ^SECRET_KEY /etc/privacyidea/pi.cfg)" ]; then
+    # SECRET_KEY does not exist, yet
+    SECRET="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c24)"
+    echo "SECRET_KEY = '$SECRET'" >> /etc/privacyidea/pi.cfg
+fi
+if [ -n "$(grep '^SQLALCHEMY_DATABASE_URI\s*=\s*.\(py\)\?mysql:.*$' /etc/privacyidea/pi.cfg)" ]; then
+    #  We found an old mysql config file
+    sed -i -e s/"\(^SQLALCHEMY_DATABASE_URI\s*=\s*.\)\(py\)\?mysql:\(.*\)$"/"\1mysql+pymysql:\3"/g /etc/privacyidea/pi.cfg
+    echo "# The SQLALCHEMY_DATABASE_URI was updated during the update to privacyIDEA %{version}" >> /etc/privacyidea/pi.cfg
+
 #####################################################
 # Create database
 if [ -z "$(grep ^SQLALCHEMY_DATABASE_URI /etc/privacyidea/pi.cfg)" ]; then
@@ -94,25 +112,6 @@ cp /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable 2>&1 ||
 cp /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable 2>&1 || true > /dev/null
 echo "# placeholder to avoid conflict with privacyidea.conf" > /etc/httpd/conf.d/ssl.conf
 echo "# placeholder to avoid conflict with privacyidea.conf" > /etc/httpd/conf.d/welcome.conf
-
-
-##################################################
-# Adapt pi.cfg
-if [ -z "$(grep ^PI_PEPPER /etc/privacyidea/pi.cfg)" ]; then
-    # PEPPER does not exist, yet
-    PEPPER="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c24)"
-    echo "PI_PEPPER = '$PEPPER'" >> /etc/privacyidea/pi.cfg
-fi
-if [ -z "$(grep ^SECRET_KEY /etc/privacyidea/pi.cfg)" ]; then
-    # SECRET_KEY does not exist, yet
-    SECRET="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c24)"
-    echo "SECRET_KEY = '$SECRET'" >> /etc/privacyidea/pi.cfg
-fi
-if [ -n "$(grep '^SQLALCHEMY_DATABASE_URI\s*=\s*.\(py\)\?mysql:.*$' /etc/privacyidea/pi.cfg)" ]; then
-    #  We found an old mysql config file
-    sed -i -e s/"\(^SQLALCHEMY_DATABASE_URI\s*=\s*.\)\(py\)\?mysql:\(.*\)$"/"\1mysql+pymysql:\3"/g /etc/privacyidea/pi.cfg
-    echo "# The SQLALCHEMY_DATABASE_URI was updated during the update to privacyIDEA %{version}" >> /etc/privacyidea/pi.cfg
-fi
 
 ######################################################
 # Create PGP key

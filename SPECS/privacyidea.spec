@@ -51,7 +51,7 @@ mkdir -p $RPM_BUILD_ROOT/opt/
 cp -r /opt/privacyidea $RPM_BUILD_ROOT/opt/
 
 %post
-rm -rf /opt/privacyidea/lib/python2.7/site-packages/ecdsa/six*
+rm -rf /opt/privacyidea/lib/python2.7/site-packages/ecdsa/six* 2>&1 > /dev/null
 
 %clean
 rm -rf $RPM_BUILD_ROOT
