@@ -45,8 +45,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/privacyidea
 %config /etc/httpd/conf.d/
 
-%post
+%posttrans
 rm -rf /opt/privacyidea/lib/python2.7/site-packages/ecdsa/six* 2>&1 > /dev/null
+%post
 USERNAME=privacyidea
 getent passwd $USERNAME >/dev/null || useradd -r $USERNAME -m 2>&1 || true > /dev/null
 mkdir -p /var/log/privacyidea
@@ -90,12 +91,12 @@ if [ -z "$(grep ^SQLALCHEMY_DATABASE_URI /etc/privacyidea/pi.cfg)" ]; then
 	systemctl start mariadb
 	# check if pi database exists
 	mysql pi -e quit
-	if [ $? -ne 0 ]; then
+if [ $? -ne 0 ]; then
 	    # create the new database if it does not exist
             mysql -e "create database pi;" || true
 	else
 	    echo "Database already exists. Good."
-  fi
+fi
         mysql -e "grant all privileges on pi.* to 'pi'@'localhost' identified by '$NPW';"
         echo "SQLALCHEMY_DATABASE_URI = 'pymysql://pi:$NPW@localhost/pi'" >> /etc/privacyidea/pi.cfg
 	pi-manage createdb 2>&1 || true > /dev/null
