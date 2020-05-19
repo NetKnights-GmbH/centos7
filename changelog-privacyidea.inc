@@ -1,3 +1,10 @@
+* Tue May 19 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3.3
+
+  Fixes:
+    * Fix failing Challenge Response in WebUI (#2192)
+    * Add better logging for contradciting policy calls
+    * Case insensitive user check failsafe in policy matching (#2198)
+
 * Wed May 06 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3.2
 
   Fixes:
