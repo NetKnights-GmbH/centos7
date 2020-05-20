@@ -16,7 +16,6 @@ URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      noarch
 
-BuildRequires: libxml2-devel, freetype-devel, libxslt-devel, zlib-devel, openssl-devel
 Requires:      freeradius, freeradius-perl, perl-LWP-Protocol-https, freeradius-utils
 
 

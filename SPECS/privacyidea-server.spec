@@ -14,7 +14,12 @@ License:        AGPLv3
 URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      x86_64
+
+%if %{centos_ver} == 8
+Requires:	privacyidea = %{version}, python3, mariadb-server, httpd, python3-mod_wsgi, mod_ssl, shadow-utils
+%else
 Requires:	privacyidea = %{version}, mariadb-server, httpd, mod_wsgi, mod_ssl, shadow-utils
+%endif
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -46,7 +51,6 @@ rm -rf $RPM_BUILD_ROOT
 %config /etc/httpd/conf.d/
 
 %posttrans
-#rm -rf /opt/privacyidea/lib/python2.7/site-packages/ecdsa/six* 2>&1 > /dev/null
 USERNAME=privacyidea
 getent passwd $USERNAME >/dev/null || useradd -r $USERNAME -m 2>&1 || true > /dev/null
 mkdir -p /var/log/privacyidea
@@ -82,24 +86,26 @@ if [ -n "$(grep '^SQLALCHEMY_DATABASE_URI\s*=\s*.\(py\)\?mysql:.*$' /etc/privacy
     sed -i -e s/"\(^SQLALCHEMY_DATABASE_URI\s*=\s*.\)\(py\)\?mysql:\(.*\)$"/"\1mysql+pymysql:\3"/g /etc/privacyidea/pi.cfg
     echo "# The SQLALCHEMY_DATABASE_URI was updated during the update to privacyIDEA %{version}" >> /etc/privacyidea/pi.cfg
 fi
+
 #####################################################
 # Create database
 if [ -z "$(grep ^SQLALCHEMY_DATABASE_URI /etc/privacyidea/pi.cfg)" ]; then
-	NPW="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c12)"
-	# might not run
-	systemctl start mariadb
-	# check if pi database exists
-	mysql pi -e quit
-if [ $? -ne 0 ]; then
-	    # create the new database if it does not exist
-            mysql -e "create database pi;" || true
-	else
-	    echo "Database already exists. Good."
+    NPW="$(tr -dc A-Za-z0-9_ </dev/urandom | head -c12)"
+    # might not run
+    systemctl start mariadb
+    # check if pi database exists
+    mysql pi -e quit
+    if [ $? -ne 0 ]; then
+        # create the new database if it does not exist
+        mysql -e "create database pi;" || true
+    else
+        echo "Database already exists. Good."
+    fi
+    mysql -e "grant all privileges on pi.* to 'pi'@'localhost' identified by '$NPW';"
+    echo "SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://pi:$NPW@localhost/pi'" >> /etc/privacyidea/pi.cfg
+    pi-manage createdb 2>&1 || true > /dev/null
 fi
-        mysql -e "grant all privileges on pi.* to 'pi'@'localhost' identified by '$NPW';"
-        echo "SQLALCHEMY_DATABASE_URI = 'pymysql://pi:$NPW@localhost/pi'" >> /etc/privacyidea/pi.cfg
-	pi-manage createdb 2>&1 || true > /dev/null
-fi
+
 ####################################################
 # Update DB
 # Upgrade the database
