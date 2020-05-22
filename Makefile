@@ -24,7 +24,7 @@ endif
 	PI_VERSION=$(VERSION) rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-radius.spec
 
 signrpm: buildrpm
-       find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
+	find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
 
 fill-release-repo: signrpm
 	mkdir -p repository/centos/7/

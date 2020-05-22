@@ -1,10 +1,13 @@
 %define source_name privacyIDEA
 %define name privacyidea
 %define version %{getenv:PI_VERSION}
+%define unmangled_version %{version}
 %define release 1
 # Somehow stripping the '.comment' section from the Pillow libraries breaks the strip-tool,
 # so we skip stripping and byte-compile in the postinstall scripts, otherwise Pillow will fail.
 %global __os_install_post %(echo '%{__os_install_post}' | sed -re 's!/usr/lib[^[:space:]]*/((brp-python-bytecompile)|(brp-strip-comment-note))[[:space:]].*$!!g')
+%global _build_id_links none
+
 Name:           %{name}
 Version:        %{version}
 Release:        %{release}%{?dist}
@@ -17,7 +20,7 @@ Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 ExclusiveArch:  x86_64
 AutoReqProv:    no
 
-%if %{centos_ver} == 8
+%if 0%{centos_ver} == 8
 BuildRequires: python3-virtualenv, git
 %else
 BuildRequires: python-virtualenv, git
@@ -48,14 +51,12 @@ source /opt/privacyidea/bin/activate
 pip install --upgrade pip setuptools
 pip install -r %{_builddir}/privacyidea/requirements.txt
 pip install %{_builddir}/privacyidea/
-# Fix shebang error on centos 8
-%if %{centos_ver} == 8
-sed -i -e 's/^\(#\!\/usr\/bin\/env python\)$/\13/g' /opt/privacyidea/lib/python3.6/site-packages/editor.py
-%endif
 
 %install
-mkdir -p $RPM_BUILD_ROOT/opt/
-cp -r /opt/privacyidea $RPM_BUILD_ROOT/opt/
+mkdir -p $RPM_BUILD_ROOT/opt
+cp -r /opt/privacyidea $RPM_BUILD_ROOT/opt
+# temporary fix for broken python-editor package
+chmod ugo-x $RPM_BUILD_ROOT/opt/privacyidea/lib/python*/site-packages/editor.py
 
 %clean
 rm -rf $RPM_BUILD_ROOT

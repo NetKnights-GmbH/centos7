@@ -2,8 +2,8 @@
 %define name privacyidea-server
 %define version %{getenv:PI_VERSION}
 %define unmangled_version %{version}
-%define unmangled_version %{version}
 %define release 1
+
 Name:           %{name}
 Version:        %{version}
 Release:        %{release}%{?dist}
@@ -13,13 +13,20 @@ Group:          Applications/System
 License:        AGPLv3
 URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
-BuildArch:      x86_64
+ExclusiveArch:  x86_64
 
-%if %{centos_ver} == 8
-Requires:	privacyidea = %{version}, python3, mariadb-server, httpd, python3-mod_wsgi, mod_ssl, shadow-utils
-%else
-Requires:	privacyidea = %{version}, mariadb-server, httpd, mod_wsgi, mod_ssl, shadow-utils
+Requires:       privacyidea = %{version}, mariadb-server, httpd, mod_ssl, shadow-utils
+%if 0%{?centos_ver} == 7
+Requires:       mod_wsgi
 %endif
+%if 0%{?centos_ver} == 8
+Requires:       python3-mod_wsgi
+%endif
+
+Source1: pi.cfg
+Source2: privacyideaapp.wsgi
+Source3: privacyidea.conf.disabled
+# BuildRequires:
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -34,9 +41,11 @@ Requires:	privacyidea = %{version}, mariadb-server, httpd, mod_wsgi, mod_ssl, sh
 %install
 mkdir -p $RPM_BUILD_ROOT/etc/privacyidea
 mkdir -p $RPM_BUILD_ROOT/etc/httpd/conf.d/
-cp $RPM_SOURCE_DIR/pi.cfg $RPM_BUILD_ROOT/etc/privacyidea
-cp $RPM_SOURCE_DIR/privacyideaapp.wsgi $RPM_BUILD_ROOT/etc/privacyidea
-cp $RPM_SOURCE_DIR/privacyidea.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/
+# we need to change access right, otherwise each local user could call
+# pi-manage
+install -m 640 %{SOURCE1} $RPM_BUILD_ROOT/etc/privacyidea
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT/etc/privacyidea
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/etc/httpd/conf.d/
 ##################################################
 # Get the NetKnights public key and other configs
 curl https://raw.githubusercontent.com/privacyidea/privacyidea/master/deploy/privacyidea/NetKnights.pem -o $RPM_BUILD_ROOT/etc/privacyidea/NetKnights.pem
@@ -62,6 +71,7 @@ pi-manage create_audit_keys 2>&1 || true
 chown -R $USERNAME /var/log/privacyidea
 chown -R $USERNAME /var/lib/privacyidea
 chown -R $USERNAME /etc/privacyidea
+chgrp root /etc/privacyidea/pi.cfg
 chmod 600 /etc/privacyidea/enckey
 chmod 600 /etc/privacyidea/private.pem
 # we need to change access right, otherwise each local user could call
@@ -113,11 +123,18 @@ fi
 
 ###################################################
 # The webserver
-mkdir -p /var/run/wsgi
+# first we need to start the webserver to let it create the self-signed certificates
+systemctl start httpd
+# mkdir -p /var/run/wsgi
+# then we can disable the default configurations
 cp /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable 2>&1 || true > /dev/null
 cp /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable 2>&1 || true > /dev/null
 echo "# placeholder to avoid conflict with privacyidea.conf" > /etc/httpd/conf.d/ssl.conf
 echo "# placeholder to avoid conflict with privacyidea.conf" > /etc/httpd/conf.d/welcome.conf
+# and enable our own
+cp /etc/httpd/conf.d/privacyidea.conf.disabled /etc/httpd/conf.d/privacyidea.conf
+# finally restart the webserver
+systemctl restart httpd
 
 ######################################################
 # Create PGP key
