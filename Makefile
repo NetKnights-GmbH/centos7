@@ -1,10 +1,3 @@
-# Makefile for building CentOS RPMs
-
-ifndef VERSION
-    VERSION = $(shell curl --silent https://api.github.com/repos/privacyidea/privacyidea/tags | head | grep -Po '"name": "v?\K.*?(?=")')
-    $(warning VERSION not set. Using the latest tag from GitHub: $(VERSION))
-endif
-PI_VERSION = ${VERSION}
 
 info:
 	@echo "buildrpm          - build a new RPM from a GitHub tag"
@@ -16,14 +9,19 @@ info:
 	@echo "push-repo         - push the devel and productive repo to lancelot"
 
 buildrpm:
-	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea.spec
-	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-server.spec
+ifndef VERSION
+	$(eval VERSION := $(shell curl --silent https://api.github.com/repos/privacyidea/privacyidea/tags | head | grep -Po '"name": "v?\K.*?(?=")' ))
+	@echo "Warning: VERSION not set. Using the latest tag from GitHub: $(VERSION)"
+endif
+	PI_VERSION=${VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea.spec
+	PI_VERSION=${VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-server.spec
 
 buildradius:
-	PI_VERSION=${PI_VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-radius.spec
-
-buildoracle:
-	rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-cx-oracle.spec
+ifndef VERSION
+	$(eval VERSION := $(shell curl --silent https://api.github.com/repos/privacyidea/FreeRADIUS/tags | head | grep -Po '"name": "v?\K.*?(?=")' ))
+	@echo "Warning: VERSION not set. Using the latest tag from GitHub: $(VERSION)"
+endif
+	PI_VERSION=$(VERSION) rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-radius.spec
 
 signrpm: buildrpm
        find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
