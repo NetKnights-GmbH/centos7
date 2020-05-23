@@ -6,7 +6,9 @@
 # Somehow stripping the '.comment' section from the Pillow libraries breaks the strip-tool,
 # so we skip stripping and byte-compile in the postinstall scripts, otherwise Pillow will fail.
 %global __os_install_post %(echo '%{__os_install_post}' | sed -re 's!/usr/lib[^[:space:]]*/((brp-python-bytecompile)|(brp-strip-comment-note))[[:space:]].*$!!g')
+# don't add build-ids since we copy some libs from default locations
 %global _build_id_links none
+%global _tmp_build_dir %{_tmppath}/build_%{name}-%{version}-%{release}
 
 Name:           %{name}
 Version:        %{version}
@@ -41,16 +43,16 @@ BuildRequires: python-virtualenv, git
 
 %prep
 rm -fr /opt/privacyidea
-rm -fr %{_builddir}/privacyidea
-mkdir -p %{_builddir}
-git clone --branch v%{version} --depth 1 https://github.com/privacyidea/privacyidea.git %{_builddir}/privacyidea
+rm -fr %{_tmp_build_dir}/privacyidea
+mkdir -p %{_tmp_build_dir}
+git clone --branch v%{version} --depth 1 https://github.com/privacyidea/privacyidea.git %{_tmp_build_dir}/privacyidea
 
 %build
 virtualenv /opt/privacyidea
 source /opt/privacyidea/bin/activate
 pip install --upgrade pip setuptools
-pip install -r %{_builddir}/privacyidea/requirements.txt
-pip install %{_builddir}/privacyidea/
+pip install -r %{_tmp_build_dir}/privacyidea/requirements.txt
+pip install %{_tmp_build_dir}/privacyidea/
 
 %install
 mkdir -p $RPM_BUILD_ROOT/opt

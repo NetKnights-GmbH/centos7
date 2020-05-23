@@ -15,7 +15,7 @@ URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 ExclusiveArch:  x86_64
 
-Requires:       privacyidea = %{version}, mariadb-server, httpd, mod_ssl, shadow-utils
+Requires:       privacyidea = %{version}, mariadb-server, httpd, mod_ssl, shadow-utils, rng-tools
 %if 0%{?centos_ver} == 7
 Requires:       mod_wsgi
 %endif
@@ -60,6 +60,8 @@ rm -rf $RPM_BUILD_ROOT
 %config /etc/httpd/conf.d/
 
 %posttrans
+# first we enable and start the rngd since creation of gpg-keys might block in VMs
+systemctl enable --now rngd.service
 USERNAME=privacyidea
 getent passwd $USERNAME >/dev/null || useradd -r $USERNAME -m 2>&1 || true > /dev/null
 mkdir -p /var/log/privacyidea
