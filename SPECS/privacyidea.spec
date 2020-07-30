@@ -2,10 +2,14 @@
 %define name privacyidea
 %define version %{getenv:PI_VERSION}
 %define unmangled_version %{version}
-%define unmangled_version %{version}
 %define release 1
-# Skip the postinstall scripts, otherwise Pillow will fail.
-%global __os_install_post %{nil}
+# Somehow stripping the '.comment' section from the Pillow libraries breaks the strip-tool,
+# so we skip stripping and byte-compile in the postinstall scripts, otherwise Pillow will fail.
+%global __os_install_post %(echo '%{__os_install_post}' | sed -re 's!/usr/lib[^[:space:]]*/((brp-python-bytecompile)|(brp-strip-comment-note))[[:space:]].*$!!g')
+# don't add build-ids since we copy some libs from default locations
+%global _build_id_links none
+%global _tmp_build_dir %{_tmppath}/build_%{name}-%{version}-%{release}
+
 Name:           %{name}
 Version:        %{version}
 Release:        %{release}%{?dist}
@@ -15,10 +19,14 @@ Group:          Applications/System
 License:        AGPLv3
 URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
-BuildArch:      x86_64
-AutoReqProv:	no
+ExclusiveArch:  x86_64
+AutoReqProv:    no
 
-BuildRequires: python-virtualenv
+%if 0%{centos_ver} == 8
+BuildRequires: python3-virtualenv, git
+%else
+BuildRequires: python-virtualenv, git
+%endif
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -34,24 +42,23 @@ BuildRequires: python-virtualenv
 
 
 %prep
+rm -fr /opt/privacyidea
+rm -fr %{_tmp_build_dir}/privacyidea
+mkdir -p %{_tmp_build_dir}
+git clone --branch v%{version} --depth 1 https://github.com/privacyidea/privacyidea.git %{_tmp_build_dir}/privacyidea
 
 %build
-rm -fr /opt/privacyidea
 virtualenv /opt/privacyidea
 source /opt/privacyidea/bin/activate
 pip install --upgrade pip setuptools
-pip install privacyidea==%{version}
-pip install -r /opt/privacyidea/lib/privacyidea/requirements.txt
-# No Auth Modules in the base package
-rm -fr /opt/privacyidea/lib/python2.7/site-packages/authmodules
-rm -fr /opt/privacyidea/lib/privacyidea/authmodules
+pip install -r %{_tmp_build_dir}/privacyidea/requirements.txt
+pip install %{_tmp_build_dir}/privacyidea/
 
 %install
-mkdir -p $RPM_BUILD_ROOT/opt/
-cp -r /opt/privacyidea $RPM_BUILD_ROOT/opt/
-
-#%post
-#rm -rf /opt/privacyidea/lib/python2.7/site-packages/ecdsa/six* 2>&1 > /dev/null
+mkdir -p $RPM_BUILD_ROOT/opt
+cp -r /opt/privacyidea $RPM_BUILD_ROOT/opt
+# temporary fix for broken python-editor package
+chmod ugo-x $RPM_BUILD_ROOT/opt/privacyidea/lib/python*/site-packages/editor.py
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -60,5 +67,4 @@ rm -rf $RPM_BUILD_ROOT
 /opt/privacyidea
 
 %changelog
-
 %include %{_topdir}/changelog-privacyidea.inc

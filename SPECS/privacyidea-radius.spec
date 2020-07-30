@@ -2,9 +2,10 @@
 %define name privacyidea-radius
 %define version %{getenv:PI_VERSION}
 %define unmangled_version %{version}
-%define unmangled_version %{version}
 %define gitsource https://github.com/privacyidea/FreeRADIUS.git
 %define release 1
+%global build_dir %{_tmppath}/build_%{name}-%{version}
+
 Name:           %{name}
 Version:        %{version}
 Release:        %{release}%{?dist}
@@ -16,9 +17,16 @@ URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      noarch
 
-BuildRequires: libxml2-devel, freetype-devel, libxslt-devel, zlib-devel, openssl-devel
-Requires:      freeradius, freeradius-perl, perl-LWP-Protocol-https, freeradius-utils
+BuildRequires:  git
+Requires:       freeradius, freeradius-perl, perl-LWP-Protocol-https, freeradius-utils
+#Requires:       epel-release
+#Requires:       perl-Data-Dump
+#Requires:       perl-Config-IniFiles
+#Requires:       perl-JSON
+#Requires:       perl-Time-HiRes
 
+Source1: privacyidea-radius-site
+Source2: privacyidea-mods-perl
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -39,20 +47,18 @@ Requires:      freeradius, freeradius-perl, perl-LWP-Protocol-https, freeradius-
 
 %install
 # Create git repo
-mkdir -p $RPM_BUILD_ROOT/git
-git clone %{gitsource} $RPM_BUILD_ROOT/git
-cd $RPM_BUILD_ROOT/git; git checkout v%{version}
+mkdir -p %{build_dir}/git
+git clone %{gitsource} %{build_dir}/git
+cd %{build_dir}/git; git checkout v%{version}
 mkdir -p $RPM_BUILD_ROOT/usr/lib/privacyidea
-cp $RPM_BUILD_ROOT/git/privacyidea_radius.pm $RPM_BUILD_ROOT/usr/lib/privacyidea/privacyidea_radius.pm
+install %{build_dir}/git/privacyidea_radius.pm $RPM_BUILD_ROOT/usr/lib/privacyidea/
 mkdir -p $RPM_BUILD_ROOT/etc/privacyidea
-cp $RPM_BUILD_ROOT/git/rlm_perl.ini $RPM_BUILD_ROOT/etc/privacyidea/rlm_perl.ini
-cp $RPM_BUILD_ROOT/git/dictionary.netknights $RPM_BUILD_ROOT/etc/privacyidea/dictionary.netknights
+install %{build_dir}/git/rlm_perl.ini $RPM_BUILD_ROOT/etc/privacyidea/
+install %{build_dir}/git/dictionary.netknights $RPM_BUILD_ROOT/etc/privacyidea/
 mkdir -p $RPM_BUILD_ROOT/etc/raddb/sites-available/
 mkdir -p $RPM_BUILD_ROOT/etc/raddb/mods-available/
-cp $RPM_SOURCE_DIR/privacyidea-radius-site $RPM_BUILD_ROOT/etc/raddb/sites-available/privacyidea
-cp $RPM_SOURCE_DIR/privacyidea-mods-perl $RPM_BUILD_ROOT/etc/raddb/mods-available/piperl
-rm $RPM_BUILD_ROOT/git -fr
-
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/raddb/sites-available/privacyidea
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/raddb/mods-available/piperl
 
 %post
 # Activate the piperl RADIUS module
@@ -61,6 +67,8 @@ ln -s ../mods-available/piperl .
 systemctl restart radiusd
 
 %clean
+rm -fr %{build_dir}/git
+rm -rf $RPM_BUILD_ROOT
 
 %files
 /usr/lib/privacyidea

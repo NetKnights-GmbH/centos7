@@ -1,5 +1,5 @@
-* Tue May 25 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4
-- Allow different configs with the same scriptto use redundant to 
+* Mon May 25 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4
+- Allow different configs with the same scriptto use redundant to
   ask different privacyIDEA servers. (#10)
 - Add parameter ADD_EMPTY_PASS to handle RADIUS requests without User-Password.
 
@@ -25,6 +25,6 @@
 * Thu Feb 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10
 - packaging of release 2.10
 
-* Thu Jan 27 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10dev5-1
+* Wed Jan 27 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10dev5-1
 - initial RPM packaging
 

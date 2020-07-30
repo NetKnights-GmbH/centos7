@@ -1,10 +1,7 @@
-Build environment for building CentOS 7 package
+Build environment for building CentOS packages
 
-make will fetch this version from the python package index.
+make will fetch the version from GitHub.
 
 E.g. You can build a devel repo like this:
 
     VERSION=2.23 make clean buildrpm fill-devel-repo make-repo
-
-.. Note: Sometimes a new package can not be found. You should then
-   clear the pip cache in ~/.cache/pip/
