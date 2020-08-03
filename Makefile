@@ -1,4 +1,3 @@
-
 info:
 	@echo "buildrpm          - build a new RPM from a GitHub tag"
 	@echo "buildradius       - build a new RPM for the radius plugin"
@@ -23,25 +22,50 @@ ifndef VERSION
 endif
 	PI_VERSION=$(VERSION) rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-radius.spec
 
+buildselinux:
+	rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-selinux.spec
+
 signrpm: buildrpm
 	find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
 
-fill-release-repo: signrpm
-	mkdir -p repository/centos/7/
-	cp -r RPMS/* repository/centos/7/
 
-fill-devel-repo: signrpm
+fill-release-repo:
+%if 0%{?centos_ver} == 7
+	mkdir -p repository/centos/7/
+        cp -r RPMS/* repository/centos/7/
+%endif
+%if 0%{?centos_ver} == 8
+	mkdir -p repository/centos/8/
+        cp -r RPMS/* repository/centos/8/
+%endif
+
+fill-devel-repo:
+%if 0%{?centos_ver} == 7
 	mkdir -p repository/centos-devel/7/
 	cp -r RPMS/* repository/centos-devel/7/
+%endif
+%if 0%{?centos_ver} == 8
+        mkdir -p repository/centos-devel/8/
+        cp -r RPMS/* repository/centos-devel/8/
+%endif
 
 make-repo:
-	mkdir -p repository
+%if 0%{?centos_ver} == 7
 	# Fetch old packages
 	(cd repository; rsync -vr root@lancelot:/srv/www/rpmrepo/ .)
 	(cd repository/centos/7/x86_64/; createrepo .)
 	(cd repository/centos/7/noarch/; createrepo .)
 	(cd repository/centos-devel/7/x86_64/; createrepo .)
 	(cd repository/centos-devel/7/noarch/; createrepo .)
+%endif
+%if 0%{?centos_ver} == 8
+        # Fetch old packages
+        (cd repository; rsync -vr root@lancelot:/srv/www/rpmrepo/ .)
+        (cd repository/centos/8/x86_64/; createrepo .)
+        (cd repository/centos/8/noarch/; createrepo .)
+        (cd repository/centos-devel/8/x86_64/; createrepo .)
+        (cd repository/centos-devel/8/noarch/; createrepo .)
+%endif
 
 push-repo:
 	(cd repository;	rsync -vr centos root@lancelot:/srv/www/rpmrepo/)
