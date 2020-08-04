@@ -10,7 +10,7 @@ info:
 	@echo "fill-release-repo - put the newly built packages into the local release repo"
 	@echo "make-repo         - fetch existing repo and build a new local repository with new packages"
 	@echo "push-repo         - push the devel and productive repo to lancelot"
-	@echo "release-version   - shows which release version is present" $(OS)
+	@echo "shows which release version is present:" $(OS)
 
 buildrpm:
 ifndef VERSION
