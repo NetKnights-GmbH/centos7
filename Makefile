@@ -44,6 +44,7 @@ fill-devel-repo:
 
 make-repo:
 	# Fetch old packages
+	mkdir -p repository
 	(cd repository; rsync -vr root@lancelot:/srv/www/rpmrepo/ .)
 	(cd repository/centos/$(OS)/x86_64/; createrepo .)
 	(cd repository/centos/$(OS)/noarch/; createrepo .)
