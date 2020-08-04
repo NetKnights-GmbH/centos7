@@ -1,12 +1,16 @@
+#Makefile variable OS
+OS = ${shell rpm -q --queryformat '%{VERSION}' centos-release | cut -c1 }
+
 info:
 	@echo "buildrpm          - build a new RPM from a GitHub tag"
 	@echo "buildradius       - build a new RPM for the radius plugin"
+	@echo "buildselinux      - build a new RPM with Selinux Policy for privacyidea base on centos"
 	@echo "signrpm           - sign all RPMs"
 	@echo "fill-devel-repo   - put the newly built packages into the local DEVEL repo"
 	@echo "fill-release-repo - put the newly built packages into the local release repo"
 	@echo "make-repo         - fetch existing repo and build a new local repository with new packages"
 	@echo "push-repo         - push the devel and productive repo to lancelot"
-	@echo "buildselinux      - build a new RPM with Selinux Policy"
+	@echo "release-version   - shows which release version is present" $(OS)
 
 buildrpm:
 ifndef VERSION
@@ -30,43 +34,21 @@ signrpm: buildrpm
 	find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
 
 
-##fill-release-repo:
-##ifeq [ rpm -q --queryformat '%{VERSION}' centos-release | awk -F. '{print $1}' ] == 7
-##	mkdir -p repository/centos/7/
-##       cp -r RPMS/* repository/centos/7/
-##endif
-##ifeq [ rpm -q --queryformat '%{VERSION}' centos-release | awk -F. '{print $1}' ] == 8
-##	mkdir -p repository/centos/8/
-##        cp -r RPMS/* repository/centos/8/
-##endif
+fill-release-repo:
+	mkdir -p repository/centos/$(OS)/
+	cp -r RPMS/* repository/centos/$(OS)/
 
-##fill-devel-repo:
-##%if 0%{?centos_ver} == 7
-##	mkdir -p repository/centos-devel/7/
-##	cp -r RPMS/* repository/centos-devel/7/
-##%endif
-##%if 0%{?centos_ver} == 8
-##        mkdir -p repository/centos-devel/8/
-##        cp -r RPMS/* repository/centos-devel/8/
-##%endif
+fill-devel-repo:
+	mkdir -p repository/centos-devel/$(OS)/
+	cp -r RPMS/* repository/centos-devel/$(OS)/
 
-##make-repo:
-##%if 0%{?centos_ver} == 7
-##	# Fetch old packages
-##	(cd repository; rsync -vr root@lancelot:/srv/www/rpmrepo/ .)
-##	(cd repository/centos/7/x86_64/; createrepo .)
-##	(cd repository/centos/7/noarch/; createrepo .)
-##	(cd repository/centos-devel/7/x86_64/; createrepo .)
-##	(cd repository/centos-devel/7/noarch/; createrepo .)
-##%endif
-##%if 0%{?centos_ver} == 8
-##        # Fetch old packages
-##        (cd repository; rsync -vr root@lancelot:/srv/www/rpmrepo/ .)
-##        (cd repository/centos/8/x86_64/; createrepo .)
-##        (cd repository/centos/8/noarch/; createrepo .)
-##        (cd repository/centos-devel/8/x86_64/; createrepo .)
-##        (cd repository/centos-devel/8/noarch/; createrepo .)
-##%endif
+make-repo:
+	# Fetch old packages
+	(cd repository; rsync -vr root@lancelot:/srv/www/rpmrepo/ .)
+	(cd repository/centos/$(OS)/x86_64/; createrepo .)
+	(cd repository/centos/$(OS)/noarch/; createrepo .)
+	(cd repository/centos-devel/$(OS)/x86_64/; createrepo .)
+	(cd repository/centos-devel/$(OS)/noarch/; createrepo .)
 
 push-repo:
 	(cd repository;	rsync -vr centos root@lancelot:/srv/www/rpmrepo/)
@@ -77,3 +59,4 @@ clean:
 	rm -fr BUILD/*
 	rm -fr RPMS/*
 	rm -fr SRPMS/*
+
