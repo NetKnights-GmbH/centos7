@@ -33,11 +33,11 @@ buildselinux:
 signrpm: buildrpm
 	find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
 
-fill-release-repo:
+fill-release-repo: signrpm
 	mkdir -p repository/centos/$(OS)/
 	cp -r RPMS/* repository/centos/$(OS)/
 
-fill-devel-repo:
+fill-devel-repo: signrpm
 	mkdir -p repository/centos-devel/$(OS)/
 	cp -r RPMS/* repository/centos-devel/$(OS)/
 
