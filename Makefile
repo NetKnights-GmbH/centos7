@@ -10,7 +10,7 @@ info:
 	@echo "fill-release-repo - put the newly built packages into the local release repo"
 	@echo "make-repo         - fetch existing repo and build a new local repository with new packages"
 	@echo "push-repo         - push the devel and productive repo to lancelot"
-	@echo "shows the OS level of the centos OS machine:" $(OS)
+	@echo "Info about the running OS level of the centos machine:" $(OS)
 
 buildrpm:
 ifndef VERSION
@@ -59,4 +59,3 @@ clean:
 	rm -fr BUILD/*
 	rm -fr RPMS/*
 	rm -fr SRPMS/*
-
