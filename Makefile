@@ -1,4 +1,4 @@
-#Makefile variable OS
+# variable for holding OS level
 OS = ${shell rpm -q --queryformat '%{VERSION}' centos-release | cut -c1 }
 
 info:
@@ -10,7 +10,7 @@ info:
 	@echo "fill-release-repo - put the newly built packages into the local release repo"
 	@echo "make-repo         - fetch existing repo and build a new local repository with new packages"
 	@echo "push-repo         - push the devel and productive repo to lancelot"
-	@echo "shows which release version is present:" $(OS)
+	@echo "shows the OS level of the centos OS machine:" $(OS)
 
 buildrpm:
 ifndef VERSION
@@ -32,7 +32,6 @@ buildselinux:
 
 signrpm: buildrpm
 	find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
-
 
 fill-release-repo:
 	mkdir -p repository/centos/$(OS)/

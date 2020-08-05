@@ -36,10 +36,10 @@ BuildRequires:		selinux-policy selinux-policy-devel
 Source:			%{name}-%{version}.tar.gz
 
 %description
-privacyidea-selinux provides SELinux polices module 
-to using with packages privacyidea privacyidea-server 
-based on RHEL/Centos OS, that allows httpd service 
-communicate with the services mysql and ldap
+privacyidea-selinux is a additional package 
+for the RPM package privacyidea/privacyidea-server
+with a SELinux policy module, that allows
+httpd service the communicate with the services mysql and ldap
 
 %prep
 %setup -q
@@ -48,7 +48,6 @@ communicate with the services mysql and ldap
 make SHARE="%{_datadir}" TARGETS="%{modulenames}"
 
 %install
-
 # Install SELinux interfaces
 %_format INTERFACES $x.if
 install -d %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
@@ -62,16 +61,13 @@ install -m 0644 $MODULES \
 	%{buildroot}%{_datadir}/selinux/packages
 
 %post
-#
 # Install all modules in a single transaction
-#
 %_format MODULES %{_datadir}/selinux/packages/$x.pp.bz2
 %{_sbindir}/semodule -n -s %{selinuxtype} -i $MODULES
 if %{_sbindir}/selinuxenabled ; then
     %{_sbindir}/load_policy
     %relabel_files
 fi
-
 
 %postun
 if [ $1 -eq 0 ]; then
