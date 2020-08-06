@@ -10,7 +10,7 @@ info:
 	@echo "fill-release-repo - put the newly built packages into the local release repo"
 	@echo "make-repo         - fetch existing repo and build a new local repository with new packages"
 	@echo "push-repo         - push the devel and productive repo to lancelot"
-	@echo "shows which release version is present:" $(OS)
+	@echo "Info about the running OS level of the centos machine:" $(OS)
 
 buildrpm:
 ifndef VERSION
@@ -33,11 +33,11 @@ buildselinux:
 signrpm: buildrpm
 	find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
 
-fill-release-repo:
+fill-release-repo: signrpm
 	mkdir -p repository/centos/$(OS)/
 	cp -r RPMS/* repository/centos/$(OS)/
 
-fill-devel-repo:
+fill-devel-repo: signrpm
 	mkdir -p repository/centos-devel/$(OS)/
 	cp -r RPMS/* repository/centos-devel/$(OS)/
 
