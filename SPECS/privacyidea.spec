@@ -45,10 +45,7 @@ BuildRequires: python-virtualenv, git
 rm -fr /opt/privacyidea
 rm -fr %{_tmp_build_dir}/privacyidea
 mkdir -p %{_tmp_build_dir}
-git clone --branch v%{version} --depth 1 https://github.com/privacyidea/privacyidea.git %{_tmp_build_dir}/privacyidea
-# update submodules
-cd %{_tmp_build_dir}/privacyidea 
-git submodule update --init --merge --remote
+git clone --branch v%{version} --recursive --depth 1 https://github.com/privacyidea/privacyidea.git %{_tmp_build_dir}/privacyidea
 
 %build
 virtualenv /opt/privacyidea
