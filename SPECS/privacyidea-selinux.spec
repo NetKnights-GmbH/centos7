@@ -65,7 +65,7 @@ install -m 0644 $MODULES %{buildroot}%{_datadir}/selinux/packages
 # use selinux_set_booleans after custom SELinux module is loaded.
 %_format MODULES %{_datadir}/selinux/packages/$x.pp.bz2
 %selinux_modules_install -s %{selinuxtype} $MODULES
-semanage fcontext -a -t httpd_log_t "/var/log/privacyidea/privacyidea.log*"
+semanage fcontext -a -t httpd_log_t "/var/log/privacyidea/[^/]+"
 restorecon -R -v /var/log > /dev/null 2>&1
 
 %postun
@@ -73,7 +73,7 @@ restorecon -R -v /var/log > /dev/null 2>&1
 if [ $1 -eq 0 ]; then 
 %selinux_modules_uninstall -s %{selinuxtype} privacyidea-selinux
 fi
-semanage fcontext -d "/var/log/privacyidea/privacyidea.log*"
+semanage fcontext -d "/var/log/privacyidea/[^/]+"
 restorecon -R -v /var/log > /dev/null 2>&1
 
 %posttrans
