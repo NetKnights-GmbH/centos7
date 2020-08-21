@@ -1,7 +1,6 @@
 module privacyidea-selinux 1.0;
 
 require {
-        type var_log_t;
         type ldap_port_t;
         type httpd_t;
         type mysqld_port_t;
@@ -18,4 +17,3 @@ allow httpd_t ldap_port_t:tcp_socket name_connect;
 #!!!! This avc can be allowed using one of the these booleans:
 #     httpd_can_network_connect, httpd_can_network_connect_db
 allow httpd_t mysqld_port_t:tcp_socket name_connect;
-allow httpd_t var_log_t:file open;
