@@ -4,3 +4,4 @@
 # MCS categories: <none>
 
 /usr/sbin/httpd         --      gen_context(system_u:object_r:httpd_exec_t,s0)
+/var/log/privacyidea(/.*)?      --      gen_context(system_u:object_r:httpd_log_t,s0)
