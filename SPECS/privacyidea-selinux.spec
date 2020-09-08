@@ -65,12 +65,14 @@ install -m 0644 $MODULES %{buildroot}%{_datadir}/selinux/packages
 # use selinux_set_booleans after custom SELinux module is loaded.
 %_format MODULES %{_datadir}/selinux/packages/$x.pp.bz2
 %selinux_modules_install -s %{selinuxtype} $MODULES
+restorecon -R -v /var/log/privacyidea > /dev/null 2>&1
 
 %postun
 # Uninstall module
 if [ $1 -eq 0 ]; then 
 %selinux_modules_uninstall -s %{selinuxtype} privacyidea-selinux
 fi
+restorecon -R -v /var/log/privacyidea > /dev/null 2>&1
 
 %posttrans
 %selinux_relabel_post -s %{selinuxtype}
