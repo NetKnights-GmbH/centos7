@@ -3,12 +3,9 @@
 %global modulenames	privacyidea-selinux	
 
 # Usage: _format var format
-#   Expand 'modulenames' into various formats as needed
-#   Format must contain '$x' somewhere to do anything useful
+# Expand 'modulenames' into various formats as needed
+# Format must contain '$x' somewhere to do anything useful
 %global _format() export %1=""; for x in %{modulenames}; do %1+=%2; %1+=" "; done;
-
-# Relabel files
-%global relabel_files() \ # ADD files in *.fc file
 
 # Version of distribution SELinux policy package
 %if 0%{?centos_ver} == 7
@@ -17,9 +14,6 @@
 %if 0%{?centos_ver} == 8
 %global selinux_policyver 3.14.3-20.el8
 %endif
-
-# Version of distribution SELinux policy package 
-#%global selinux_policyver 3.14.3-20.el8
 
 # Package information
 Name:			privacyidea-selinux
@@ -32,62 +26,62 @@ BuildArch:		noarch
 URL:			https://privacyidea.org
 Requires(post):		selinux-policy-base >= %{selinux_policyver}, selinux-policy-targeted >= %{selinux_policyver}, policycoreutils, libselinux-utils
 BuildRequires:		selinux-policy selinux-policy-devel
-
-Source:			%{name}-%{version}.tar.gz
+Source1:		privacyidea-selinux-src
 
 %description
-privacyidea-selinux provides SELinux polices module 
-to using with packages privacyidea privacyidea-server 
-based on RHEL/Centos OS, that allows httpd service 
+privacyidea-selinux provides a SELinux polices module
+for using with the privacyidea/ privacyidea-server packages
+based on Centos OS, that allows httpd service
 communicate with the services mysql and ldap
 
 %prep
-%setup -q
+rm -rf %{_builddir}/%{name}-%{version}
+cp -r %{SOURCE1} %{_builddir}/%{name}-%{version}
 
 %build
+cd %{_builddir}/%{name}-%{version}
 make SHARE="%{_datadir}" TARGETS="%{modulenames}"
 
+%pre
+%selinux_relabel_pre -s %{selinuxtype}
+
 %install
+# Create directories where SELinux polies will be installed
+install -d %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
+install -d %{buildroot}%{_datadir}/selinux/packages
 
 # Install SELinux interfaces
 %_format INTERFACES $x.if
-install -d %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
-install -p -m 644 $INTERFACES \
-	%{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
+cd %{_builddir}/%{name}-%{version}
+install -p -m 644 $INTERFACES %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
 
 # Install policy modules
 %_format MODULES $x.pp.bz2
-install -d %{buildroot}%{_datadir}/selinux/packages
-install -m 0644 $MODULES \
-	%{buildroot}%{_datadir}/selinux/packages
+cd %{_builddir}/%{name}-%{version}
+install -m 0644 $MODULES %{buildroot}%{_datadir}/selinux/packages
 
 %post
-#
 # Install all modules in a single transaction
-#
+# use selinux_set_booleans after custom SELinux module is loaded.
 %_format MODULES %{_datadir}/selinux/packages/$x.pp.bz2
-%{_sbindir}/semodule -n -s %{selinuxtype} -i $MODULES
-if %{_sbindir}/selinuxenabled ; then
-    %{_sbindir}/load_policy
-    %relabel_files
-fi
-
+%selinux_modules_install -s %{selinuxtype} $MODULES
+restorecon -R -v /var/log/privacyidea > /dev/null 2>&1
 
 %postun
-if [ $1 -eq 0 ]; then
-	%{_sbindir}/semodule -n -r %{modulenames} &> /dev/null || :
-	if %{_sbindir}/selinuxenabled ; then
-		%{_sbindir}/load_policy
-		%relabel_files
-	fi
+# Uninstall module
+if [ $1 -eq 0 ]; then 
+%selinux_modules_uninstall -s %{selinuxtype} privacyidea-selinux
 fi
+restorecon -R -v /var/log/privacyidea > /dev/null 2>&1
+
+%posttrans
+%selinux_relabel_post -s %{selinuxtype}
 
 %files
-%defattr(-,root,root,0755)
-%attr(0644,root,root) %{_datadir}/selinux/packages/*.pp.bz2
-%attr(0644,root,root) %{_datadir}/selinux/devel/include/%{moduletype}/*.if
+%defattr(0644,root,root,0755)
+%{_datadir}/selinux/packages/*.pp.bz2
+%{_datadir}/selinux/devel/include/%{moduletype}/*.if
 
 %changelog
 * Fri Jun 19 2020 Julio Storch <julio.storch@netknights.it> - 1.0.0-1
 - First Build
-

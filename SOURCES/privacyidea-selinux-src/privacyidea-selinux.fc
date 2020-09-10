@@ -1,0 +1,8 @@
+# privacyidea-selinux executable will have:
+# label: system_u:object_r:httpd_exec_t
+# label: system_u:object_r:httpd_log_t
+# MLS sensitivity: s0
+# MCS categories: <none>
+
+/usr/sbin/httpd         --      gen_context(system_u:object_r:httpd_exec_t,s0)
+/var/log/privacyidea(/.*)?      --      gen_context(system_u:object_r:httpd_log_t,s0)
