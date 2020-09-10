@@ -1,6 +1,8 @@
 Build environment for building CentOS packages
 
-make will fetch the version from GitHub.
+Works for CentOS7 and CentOS8.
+
+Make will fetch the version from GitHub.
 
 E.g. You can build a devel repo like this:
 
