@@ -1,6 +1,7 @@
 %global selinuxtype	targeted
 %global moduletype	services
 %global modulenames	privacyidea-selinux	
+%define release 1
 
 # Usage: _format var format
 # Expand 'modulenames' into various formats as needed
@@ -18,7 +19,7 @@
 # Package information
 Name:			privacyidea-selinux
 Version:		1.0	
-Release:		1%{?dist}
+Release:		%{release}%{?dist}
 License:		GPLv2
 Group:			System Environment/Base
 Summary:		SELinux Policy for privacyidea privacyidea-server 
@@ -84,4 +85,4 @@ restorecon -R -v /var/log/privacyidea > /dev/null 2>&1
 
 %changelog
 * Fri Jun 19 2020 Julio Storch <julio.storch@netknights.it> - 1.0.0-1
-- First Build
+- SElinux Build release

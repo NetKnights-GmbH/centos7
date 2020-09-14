@@ -1,3 +1,6 @@
+* Fri Sep 11 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4
+- Update version number
+
 * Tue May 19 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3.3
 - Update version number
 
