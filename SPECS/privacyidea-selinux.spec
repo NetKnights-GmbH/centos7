@@ -78,6 +78,9 @@ restorecon -R -v /var/log/privacyidea > /dev/null 2>&1
 %posttrans
 %selinux_relabel_post -s %{selinuxtype}
 
+%clean
+rm -rf %{_builddir}
+
 %files
 %defattr(0644,root,root,0755)
 %{_datadir}/selinux/packages/*.pp.bz2
