@@ -1,3 +1,12 @@
+* Wed Jan 27 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.1dev3
+- Update version number
+
+* Wed Jan 27 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.1dev2
+- Update version number
+
+* Tue Dec 22 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5
+- Update version number
+
 * Fri Oct 07 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4.1dev3
 - Update version number
 

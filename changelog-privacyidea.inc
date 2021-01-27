@@ -1,3 +1,97 @@
+* Wed Jan 27 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.1dev3
+    
+    Fixes:
+     * Fix requierments (#2598) 
+
+* Wed Jan 27 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.1dev2
+
+    Fixes:
+     * Fix DB migration script for update from prior of 3.3. (#2582)
+     * Fix the internal interface of container audit module (#2562)
+
+* Tue Dec 22 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5
+    
+    Features:
+     * 4Eyes token uses multi challenge authentication (#2317)
+     * Require attestation certificate when enrolling
+       certificate token (#2152)
+
+    Enhancements:
+     * Tokens
+     * Allow to update firebase_token of a Push Token (#2436)
+     * Support WebAuthn tokens without sign_count (#2361)
+     * PSKC import now verifies the MAC of the token secrets (#2312)
+     * Configure length and contents of registration token via policy (#2284)
+     * The questionnaire token can now ask several questions from the list (#2137)
+     * Event handler:
+     * Choose SMS Gateway Identifier in Tokenhandler
+       when enrolling SMS token (#2506)
+     * Choose SMTP Identifier in Tokenhandler
+       when enrolling Email token (#2452)
+     * Increase or decrease failcounter in Tokenhandler (#2402)
+     * Allow to set maxfail counter in event handlers (#2541)
+     * Policies:
+     * Add extended conditions for tokeninfo (#1947)
+     * Web UI
+     * PIN can be changed with Challlenge Response when authenticating
+       at the WebUI (#2474)
+     * Hide some audit log columns for service desk users (#2372)
+     * Allow to configure a link to a policy statement/GDPR (#2325)
+     * Audit log now contains start time, end time and
+       duration of a request (#2254)
+     * The length of the audit columns to be truncated can be
+       configured in pi.cfg (#1756)
+     * Action grouping in scope authorization (#2438)
+     * Redesign welcome message for community version (#2397)
+     * Add usernames and serials of failed authentications
+       as shortlink into dashboard (#2475)
+     * Policy to add node name in the web UI (#1961)
+     * Make event conditions searchable (#2148)
+     * Align search layout in event conditions and policy actions (#2557)
+     * pi-manage: export resolver configuration (#1329)
+     * Documentation:
+     * Add note about SELinux and using non-standard ports (#2459)
+     * Explain sync_to_database for script handlers (#2450)
+     * Add documentation for RADIUS configuration (#2448)
+
+   Fixes:
+    * Allow equal signs in policy actions (#2494)
+    * Challenge Response is now checked independently on the presence
+      of a challenge in the database (#2491)
+    * Fix enrollment of two tokens using double click (#2487)
+    * Fix wrong (to few) number of authentication requests
+      in the dashboard (#2473)
+    * Allow setting an empty PIN in the UI (#2472)
+    * The dashboard only displays information, which an admin is
+      allowed to see, without throwing errors (#2456)
+    * Fix length of hashed password column in auth_cache table (#2446)
+    * Fix url_decode (#2345)
+    * Fix missing adminuser when importing policies (#2340)
+    * Hide browser autocomplete in user search field (#2292)
+
+
+
+* Fri Oct 09 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4.1
+
+    Fixes:
+     * Fix the deletion of the registration token (#2356)
+     * Add "messages" to JSON response in case of multi challenge
+       pin change (2346)
+     * Move from PBKDF2 to Argon2 for password hashes. Might want to
+       reset local admin passwords to use new hashing algo (#2412)
+     * Hide dashboard for normal users (#2384)
+     * Fix problem with missing templates in CA conncetor (#2374)
+     * Fix missing successful authentications in dashboard (#2394)
+     * Improve error handling in token janitor in case of
+       problematic user (#2405)
+     * remove PI_PEPPER and pyCrypto (#2409)
+     * only check for existing JWT algorithms (#2407)
+     * Use Argon2 for PINs and local admins (#2413)
+     * Fix error when logging in with REMOTE_USER (#2423)
+     * Use a secure way to compare strings to avoid
+       theoretical side channel attacks (#2415)
+
+
 * Fri Oct 07 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4.1dev3
 
     Features:
@@ -26,16 +120,16 @@
      * HTTPSMSProvider can now have header parameters in the
        provider definition (#1963)
      * Events
-       * Add failcounter as condition in event handlers (#2147)
-       * The script handler allows to sync the database before
-         running the script (#2293 #2302)
-       * Allow using user_obj in pre event handlers for
-         /auth event. (#2303)
+     * Add failcounter as condition in event handlers (#2147)
+     * The script handler allows to sync the database before
+       running the script (#2293 #2302)
+     * Allow using user_obj in pre event handlers for
+       /auth event. (#2303)
      * Policies
-       * Allow to define characters for set_random_pin policy (#2121)
-       * Add privacyIDEA nodes to policy condition (#2108)
-       * Add new authz policy action is_authorized to basically
-         allow or deny access (#2275)
+     * Allow to define characters for set_random_pin policy (#2121)
+     * Add privacyIDEA nodes to policy condition (#2108)
+     * Add new authz policy action is_authorized to basically
+       allow or deny access (#2275)
      * Allow ECDSA and other SSH key types (#2274)
      * pi-manage can import tokens including HOTP token counter (#2285)
      * Allow the token janitor to set tokenrealms (#2299)
