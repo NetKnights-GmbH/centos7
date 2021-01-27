@@ -92,7 +92,7 @@
        theoretical side channel attacks (#2415)
 
 
-* Fri Oct 07 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4.1dev3
+* Wed Oct 07 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4.1dev3
 
     Features:
      * Add ScriptSMSProvider, that can send SMS through external
