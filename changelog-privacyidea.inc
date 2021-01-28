@@ -1,13 +1,10 @@
-* Wed Jan 27 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.1dev3
-    
-    Fixes:
-     * Fix requierments (#2598) 
-
-* Wed Jan 27 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.1dev2
+* Thu Jan 28 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.1
 
     Fixes:
      * Fix DB migration script for update from prior of 3.3. (#2582)
      * Fix the internal interface of container audit module (#2562)
+     * Add missing headers to /auth request (#2599)
+     * Fix tokeninfo value filter with Oracle db (#2602)
 
 * Tue Dec 22 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5
     
