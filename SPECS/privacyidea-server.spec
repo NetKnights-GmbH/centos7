@@ -25,7 +25,7 @@ Requires:       python3-mod_wsgi
 
 Source1: pi.cfg
 Source2: privacyideaapp.wsgi
-Source3: privacyidea.conf.disabled
+Source3: privacyidea.conf
 # BuildRequires:
 
 %description
@@ -57,7 +57,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %config(noreplace) /etc/privacyidea
-%config /etc/httpd/conf.d/
+%config(noreplace) /etc/httpd/conf.d
 
 %posttrans
 # first we enable and start the rngd since creation of gpg-keys might block in VMs
@@ -106,7 +106,7 @@ if [ -z "$(grep ^SQLALCHEMY_DATABASE_URI /etc/privacyidea/pi.cfg)" ]; then
     # might not run
     systemctl start mariadb
     # check if pi database exists
-    mysql pi -e quit
+    mysql pi -e quit 2> /dev/null
     if [ $? -ne 0 ]; then
         # create the new database if it does not exist
         mysql -e "create database pi;" || true
@@ -125,16 +125,13 @@ fi
 
 ###################################################
 # The webserver
-# first we need to start the webserver to let it create the self-signed certificates
-systemctl start httpd
-# mkdir -p /var/run/wsgi
+# first we need to create the self-signed certificates on CentOS 8.
+[[ -x /usr/libexec/httpd-ssl-gencerts ]] && /usr/libexec/httpd-ssl-gencerts
 # then we can disable the default configurations
-cp /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable 2>&1 || true > /dev/null
 cp /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable 2>&1 || true > /dev/null
+cp /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable 2>&1 || true > /dev/null
 echo "# placeholder to avoid conflict with privacyidea.conf" > /etc/httpd/conf.d/ssl.conf
 echo "# placeholder to avoid conflict with privacyidea.conf" > /etc/httpd/conf.d/welcome.conf
-# and enable our own
-cp /etc/httpd/conf.d/privacyidea.conf.disabled /etc/httpd/conf.d/privacyidea.conf
 # finally restart the webserver
 systemctl restart httpd
 
