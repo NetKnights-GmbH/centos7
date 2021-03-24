@@ -1,3 +1,14 @@
+* Thu Mar 24 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.2
+
+    Fixes:
+     * Add serial to the request object in /ttype/ endpoint (#2605)
+     * Fix missing audit entries missing_line and sig_check (#2627)
+     * Fix backup on Ubuntu 20.04 (#2646)
+     * Fix missing priority in policy import (#2643)
+     * Fix DB migrate URI if it contains char % (#2661)
+     * Fix long default POOLING_LOOP_TIMEOUT (#2662)
+     * Fix tokeninfo value filter with Oracle db (#2602)
+    
 * Thu Jan 28 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.1
 
     Fixes:
