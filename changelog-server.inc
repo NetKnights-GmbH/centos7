@@ -1,4 +1,4 @@
-* Thu Mar 24 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it 3.5.2
+* Wed Mar 24 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it 3.5.2
 - Update version number
 
 * Thu Jan 28 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.1

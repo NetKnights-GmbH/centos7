@@ -1,4 +1,4 @@
-* Thu Mar 24 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.2
+* Wed Mar 24 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.2
 
     Fixes:
      * Add serial to the request object in /ttype/ endpoint (#2605)
