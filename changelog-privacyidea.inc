@@ -1,4 +1,4 @@
-* Wed Mar 24 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.2
+* Wed Mar 24 2021 NetKnights GmbH <release@netknights.it> 3.5.2
 
     Fixes:
      * Add serial to the request object in /ttype/ endpoint (#2605)
@@ -9,7 +9,7 @@
      * Fix long default POOLING_LOOP_TIMEOUT (#2662)
      * Fix tokeninfo value filter with Oracle db (#2602)
     
-* Thu Jan 28 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5.1
+* Thu Jan 28 2021 NetKnights GmbH <release@netknights.it> 3.5.1
 
     Fixes:
      * Fix DB migration script for update from prior of 3.3. (#2582)
@@ -17,7 +17,7 @@
      * Add missing headers to /auth request (#2599)
      * Fix tokeninfo value filter with Oracle db (#2602)
 
-* Tue Dec 22 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.5
+* Tue Dec 22 2020 NetKnights GmbH <release@netknights.it> 3.5
     
     Features:
      * 4Eyes token uses multi challenge authentication (#2317)
@@ -79,7 +79,7 @@
 
 
 
-* Fri Oct 09 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4.1
+* Fri Oct 09 2020 NetKnights GmbH <release@netknights.it> 3.4.1
 
     Fixes:
      * Fix the deletion of the registration token (#2356)
@@ -100,7 +100,7 @@
        theoretical side channel attacks (#2415)
 
 
-* Wed Oct 07 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4.1dev3
+* Wed Oct 07 2020 NetKnights GmbH <release@netknights.it> 3.4.1dev3
 
     Features:
      * Add ScriptSMSProvider, that can send SMS through external
@@ -172,7 +172,7 @@
      * Fix token settings for Yubikey in UI enrollment (#2365, #2366)
 
 
-* Fri Sep 11 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4
+* Fri Sep 11 2020 NetKnights GmbH <release@netknights.it> 3.4
 
   Features:
    * Add ScriptSMSProvider, that can send SMS through external
@@ -243,25 +243,25 @@
    * Fix url_decode (#2360)
    * Fix token settings for Yubikey in UI enrollment (#2365, #2366)
 
-* Tue May 19 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3.3
+* Tue May 19 2020 NetKnights GmbH <release@netknights.it> 3.3.3
 
   Fixes:
     * Fix failing Challenge Response in WebUI (#2192)
     * Add better logging for contradciting policy calls
     * Case insensitive user check failsafe in policy matching (#2198)
 
-* Wed May 06 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3.2
+* Wed May 06 2020 NetKnights GmbH <release@netknights.it> 3.3.2
 
   Fixes:
     * Fix restricted audit log for helpdesk users (#2181)
 
-* Wed Apr 29 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3.1
+* Wed Apr 29 2020 NetKnights GmbH <release@netknights.it> 3.3.1
   
   Fixes:
     * Fix broken U2F support (#2157)
     * Fix creation of PGP keys with pi-maange (#2165)
 
-* Sun Apr 05 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.3
+* Sun Apr 05 2020 NetKnights GmbH <release@netknights.it> 3.3
 
   Features:
     * New token type: WebAuthn/FIDO2 token is initially supported by privacyIDEA (#1468)
@@ -324,19 +324,19 @@
     * Fix documentation (#2049)
     * Fix sorting token table by column (#2111)
 
-* Fri Jan 17 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.2.2
+* Fri Jan 17 2020 NetKnights GmbH <release@netknights.it> 3.2.2
 
   Fixes:
   * Fix Popen calls like with pi-manage backup restore
   * Fix retrieving the correct database for restore
   * Fix caconnectorread policy
 
-* Tue Dec 31 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.2.1
+* Tue Dec 31 2019 NetKnights GmbH <release@netknights.it> 3.2.1
 
   Fixes:
   * Fix the wording and translation of the lost token scenario
 
-* Mon Dec 02 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.2
+* Mon Dec 02 2019 NetKnights GmbH <release@netknights.it> 3.2
 
   Features:
   * New Event Handler: RequestMangler to modify request attributes (#1810)
@@ -397,19 +397,19 @@
   * Make the policy creation at the command line with pi-manage more
     consistent (#1807)
 
-* Fri Nov 15 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.1.2
+* Fri Nov 15 2019 NetKnights GmbH <release@netknights.it> 3.1.2
 
   Fixes:
   * Fix the missing phone number field for SMS token, when a user
     wants to enroll an SMS token. (#1929)
 
-* Wed Sep 25 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.1.1  
+* Wed Sep 25 2019 NetKnights GmbH <release@netknights.it> 3.1.1  
 
   Fixes:
   * Fix the wrong token_type key in the audit log which caused the tokentype
     to not be contained in the audit (#1846)
 
-* Wed Sep 04 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.1
+* Wed Sep 04 2019 NetKnights GmbH <release@netknights.it> 3.1
 
   Features:
   * Allow user attributes in policy conditions (#1645)
@@ -480,13 +480,13 @@
   * Remove additional empty line in audit log in case of an error (#1707)
   * Fix enrollment of certificate tokens under Python 3 (#1799)
 
-* Mon Jun 17 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.0.2
+* Mon Jun 17 2019 NetKnights GmbH <release@netknights.it> 3.0.2
   
   Fixes:
   * Fix creation of table tokenover and update with PostgreSQL DB
   * Fix user assignment migration with non-ascii characters in userid
 
-* Thu May 23 2019 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.0.1
+* Thu May 23 2019 NetKnights GmbH <release@netknights.it> 3.0.1
 
   Fixes:
   * Fix PUSH token issues:
@@ -507,7 +507,7 @@
   * Open all accordions when searching for policy action (#1558)
   * Fix to hide support links also in menu (#1626)
 
-* Thu Sep 06 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.23.1
+* Thu Sep 06 2018 NetKnights GmbH <release@netknights.it> 2.23.1
 
   Features:
   * Add periodic tasks including a privacyidea-cron script. (#992) 
@@ -573,19 +573,19 @@
 
 
 
-* Tue Jul 31 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.22.4
+* Tue Jul 31 2018 NetKnights GmbH <release@netknights.it> 2.22.4
 
   Fixes in Server:
   * Fix the get_token_type to no issue an SQL request for token searches
   * Optimize HSM aeshsm.py module
 
-* Mon Jun 25 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.22.3
+* Mon Jun 25 2018 NetKnights GmbH <release@netknights.it> 2.22.3
 
 
   Fixes in Server:
   * Fix the pskc export and import of pw token types (#1011)
 
-* Tue May 29 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.22.2
+* Tue May 29 2018 NetKnights GmbH <release@netknights.it> 2.22.2
 
   Fixes in WebUI:
   * Fix the missing scrollbar in all remaining cases.
@@ -594,7 +594,7 @@
   * Avoid cast problems with Oracle token DB when saving
     integer values to string columns.
 
-* Fri Apr 20 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.22.1
+* Fri Apr 20 2018 NetKnights GmbH <release@netknights.it> 2.22.1
 
   Fixes in WebUI:
   * Allow to display the messages of several C/R tokens (#995, #1004)
@@ -615,7 +615,7 @@
   * Fix unicode in resolverconf database table with Oracle (#999)
 
 
-* Tue Mar 27 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.22
+* Tue Mar 27 2018 NetKnights GmbH <release@netknights.it> 2.22
 
   Features:
   * Add automatic offline refill for Offline OTP tokens (#839)
@@ -660,19 +660,19 @@
   * Fix pi-manage backup crash (Thanks to Pavol Ipoth for this contribution!)
 
 
-* Wed Jan 24 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.21.4
+* Wed Jan 24 2018 NetKnights GmbH <release@netknights.it> 2.21.4
 
   Fixes:
   * HTTP Timeout of HTTP SMS Gateway (#889)
   * Remove console.log from webui
 
 
-* Tue Jan 09 2018 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.21.1 
+* Tue Jan 09 2018 NetKnights GmbH <release@netknights.it> 2.21.1 
 
   Fixes:
   * Allow to use TLS1.1 and TLS1.2 for LDAP Resolver (#876)
 
-* Wed Dec 20 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.21
+* Wed Dec 20 2017 NetKnights GmbH <release@netknights.it> 2.21
 
   Features:
 
@@ -712,7 +712,7 @@
    * Fix failcounter_clear_timeout (#831)
    * Only remove apache host definitions on first installation (#834)
 
-* Mon Oct 30 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.20.1 
+* Mon Oct 30 2017 NetKnights GmbH <release@netknights.it> 2.20.1 
 
   Fixes:
    * /token/init allows to pass otpkey AND genkey=false (#793)
@@ -722,7 +722,7 @@
    * Fix PassOnNoUser and PassOnNoToken (#798)
    * Fix genkey=0 error during token enrollment (#793)
 
-* Wed Sep 27 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.20
+* Wed Sep 27 2017 NetKnights GmbH <release@netknights.it> 2.20
 
   Features:
 
@@ -781,7 +781,7 @@
 
 
 
-* Sun Jul 02 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.19.1
+* Sun Jul 02 2017 NetKnights GmbH <release@netknights.it> 2.19.1
 
   Version 2.19.1, 2017-07-02
 
@@ -849,7 +849,7 @@
   * Fix serial number in challenge response validation response (#649)
 
 
-* Tue Mar 28 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.18.1
+* Tue Mar 28 2017 NetKnights GmbH <release@netknights.it> 2.18.1
 
   Features:
   * Allow to disable the WebUI (#605)
@@ -923,7 +923,7 @@
   * Remove unused policy action "motp_webprovision"
   * Allow emailtext policy in triggerchallenge API (#642)
  
-* Tue Jan 10 2017 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.17
+* Tue Jan 10 2017 NetKnights GmbH <release@netknights.it> 2.17
   Features
   * Token Handler. Using the token handler the administrator
     can defined actions in response to events, to modify tokens
@@ -965,7 +965,7 @@
   * Remove 301 redirects from WebUI (#576)
 
 
-* Fri Dec 02 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.16.1
+* Fri Dec 02 2016 NetKnights GmbH <release@netknights.it> 2.16.1
   Featurs
   * Add HSM support via AES keys (#534)
   * Improved Event Handler for flexible notification (#511)
@@ -988,7 +988,7 @@
   * Truncate Audit lines, that are too long for the DB table (#525)
 
 
-* Tue Oct 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.15
+* Tue Oct 11 2016 NetKnights GmbH <release@netknights.it> 2.15
   Features
   * Client Overview. Display the type of the requesting
     authenticating clients (#489)
@@ -1010,7 +1010,7 @@
   * String comparison in HOSTS resolver (#484)
 
 
-* Wed Aug 24 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.14
+* Wed Aug 24 2016 NetKnights GmbH <release@netknights.it> 2.14
   Features
   * Import PGP encrypted seed files
   * Allow UserNotification for user actions
@@ -1029,7 +1029,7 @@
   Fixes
   * Restrict GET /user for corresponding admins #460
 
-* Thu Jun 30 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.13
+* Thu Jun 30 2016 NetKnights GmbH <release@netknights.it> 2.13
 - Features
 - Allow central definition of SMS gateways
   to be used with tokens. #392
@@ -1086,7 +1086,7 @@
 - Authentication with active token not possible if
   the user has a disabled token #339
 
-* Thu Feb 11 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10
+* Thu Feb 11 2016 NetKnights GmbH <release@netknights.it> 2.10
 - User Registration: A user may register himself and thus create
   his new user account.
 - Password Reset: Using a recovery token a user may issue a
@@ -1096,6 +1096,6 @@
   these for Email token, SMTP SMS Provider, registration process,
   or password reset.
 
-* Tue Jan 26 2016 Cornelius Kölbel <cornelius.koelbel@netknights.it> 2.10dev5-1
+* Tue Jan 26 2016 NetKnights GmbH <release@netknights.it> 2.10dev5-1
 - initial RPM packaging
 
