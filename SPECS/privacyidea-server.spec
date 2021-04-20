@@ -26,6 +26,7 @@ Requires:       python3-mod_wsgi
 Source1: pi.cfg
 Source2: privacyideaapp.wsgi
 Source3: privacyidea.conf
+Source4: privacyidea-cron
 # BuildRequires:
 
 %description
@@ -41,11 +42,13 @@ Source3: privacyidea.conf
 %install
 mkdir -p $RPM_BUILD_ROOT/etc/privacyidea
 mkdir -p $RPM_BUILD_ROOT/etc/httpd/conf.d/
+mkdir -p $RPM_BUILD_ROOT/etc/cron.d/
 # we need to change access right, otherwise each local user could call
 # pi-manage
 install -m 640 %{SOURCE1} $RPM_BUILD_ROOT/etc/privacyidea
 install -m 644 %{SOURCE2} $RPM_BUILD_ROOT/etc/privacyidea
 install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/etc/httpd/conf.d/
+install -m 644 %{SOURCE4} $RPM_BUILD_ROOT/etc/cron.d/
 ##################################################
 # Get the NetKnights public key and other configs
 curl https://raw.githubusercontent.com/privacyidea/privacyidea/master/deploy/privacyidea/NetKnights.pem -o $RPM_BUILD_ROOT/etc/privacyidea/NetKnights.pem
@@ -58,6 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %config(noreplace) /etc/privacyidea
 %config(noreplace) /etc/httpd/conf.d
+%config(noreplace) /etc/cron.d
 
 %posttrans
 # first we enable and start the rngd since creation of gpg-keys might block in VMs
