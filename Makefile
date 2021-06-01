@@ -1,5 +1,10 @@
 # variable for holding OS level
-OS = ${shell rpm -q --queryformat '%{VERSION}' centos-release | cut -c1 }
+    OS=${shell rpm -q --queryformat '%{VERSION}' centos-release | cut -c1 }
+
+ifeq ($(OS),7)
+else
+        OS=${shell rpm -q --queryformat '%{VERSION}' centos-linux-release | cut -c1 }
+endif
 
 info:
 	@echo "buildrpm          - build a new RPM from a GitHub tag"
