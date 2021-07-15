@@ -1,3 +1,11 @@
+* Thu Jul 15 2021 NetKnights GmbH <release@netknights.it> 3.6.1dev2
+
+    Fixes:
+     * Remove importlib-metadata from doc requirements
+     * Add a safe_store feature #2794
+     * Decode URL parameters for forms #2800
+     * Prepare ADFS subscription #2801
+
 * Wed Mar 24 2021 NetKnights GmbH <release@netknights.it> 3.5.2
 
     Fixes:

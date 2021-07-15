@@ -1,3 +1,6 @@
+* Thu Jul 15 2021 NetKnights GmbH <release@netknights.it> 3.6.1dev2
+- Update version number
+
 * Wed Mar 24 2021 NetKnights GmbH <release@netknights.it> 3.5.2
 - Update version number
 

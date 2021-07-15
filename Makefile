@@ -1,8 +1,10 @@
 # variable for holding OS level
-    OS=${shell rpm -q --queryformat '%{VERSION}' centos-release | cut -c1 }
+	OS=${shell rpm -q --queryformat '%{VERSION}' centos-release | cut -c1 }
 
 ifeq ($(OS),7)
+	# do nothing
 else
+	# centos8
         OS=${shell rpm -q --queryformat '%{VERSION}' centos-linux-release | cut -c1 }
 endif
 
