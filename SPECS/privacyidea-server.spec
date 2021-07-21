@@ -16,12 +16,7 @@ Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 ExclusiveArch:  x86_64
 
 Requires:       privacyidea = %{version}, mariadb-server, httpd, mod_ssl, shadow-utils, rng-tools
-%if 0%{?centos_ver} == 7
-Requires:       mod_wsgi
-%endif
-%if 0%{?centos_ver} == 8
 Requires:       python3-mod_wsgi
-%endif
 
 Source1: pi.cfg
 Source2: privacyideaapp.wsgi
