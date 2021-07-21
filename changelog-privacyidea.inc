@@ -1,3 +1,7 @@
+* Wed Jul 21 2021 NetKnights GmbH <release@netknights.it> 3.6.2dev2
+    Fixes:
+     * dummy line
+
 * Thu Jul 19 2021 NetKnights GmbH <release@netknights.it> 3.6.1
 
     Fixes:
