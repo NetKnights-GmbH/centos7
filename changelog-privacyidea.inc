@@ -1,6 +1,8 @@
-* Wed Jul 21 2021 NetKnights GmbH <release@netknights.it> 3.6.2dev2
-    Fixes:
-     * dummy line
+* Wed Jul 22 2021 NetKnights GmbH <release@netknights.it> 3.6.2
+
+    Features:
+    * Add custom user attributes that can be managed within privacyIDEA #680
+    * Extended policy conditions can match on any token attribute #2590
 
 * Thu Jul 19 2021 NetKnights GmbH <release@netknights.it> 3.6.1
 
