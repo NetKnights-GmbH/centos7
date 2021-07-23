@@ -1,3 +1,7 @@
+* Fri Jul 23 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4.1
+- Fix the urlencoding of username and password to work
+  with privacyIDEA 3.6. (#50)
+
 * Mon May 25 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4
 - Allow different configs with the same scriptto use redundant to
   ask different privacyIDEA servers. (#10)
