@@ -18,7 +18,7 @@ Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      noarch
 
 BuildRequires:  git
-Requires:       freeradius, freeradius-perl, perl-LWP-Protocol-https, freeradius-utils
+Requires:       freeradius, freeradius-perl, perl-LWP-Protocol-https, freeradius-utils, perl-URI-Encode
 #Requires:       epel-release
 #Requires:       perl-Data-Dump
 #Requires:       perl-Config-IniFiles
