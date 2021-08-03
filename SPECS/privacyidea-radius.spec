@@ -63,7 +63,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/raddb/mods-available/piperl
 %post
 # Activate the piperl RADIUS module
 cd /etc/raddb/mods-enabled/
-ln -s ../mods-available/piperl .
+ln -sf ../mods-available/piperl .
 systemctl restart radiusd
 
 %clean
