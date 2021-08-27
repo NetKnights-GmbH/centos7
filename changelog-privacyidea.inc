@@ -1,4 +1,4 @@
-* Thu Aug 25 2021 NetKnights GmbH <release@netknights.it> 3.7dev1
+* Fri Aug 27 2021 NetKnights GmbH <release@netknights.it> 3.7dev1
 
     Features:
     Enhancements:
