@@ -61,8 +61,16 @@ install -D -m 640 %{SOURCE2} $RPM_BUILD_ROOT/%{_sysconfdir}/raddb/mods-available
 # Activate the piperl RADIUS module
 install -d $RPM_BUILD_ROOT/%{_sysconfdir}/raddb/mods-enabled
 cd $RPM_BUILD_ROOT/etc/raddb/mods-enabled && ln -s ../mods-available/piperl .
+# Activate the privacyidea RADIUS module
+install -d $RPM_BUILD_ROOT/%{_sysconfdir}/raddb/sites-enabled
+cd $RPM_BUILD_ROOT/etc/raddb/sites-enabled && ln -s ../sites-available/privacyidea .
 
 %post
+# unlink not necessary modules
+unlink /etc/raddb/mods-enabled/eap
+unlink /etc/raddb/sites-enabled/default
+unlink /etc/raddb/sites-enabled/inner-tunnel
+# restart radius service
 /bin/systemctl try-restart radiusd.service
 
 %clean
@@ -76,6 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/privacyidea/rlm_perl.ini
 %config(noreplace) /etc/privacyidea/dictionary.netknights
 %attr(640,root,radiusd) %config(noreplace) /etc/raddb/sites-available/privacyidea
+%attr(-,root,radiusd) %config(noreplace) /etc/raddb/sites-enabled/privacyidea
 %attr(640,root,radiusd) %config(noreplace) /etc/raddb/mods-available/piperl
 %attr(-,root,radiusd) %config(missingok) /etc/raddb/mods-enabled/piperl
 
