@@ -1,3 +1,13 @@
+* Fri Oct 08 2021 NetKnights GmbH <release@netknights.it> 3.7dev2
+
+    Enhancements:
+     * Support SMTPS (#2568)
+     * Add policy extended conditions of webserver environment (#2510)
+
+    Fixes:
+     * Do not use not-readily enrolled tokens for auth  (#2852)
+     * Allow tokens in client_wait to be rolled over (#2763)
+
 * Fri Aug 27 2021 NetKnights GmbH <release@netknights.it> 3.7dev1
 
     Features:
