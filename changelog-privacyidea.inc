@@ -1,3 +1,9 @@
+* Thu Nov 18 2021 NetKnights GmbH <release@netknights.it> 3.6.3
+
+    Fixes:
+    * Fix endianess for certain GUID bytestrings in LDAP resovler returned from AD
+    * Fix problem with old OTP values of TOTP tokens in autoresync
+
 * Fri Oct 08 2021 NetKnights GmbH <release@netknights.it> 3.7dev2
 
     Enhancements:
