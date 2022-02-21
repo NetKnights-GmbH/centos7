@@ -1,4 +1,4 @@
-* Mo Feb 21 2022 NetKnights GmbH <release@netknights.it> 3.7dev3
+* Mon Feb 21 2022 NetKnights GmbH <release@netknights.it> 3.7dev3
 - Update version number
 
 * Thu Nov 18 2021 NetKnights GmbH <release@netknights.it> 3.6.3
