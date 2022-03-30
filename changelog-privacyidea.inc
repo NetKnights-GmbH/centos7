@@ -1,4 +1,4 @@
-* Mon Mar 28 2022 NetKnights GmbH <release@netknights.it> 3.7dev5
+* Wed Mar 30 2022 NetKnights GmbH <release@netknights.it> 3.7dev6
 
     Features:
      * Allow Offline Token without assigning to a specific IP address (#2926)
