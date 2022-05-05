@@ -1,3 +1,17 @@
+* Thu May 05 2022 NetKnights GmbH <release@netknights.it> 3.7.1dev1
+
+    Fixes:
+     * Fix WebUI login with HOTP/TOTP challenge-response token (#3038)
+     * Improve error handling for "/ttype" endpoint (#3090)
+     * Removed redundant "user" option from offline token assignment (#3077)
+     * Fix creation of download-links for certificates due to HTML sanitizer (#3088)
+     * Fix policy descriptions containing HTML-like tags (#3118)
+     * Add documentation for the CustomUserAttributeHandler (#3075)
+     * Send Push message as notification and data to FireBase (#3117)
+
+    Enhancements:
+     * Add App-PIN policy for Push token (#3116)
+
 * Thu Mar 31 2022 NetKnights GmbH <release@netknights.it> 3.7
 
     Features:
