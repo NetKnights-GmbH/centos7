@@ -1,4 +1,4 @@
-* Thu May 05 2022 NetKnights GmbH <release@netknights.it> 3.7.1dev1
+* Thu May 05 2022 NetKnights GmbH <release@netknights.it> 3.7.1dev2
 
     Fixes:
      * Fix WebUI login with HOTP/TOTP challenge-response token (#3038)
