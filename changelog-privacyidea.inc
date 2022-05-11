@@ -1,4 +1,4 @@
-* Thu May 05 2022 NetKnights GmbH <release@netknights.it> 3.7.1dev2
+* Wed May 11 2022 NetKnights GmbH <release@netknights.it> 3.7.1
 
     Fixes:
      * Fix WebUI login with HOTP/TOTP challenge-response token (#3038)
@@ -8,8 +8,7 @@
      * Fix policy descriptions containing HTML-like tags (#3118)
      * Add documentation for the CustomUserAttributeHandler (#3075)
      * Send Push message as notification and data to FireBase (#3117)
-
-    Enhancements:
+     * Fix translation issue in PSKC-import (#3126)
      * Add App-PIN policy for Push token (#3116)
 
 * Thu Mar 31 2022 NetKnights GmbH <release@netknights.it> 3.7
