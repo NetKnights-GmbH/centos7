@@ -1,3 +1,14 @@
+* Mon Jun 27 2022 NetKnights GmbH <release@netknights.it> 3.7.2dev1
+
+
+    Fixes:
+     * Fix password recovery link (#3168)
+     * Add missing user object in DEL /user/ request (#3192)
+     * Comparie users by uid, thus fixing 2step enrollment with case
+       insensitive login names(#3186)
+     * Downgrade ldap3 dependency to fix finding of 5c-users
+       in objectGUID in Active Directory
+
 * Wed May 11 2022 NetKnights GmbH <release@netknights.it> 3.7.1
 
     Fixes:
