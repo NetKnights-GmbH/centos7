@@ -1,5 +1,4 @@
-* Mon Jun 27 2022 NetKnights GmbH <release@netknights.it> 3.7.2dev1
-
+* Mon Jul 04 2022 NetKnights GmbH <release@netknights.it> 3.7.2
 
     Fixes:
      * Fix password recovery link (#3168)
