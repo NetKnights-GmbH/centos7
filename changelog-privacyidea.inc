@@ -1,3 +1,9 @@
+* Mon Aug 01 2022 NetKnights GmbH <release@netknights.it> 3.7.3
+
+    Fixes:
+     * Preserve client information, when disabling a policy (#3243)
+     * Fix spanish translatio
+
 * Mon Jul 04 2022 NetKnights GmbH <release@netknights.it> 3.7.2
 
     Fixes:
