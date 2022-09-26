@@ -22,6 +22,9 @@ Requires:       mod_wsgi
 %if 0%{?el8}
 Requires:       python3-mod_wsgi
 %endif
+%if 0%{?el9}
+Requires:       python3-mod_wsgi
+%endif
 
 Source1: pi.cfg
 Source2: privacyideaapp.wsgi
