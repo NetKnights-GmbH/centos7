@@ -122,7 +122,7 @@ if [ -z "$(grep ^SQLALCHEMY_DATABASE_URI /etc/privacyidea/pi.cfg)" ]; then
     fi
     mysql -e "grant all privileges on pi.* to 'pi'@'localhost' identified by '$NPW';"
     echo "SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://pi:$NPW@localhost/pi'" >> /etc/privacyidea/pi.cfg
-    pi-manage createdb 2>&1 || true > /dev/null
+    pi-manage create_tables 2>&1 || true > /dev/null
 fi
 
 ####################################################
