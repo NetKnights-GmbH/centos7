@@ -1,3 +1,10 @@
+* Tue Oct 18 2022 NetKnights GmbH <release@netknights.it> 3.7.4
+
+    Fixes:
+     * Fix the PassOnNoToken and passthru in Offline mode with Credential
+     Provider (#3333)
+     * URLencode password and username for remote token (#3337)
+
 * Mon Aug 01 2022 NetKnights GmbH <release@netknights.it> 3.7.3
 
     Fixes:

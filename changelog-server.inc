@@ -1,3 +1,6 @@
+* Tue Oct 18 2022 NetKnights GmbH <release@netknights.it> 3.7.4
+- Update version number
+
 * Mon Aug 01 2022 NetKnights GmbH <release@netknights.it> 3.7.3
 - Update version number
 
