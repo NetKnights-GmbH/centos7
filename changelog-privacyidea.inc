@@ -1,3 +1,29 @@
+* Mon Feb 06 2023 NetKnights GmbH <release@netknights.it> 3.8.1
+
+    Fixes:
+     * Update diag tool (#3146)
+     * Fix tokengroup error in WebUI (#3441)
+     * Fix dependencies when deleting tokengroups (#3423)
+     * Fix wrong QR code in enroll-via-validate (#3427)
+     * Add missing preferred client mode in validate-check-enrollment (#3429)
+     * Add missing enrollment parameters with challenge-response-enrollment (#3478)
+     * Fix password problem with special chars -
+       Disable unquoting of LDAP-Proxy and simpleSAMLphp (#3337)
+     * Remove false error message when user assigns a token (#3499)
+     * Fix tags in email tokens (#3330)
+     * Fix LDAP NTLM Authentication (#3482)
+     * Add missing Webhook Eventhandler in UI (#3475)
+     * Remove redundant id in SQL resolver (#3454)
+     * Fix ca-parameter policy during enrollment (#3479)
+     * Fix removing node from a policy (#3500)
+
+* Fri Jan 13 2023 NetKnights GmbH <release@netknights.it> 3.8.1dev1
+
+    Fixes:
+     * Update diag tool (#3146)
+     * Fix tokengroup error in WebUI (#3441)
+     * Fix wrong QR code in enroll-via-validate (#3427)
+
 * Tue Oct 18 2022 NetKnights GmbH <release@netknights.it> 3.7.4
 
     Fixes:

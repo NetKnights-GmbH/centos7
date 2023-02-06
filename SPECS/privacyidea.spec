@@ -58,7 +58,8 @@ pip install %{_tmp_build_dir}/privacyidea/
 mkdir -p $RPM_BUILD_ROOT/opt
 cp -r /opt/privacyidea $RPM_BUILD_ROOT/opt
 # temporary fix for broken python-editor package
-chmod ugo-x $RPM_BUILD_ROOT/opt/privacyidea/lib/python*/site-packages/editor.py
+# no longer used in version 3.8 or greater, so this line is commented.
+## chmod ugo-x $RPM_BUILD_ROOT/opt/privacyidea/lib/python*/site-packages/editor.py
 # fix for missing encoding in Flask-Babel
 %if 0%{centos_ver} == 7
 sed -i '1 s/^/# -*- coding: utf-8 -*-\n/' $RPM_BUILD_ROOT/opt/privacyidea/lib/python2.7/site-packages/flask_babel/__init__.py
