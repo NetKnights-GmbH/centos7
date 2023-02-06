@@ -22,7 +22,11 @@ Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 ExclusiveArch:  x86_64
 AutoReqProv:    no
 
+%if 0%{centos_ver} == 7
+BuildRequires: python-virtualenv, git
+%else
 BuildRequires: python3-virtualenv, git
+%endif
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -45,7 +49,7 @@ git clone --recurse-submodules --branch v%{version} --depth 1 https://github.com
 
 %build
 %if 0%{centos_ver} == 7
-virtualenv-3 /opt/privacyidea
+virtualenv -p /usr/bin/python3 /opt/privacyidea
 %else
 virtualenv /opt/privacyidea
 %endif
