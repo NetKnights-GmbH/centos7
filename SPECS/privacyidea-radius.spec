@@ -18,12 +18,14 @@ Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 BuildArch:      noarch
 
 BuildRequires:  git
-Requires:       freeradius, freeradius-perl, perl-LWP-Protocol-https, freeradius-utils
-#Requires:       epel-release
-#Requires:       perl-Data-Dump
-#Requires:       perl-Config-IniFiles
-#Requires:       perl-JSON
-#Requires:       perl-Time-HiRes
+Requires:       freeradius, freeradius-perl, freeradius-utils
+Requires:       perl-URI-Encode
+Requires:       perl-LWP-Protocol-https
+Requires:       perl-Data-Dump
+Requires:       perl-Config-IniFiles
+Requires:       perl-JSON
+Requires:       perl-Time-HiRes
+Requires:       perl-Try-Tiny
 
 Source1: privacyidea-radius-site
 Source2: privacyidea-mods-perl
@@ -50,31 +52,32 @@ Source2: privacyidea-mods-perl
 mkdir -p %{build_dir}/git
 git clone %{gitsource} %{build_dir}/git
 cd %{build_dir}/git; git checkout v%{version}
-mkdir -p $RPM_BUILD_ROOT/usr/lib/privacyidea
-install %{build_dir}/git/privacyidea_radius.pm $RPM_BUILD_ROOT/usr/lib/privacyidea/
-mkdir -p $RPM_BUILD_ROOT/etc/privacyidea
-install %{build_dir}/git/rlm_perl.ini $RPM_BUILD_ROOT/etc/privacyidea/
-install %{build_dir}/git/dictionary.netknights $RPM_BUILD_ROOT/etc/privacyidea/
-mkdir -p $RPM_BUILD_ROOT/etc/raddb/sites-available/
-mkdir -p $RPM_BUILD_ROOT/etc/raddb/mods-available/
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/raddb/sites-available/privacyidea
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/raddb/mods-available/piperl
+# Install necessary files to BUILD_ROOT
+install -D -m 755 %{build_dir}/git/privacyidea_radius.pm $RPM_BUILD_ROOT/usr/lib/privacyidea/privacyidea_radius.pm
+install -D -m 644 %{build_dir}/git/rlm_perl.ini $RPM_BUILD_ROOT/%{_sysconfdir}/privacyidea/rlm_perl.ini
+install -D -m 644 %{build_dir}/git/dictionary.netknights $RPM_BUILD_ROOT/%{_sysconfdir}/privacyidea/dictionary.netknights
+install -D -m 640 %{SOURCE1} $RPM_BUILD_ROOT/%{_sysconfdir}/raddb/sites-available/privacyidea
+install -D -m 640 %{SOURCE2} $RPM_BUILD_ROOT/%{_sysconfdir}/raddb/mods-available/piperl
+# Activate the piperl RADIUS module
+install -d $RPM_BUILD_ROOT/%{_sysconfdir}/raddb/mods-enabled
+cd $RPM_BUILD_ROOT/etc/raddb/mods-enabled && ln -s ../mods-available/piperl .
 
 %post
-# Activate the piperl RADIUS module
-cd /etc/raddb/mods-enabled/
-ln -s ../mods-available/piperl .
-systemctl restart radiusd
+/bin/systemctl try-restart radiusd.service
 
 %clean
 rm -fr %{build_dir}/git
 rm -rf $RPM_BUILD_ROOT
 
 %files
+%defattr(-,root,root)
+
 /usr/lib/privacyidea
-%config /etc/privacyidea
-%config /etc/raddb/sites-available/*
-%config /etc/raddb/mods-available/*
+%config(noreplace) /etc/privacyidea/rlm_perl.ini
+%config(noreplace) /etc/privacyidea/dictionary.netknights
+%attr(640,root,radiusd) %config(noreplace) /etc/raddb/sites-available/privacyidea
+%attr(640,root,radiusd) %config(noreplace) /etc/raddb/mods-available/piperl
+%attr(-,root,radiusd) %config(missingok) /etc/raddb/mods-enabled/piperl
 
 
 %changelog

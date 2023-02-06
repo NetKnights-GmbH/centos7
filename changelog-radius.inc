@@ -1,3 +1,15 @@
+* Fri Aug 27 2021 Netknights GmbH <release@netknights.it> 3.4.2
+- Better logging
+- Update privacyidea_radius.pm (#48)
+- Add GitHub workflow file (#50)
+- Fix failing perl versions and add GitHub workflow file (#53)
+- Fix encoding issues with passwords (#54)
+- Add link to docs
+
+* Fri Jul 23 2021 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4.1
+- Fix the urlencoding of username and password to work
+  with privacyIDEA 3.6. (#50)
+
 * Mon May 25 2020 Cornelius Kölbel <cornelius.koelbel@netknights.it> 3.4
 - Allow different configs with the same scriptto use redundant to
   ask different privacyIDEA servers. (#10)

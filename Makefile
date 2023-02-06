@@ -1,5 +1,5 @@
-# variable for holding OS level
-	OS=${shell cat /etc/centos-release |cut -d " " -f 4 | cut -c 1 }
+# variable for holding OS level centos/rocky/rhel 7/8/9
+	OS=${shell grep VERSION_ID= /etc/os-release | cut -d = -f 2| cut -c 2}
 
 info:
 	@echo "buildrpm          - build a new RPM from a GitHub tag"

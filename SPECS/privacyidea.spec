@@ -58,8 +58,6 @@ pip install %{_tmp_build_dir}/privacyidea/
 %install
 mkdir -p $RPM_BUILD_ROOT/opt
 cp -r /opt/privacyidea $RPM_BUILD_ROOT/opt
-# temporary fix for broken python-editor package
-chmod ugo-x $RPM_BUILD_ROOT/opt/privacyidea/lib/python*/site-packages/editor.py
 
 %clean
 rm -rf $RPM_BUILD_ROOT

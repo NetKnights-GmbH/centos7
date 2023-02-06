@@ -1,4 +1,40 @@
-* Thu Jul 19 2021 NetKnights GmbH <release@netknights.it> 3.6.1
+* Mon Feb 06 2023 NetKnights GmbH <release@netknights.it> 3.8.1
+- Update version number
+
+* Fri Jan 13 2023 NetKnights GmbH <release@netknights.it> 3.8.1dev1
+- Update version number
+
+* Tue Oct 18 2022 NetKnights GmbH <release@netknights.it> 3.7.4
+- Update version number
+
+* Mon Aug 01 2022 NetKnights GmbH <release@netknights.it> 3.7.3
+- Update version number
+
+* Mon Jul 04 2022 NetKnights GmbH <release@netknights.it> 3.7.2
+- Update version number
+
+* Mon Jun 27 2022 NetKnights GmbH <release@netknights.it> 3.7.2dev1
+- Update version number
+
+* Wed May 11 2022 NetKnights GmbH <release@netknights.it> 3.7.1
+- Update version number
+
+* Thu May 05 2022 NetKnights GmbH <release@netknights.it> 3.7.1dev2
+- Update version number
+
+* Thu Mar 31 2022 NetKnights GmbH <release@netknights.it> 3.7
+- Update version number
+
+* Wed Mar 30 2022 NetKnights GmbH <release@netknights.it> 3.7dev6
+- Update version number
+
+* Thu Nov 18 2021 NetKnights GmbH <release@netknights.it> 3.6.3
+- Update version number
+
+* Thu Jul 22 2021 NetKnights GmbH <release@netknights.it> 3.6.2
+- Update version number
+
+* Mon Jul 19 2021 NetKnights GmbH <release@netknights.it> 3.6.1
 - Update version number
 
 * Wed Mar 24 2021 NetKnights GmbH <release@netknights.it> 3.5.2
