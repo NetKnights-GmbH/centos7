@@ -1,3 +1,56 @@
+* Fri Jul 14 2023 NetKnights GmbH <release@netknights.it> 3.9
+
+    Features:
+    * Tokentype: Application Specific password (#3260, #3585)
+    * Add machine grouping aka service IDs to be used with
+      application specific passwords and SSH keys (#3300, #3246, #3533, #3573)
+
+    Enhancements:
+    * Add event handler to set token application like "offline" (#3335)
+    * Add chalenge response with pin reset for better usability with
+      client plugins (#3261)
+    * Allow to force description during rollout (#3469)
+    * Allow an administrator to explicitly (only) set a description (#3609)
+    * Add verify enrollment for indexed secret token (#3452)
+    * Handle declined PUSH requests so that plugins know, that they do
+      not need to poll anymore (#3599)
+    * Clean up the usage of PI_NODE and AUDIT_SERVERNAME to allow a
+      consistent naming in the audit log (#3589)
+    * Remove PI_VASCO_LIB error message in log file (#3470)
+    * Add event handler status to audit log (#3430)
+    * Optimize URL decoding for different clients (#3337)
+    * Upgrade to SQLAlchemy 1.4 (#2798)
+    * UI: Multiselect policies in WebUI (#3493)
+    * UI: Make the whole header of an accordion clickable (#3425)
+    * UI: Improved grouping in the system menu (#3419)
+    * UI: Add italian translation (#3508)
+    * Docs: Improve documentation for /validate/check-enrollment (#3507)
+    * Docs: Improve policy mangle documentation (#3565)
+    * Docs: Add a detailed plugin guide how to write fully functional plugins (#3650)
+    * Docs: Fix description of preferred_client_mode (#3661)
+    * Infrastructure: Add Bandit and GraphQL runs for pull requests
+
+    Fixes:
+    * Fix /auth endpoint in case no password is available (#3438)
+    * Return all images as data:image, so that they can be used by the
+      client plugins (#3450)
+    * Fix typo in policy definition to fix revoke permission (#3608)
+    * Add missing thread ID to audit log in case of /validate/check (#3578)
+    * Fix pi-manage backup with non-default SQL port (#3570)
+    * Fix SQLAlchemy warnings (#3547)
+    * Fix problems with naming object "." or ".." (#3409)
+    * Use more secure secrets module instead of urandom (#3623)
+    * UI: More explicit description for entering PIN or password (#3370)
+    * Fetch error when decoding JWT (#3028)
+    * UI: Fetch error when user does not exist (#3672)
+    * Ensure subprocess calls are secure (#3625)
+    * TOTP code cleanup: Use time2counter wherever necessary (#3664)
+    * Fix totp.get_otp test function (#3660)
+    * Fix typos (#3661)
+    * Update docs about TOTP apps, that have limited capabilities (#3634)
+    * Enhance schemas for urlopen (#3622)
+    * Add timeout to requests calls (#3621)
+
 * Mon Feb 06 2023 NetKnights GmbH <release@netknights.it> 3.8.1
 
     Fixes:
