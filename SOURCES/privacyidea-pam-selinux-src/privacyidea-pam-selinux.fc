@@ -1,0 +1,4 @@
+# Dateikontext für pam_privacyidea.so
+
+/usr/lib64/security/pam_privacyidea.so    --    system_u:object_r:admin_home_t:s0
+/dev/dm-0                                 --    system_u:object_r:admin_home_t:s0

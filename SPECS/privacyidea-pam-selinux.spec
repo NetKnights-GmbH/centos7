@@ -1,31 +1,30 @@
 %global selinuxtype	targeted
 %global moduletype	services
-%global modulenames	privacyidea-selinux	
-%define release 3
+%global modulenames	privacyidea-pam-selinux
+%define release 1
 
 # Usage: _format var format
 # Expand 'modulenames' into various formats as needed
 # Format must contain '$x' somewhere to do anything useful
-%global _format() export %1=""; for x in %{modulenames}; do %1+="%2 "; done;
+%global _format() export %1=""; for x in %{modulenames}; do %1+=%2; %1+=" "; done;
 
 # Package information
-Name:			privacyidea-selinux
+Name:			privacyidea-pam-selinux
 Version:		1.0	
 Release:		%{release}%{?dist}
 License:		GPLv2
 Group:			System Environment/Base
-Summary:		SELinux Policy for privacyidea privacyidea-server 
+Summary:		SELinux Policy for pam-privacyidea.so module 
 BuildArch:		noarch
 URL:			https://privacyidea.org
 Requires(post):		selinux-policy-base >= %{selinux_policyver}, selinux-policy-targeted >= %{selinux_policyver}, policycoreutils, libselinux-utils
 BuildRequires:		selinux-policy selinux-policy-devel
-Source1:		privacyidea-selinux-src
+Source1:		privacyidea-pam-selinux-src
 
 %description
-privacyidea-selinux provides a SELinux polices module
-for using with the privacyidea/ privacyidea-server packages
-based on Centos OS, that allows httpd service
-communicate with the services mysql and ldap
+privacyidea-pam-selinux provides an SELinux policy module
+for use with the privacyIDEA server that allows the pam module 
+to communicate correctly with the privacyIDEA sever.
 
 %prep
 rm -rf %{_builddir}/%{name}-%{version}
@@ -61,7 +60,7 @@ install -m 0644 $MODULES %{buildroot}%{_datadir}/selinux/packages
 
 %postun
 # Uninstall module
-[[ $1 -eq 0 ]] && %selinux_modules_uninstall -s %{selinuxtype} privacyidea-selinux
+[[ $1 -eq 0 ]] && %selinux_modules_uninstall -s %{selinuxtype} privacyidea-pam-selinux
 [[ -e /var/log/privacyidea ]] && restorecon -R -v /var/log/privacyidea > /dev/null 2>&1
 
 %posttrans
@@ -69,7 +68,6 @@ install -m 0644 $MODULES %{buildroot}%{_datadir}/selinux/packages
 
 %clean
 rm -rf %{_builddir}
-rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(0644,root,root,0755)
@@ -77,5 +75,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/selinux/devel/include/%{moduletype}/*.if
 
 %changelog
-* Fri Jun 19 2020 Julio Storch <julio.storch@netknights.it> - 1.0.0-1
-- SElinux Build release
+* Tue Sep 26 2023 Julio Storch <julio.storch@netknights.it> - 1.0.0-1
+- SElinux PAM build release
