@@ -44,8 +44,11 @@ mkdir -p %{_tmp_build_dir}
 git clone --recurse-submodules --branch v%{version} --depth 1 https://github.com/privacyidea/privacyidea.git %{_tmp_build_dir}/privacyidea
 
 %build
+%if %{rhel} < 9
 python3.9 -m venv /opt/privacyidea
-#virtualenv /opt/privacyidea
+%else
+python3 -m venv /opt/privacyidea
+%endif
 
 source /opt/privacyidea/bin/activate
 pip install --upgrade pip setuptools

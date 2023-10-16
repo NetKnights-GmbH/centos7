@@ -1,4 +1,3 @@
-# Schnittstelle für pam_privacyidea.so
-
+# interface for pam_privacyidea.so
 type pam_privacyidea, file_type;
 type pam_privacyidea, tcp_socket;

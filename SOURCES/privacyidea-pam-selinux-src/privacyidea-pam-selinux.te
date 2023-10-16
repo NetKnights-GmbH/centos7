@@ -1,5 +1,4 @@
-# Type Enforcement-Regeln für pam_privacyidea.so
-
+# type enforcement rules for pam_privacyidea.so
 module privacyidea-pam-selinux 1.0;
 
 require {
@@ -10,9 +9,8 @@ require {
     class tcp_socket name_connect;
 }
 
-# Regel 1: Erlaube dem Prozess mit dem Typ "sshd_t", die Datei "pam_privacyidea.so" mit dem Kontext "admin_home_t" zu lesen und zu öffnen.
-
+# Rule 1: Allow the process with type "sshd_t" to read and open the file "pam_privacyidea.so" with context "admin_home_t".
 allow sshd_t admin_home_t:file { read getattr open };
 
-# Regel 2: Erlaube dem Prozess mit dem Typ "sshd_t" eine Verbindung zum TCP-Port 443 (http_port_t) herzustellen.
+# Rule 2: Allow the process with type "sshd_t" to connect to TCP port 443 (http_port_t).
 allow sshd_t http_port_t:tcp_socket name_connect;
