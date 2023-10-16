@@ -1,5 +1,5 @@
 # variable for holding OS level RedHat-based Linux Distributions
-        OS=${shell grep VERSION_ID= /etc/os-release | cut -d = -f 2| cut -c 2}
+	OS=${shell grep VERSION_ID= /etc/os-release | cut -d = -f 2| cut -c 2}
 
 info:
 	@echo "buildrpm          - build a new RPM from a GitHub tag"
@@ -15,18 +15,18 @@ info:
 
 buildrpm:
 ifndef VERSION
-        $(eval VERSION := $(shell curl --silent https://api.github.com/repos/privacyidea/privacyidea/tags | head | grep -Po '"name": "v?\K.*?(?=")' ))
-        @echo "Warning: VERSION not set. Using the latest tag from GitHub: $(VERSION)"
+	$(eval VERSION := $(shell curl --silent https://api.github.com/repos/privacyidea/privacyidea/tags | head | grep -Po '"name": "v?\K.*?(?=")' ))
+	@echo "Warning: VERSION not set. Using the latest tag from GitHub: $(VERSION)"
 endif
-        PI_VERSION=${VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea.spec
-        PI_VERSION=${VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-server.spec
+	PI_VERSION=${VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea.spec
+	PI_VERSION=${VERSION} rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-server.spec
 
 buildradius:
 ifndef VERSION
-        $(eval VERSION := $(shell curl --silent https://api.github.com/repos/privacyidea/FreeRADIUS/tags | head | grep -Po '"name": "v?\K.*?(?=")' ))
-        @echo "Warning: VERSION not set. Using the latest tag from GitHub: $(VERSION)"
+	$(eval VERSION := $(shell curl --silent https://api.github.com/repos/privacyidea/FreeRADIUS/tags | head | grep -Po '"name": "v?\K.*?(?=")' ))
+	@echo "Warning: VERSION not set. Using the latest tag from GitHub: $(VERSION)"
 endif
-        PI_VERSION=$(VERSION) rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-radius.spec
+	PI_VERSION=$(VERSION) rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-radius.spec
 
 buildselinux:
 	rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-selinux.spec
@@ -35,15 +35,15 @@ buildpamselinux:
 	rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-pam-selinux.spec
 
 signrpm: buildrpm
-        find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
+	find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
 
 fill-release-repo: signrpm
-        mkdir -p repository/centos/$(OS)/
-        cp -r RPMS/* repository/centos/$(OS)/
+	mkdir -p repository/centos/$(OS)/
+	cp -r RPMS/* repository/centos/$(OS)/
 
 fill-devel-repo: signrpm
-        mkdir -p repository/centos-devel/$(OS)/
-        cp -r RPMS/* repository/centos-devel/$(OS)/
+	mkdir -p repository/centos-devel/$(OS)/
+	cp -r RPMS/* repository/centos-devel/$(OS)/
 
 make-repo:
 	# Fetch old packages
