@@ -3,6 +3,7 @@
 %define version %{getenv:PI_VERSION}
 %define unmangled_version %{version}
 %define release 1
+%undefine __brp_mangle_shebangs
 # Somehow stripping the '.comment' section from the Pillow libraries breaks the strip-tool,
 # so we skip stripping and byte-compile in the postinstall scripts, otherwise Pillow will fail.
 %global __os_install_post %(echo '%{__os_install_post}' | sed -re 's!/usr/lib[^[:space:]]*/((brp-python-bytecompile)|(brp-strip-comment-note))[[:space:]].*$!!g')
@@ -18,15 +19,10 @@ Summary:        two-factor authentication system e.g. for OTP devices
 Group:          Applications/System
 License:        AGPLv3
 URL:            https://www.privacyidea.org
-Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
+Packager:       NetKnights GmbH <release@netknights.it>
 ExclusiveArch:  x86_64
 AutoReqProv:    no
-
-%if 0%{centos_ver} == 7
-BuildRequires: python-virtualenv, git
-%else
-BuildRequires: python3-virtualenv, git
-%endif
+BuildRequires:  python3-virtualenv, git
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -48,10 +44,10 @@ mkdir -p %{_tmp_build_dir}
 git clone --recurse-submodules --branch v%{version} --depth 1 https://github.com/privacyidea/privacyidea.git %{_tmp_build_dir}/privacyidea
 
 %build
-%if 0%{centos_ver} == 7
-virtualenv -p /usr/bin/python3 /opt/privacyidea
+%if %{rhel} < 9
+python3.9 -m venv /opt/privacyidea
 %else
-virtualenv /opt/privacyidea
+python3 -m venv /opt/privacyidea
 %endif
 
 source /opt/privacyidea/bin/activate
