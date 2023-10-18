@@ -22,7 +22,10 @@ URL:            https://www.privacyidea.org
 Packager:       NetKnights GmbH <release@netknights.it>
 ExclusiveArch:  x86_64
 AutoReqProv:    no
+%if 0%{?rhel} < 9
 BuildRequires:  python3-virtualenv, git
+%endif
+BuildRequires:  git
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
