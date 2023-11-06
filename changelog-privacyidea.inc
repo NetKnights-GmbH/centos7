@@ -1,4 +1,4 @@
-* Fri Jul 14 2023 NetKnights GmbH <release@netknights.it> 3.9
+* Mon Nov 06 2023 NetKnights GmbH <release@netknights.it> 3.9.1
 
     Features:
     * Tokentype: Application Specific password (#3260, #3585)
@@ -31,6 +31,11 @@
     * Infrastructure: Add Bandit and GraphQL runs for pull requests
 
     Fixes:
+    * Set correct start sequence for empty tables
+    * Fix pi-manage backup
+    * Add privacyIDEA CP to list of clients, that do not
+      need to be unquoted. (#3770)
+    * Fix problem with token description and verify enrollment (#3798)
     * Fix /auth endpoint in case no password is available (#3438)
     * Return all images as data:image, so that they can be used by the
       client plugins (#3450)
