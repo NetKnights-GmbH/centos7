@@ -1,3 +1,9 @@
+* Wed Dec 20 2023 NetKnights GmbH <release@netknights.it> 3.9.2
+
+  Fixes:
+  * Allow verify-enroll for paper token and TAN token (#3809)
+  * Fix offline data, when PIN is behind the OTP value (#3831)
+
 * Mon Nov 06 2023 NetKnights GmbH <release@netknights.it> 3.9.1
 
     Features:
