@@ -1,3 +1,8 @@
+* Thu Apr 04 2024 NetKnights GmbH <release@netknights.it> 3.9.3dev1
+
+  Fixes:
+  * Fix creation of database tables with galera cluster (#3863)
+
 * Wed Dec 20 2023 NetKnights GmbH <release@netknights.it> 3.9.2
 
   Fixes:
