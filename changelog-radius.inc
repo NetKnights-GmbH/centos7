@@ -1,3 +1,9 @@
+* Thu Aug 15 2024 Netknights GmbH <release@netknights.it> 3.4.3
+- Guess encoding of username to better handle special characters
+- Add SSL check using a CA path parameter (#59) by @lferrarotti74
+- Add "Message-Authenticator" to reply to mitigate CVE-2024-3596 (#67) by
+  @basvandervlies
+
 * Fri Aug 27 2021 Netknights GmbH <release@netknights.it> 3.4.2
 - Better logging
 - Update privacyidea_radius.pm (#48)
