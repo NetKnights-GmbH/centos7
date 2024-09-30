@@ -1,3 +1,81 @@
+* Mon Sep 30 2024 NetKnights GmbH <release@netknights.it> 3.10.1dev1
+
+  Features:
+  * Node-specific realms (#3758)
+    * Add node names and UUIDs to database (#3757)
+    * Add, remove and configure realms with node-specific resolver configuration (API and WebUI)
+  * Add token containers (#1291)
+    * There are three container types (generic, smartphone, and yubikey) which can contain different token types
+    * A container can have one owner and multiple tokens
+    * Tokens can be added to a container on the fly during the enrollment, on the token, user and container page
+    * Perform actions on all tokens of a container (enable, disable, delete)
+    * Event Handler
+    * Admin and user policies (similar to tokens)
+    * Added container serial and type as columns to the audit log
+
+  Enhancements:
+  * Drop support of Python 3.6 and enable Python 3.11 and 3.12 (#3593, #3711, #3760)
+  * UI: Capitalize headings
+  * UI: Enable/disable tokens, reset the fail counter, delete tokens and unassign user from token in user details
+  * UI: The support button in the footer will now initiate an email to ease the request of support (#3919)
+  * UI: Add multiple choice elements for realms and resolvers (#3793)
+  * UI: Hide enroll token menu entry, if no token-type is allowed (#4053)
+  * MS CA Connector: Added certificate revocation (#3316)
+  * Email and Phone number attributes can be used in challenge texts (#2917)
+  * Validity of JWT can be configured (#3996)
+  * PUSH: Optionally, the user can be required to press a number or character that is displayed on login
+                to complete the push authentication (#3897)
+  * PUSH: Add event handler for declining push requests (#3632)
+  * PUSH: Allow tags in PUSH notifications (#3227)
+  * Added "Authentication" condition to event handlers, which can be used to distinguish between
+    SUCCESS, FAILED and CHALLENGE (#3886)
+  * Enrollment via validate can have a custom enrollment text (#3884)
+  * Allow case insensitive usernames in policies (#3281)
+  * Cleanup of expired challenges externally (#3920)
+  * Tools: Migration of several tools to the click framework (#2498, #3769)
+  * Add functionality to dump token data to YAML (#3005)
+  * Allow extended notes on policies (#1814, #3895)
+  * WebAuthn: Allow offline usage (#3764, #3857, #3866)
+  * Add user-agent to audit log (#3856)
+  * Check Yubikey OTP length before validating (#3746)
+  * Check secret length for Yubikey token during enrollment (#3725)
+  * Enable user-agent version in subscription checks (#3800)
+  * Enhance offline token to allow refill for WebAuthn tokens (#3764)
+  * Add policy to disable PIN+OTP check when using challenge-response (#4051)
+  * Add privacyIDEA version to exported data and warn during import if versions mismatch (#4055)
+  * Make token description available as a tag in the user-notification handler (#3763)
+  * Add "creator" tag to QR-code for enrollment (#3902)
+  * Add email validation to enrollment (#3918)
+
+  Fixes:
+  * UI: Follow general button design for Container in token view (#4089)
+  * UI: Audit action filter now working properly (#4093)
+  * UI: Fix empty configuration views (#4068)
+  * WebAuthn: Properly check user verification during authentication (#4083)
+  * Enhance comparison for event condition `user_token_number` (#4049)
+  * Fix token rollover with 2step enrollment and PIN policies (#4037)
+  * UI: Added translation for page navigation in the user details and list pages
+  * UI: Fixed open and close all actions in create new policy and conditions in create new event handler
+  * UI: Removed duplicated controller calls resulting in duplicated API calls (#3421)
+  * UI: Cancel poll-transaction in case another token is used (#3861)
+  * UI: Fix reset of user filters when changing user view (#3543)
+  * UI: Fix error during generation of drop-down lists in UI (#3937)
+  * UI: Hide "unassign" button in token view if the user does not have the proper rights (#3966)
+  * When attaching a token to a machine, validate the serial and the application (#4019)
+  * The realm of the token owner can not be removed from the token, unless the token is unassigned from the user (#3986)
+  * PUSH: Declined PUSH requests are now saved as such and can no longer be polled (#4026)
+  * PUSH: Label policies are now considered for PUSH token enrollment via validate (#3883)
+  * Verify enrollment now works for indexed secret token (#3869)
+  * Remove duplicate messages from response (#3989)
+  * Lazy translation evaluation for static strings (#3721)
+  * Truncate token description (#3747)
+  * Use uppercase hash name for google-authenticator URLs (#3812)
+  * Improve logging of event handler status in Audit log (#3781)
+  * Update config description of LDAP resolver to remove warning (#3854)
+  * Add missing index to Challenge.expiration column (#3920)
+  * Fix usage of challenge text and token defaults policies during multi-challenge enrollment (#3928, #3976)
+  * Enable sms/email text policies when verifying enrollment (#3971)
+
 * Tue Apr 09 2024 NetKnights GmbH <release@netknights.it> 3.9.3
 
   Fixes:
