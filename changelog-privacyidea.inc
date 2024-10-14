@@ -1,4 +1,4 @@
-* Mon Sep 30 2024 NetKnights GmbH <release@netknights.it> 3.10.1dev1
+* Mon Oct 14 2024 NetKnights GmbH <release@netknights.it> 3.10.1
 
   Features:
   * Node-specific realms (#3758)
