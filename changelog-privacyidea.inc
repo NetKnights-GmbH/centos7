@@ -1,4 +1,4 @@
-* Wed Dec 10 2024 NetKnights GmbH <release@netknights.it> 3.10.2dev2
+* Tue Dec 10 2024 NetKnights GmbH <release@netknights.it> 3.10.2dev2
 
   Fixes:
   * Fix some problems with Oracle databases during upgrade (#4105)
