@@ -1,3 +1,8 @@
+* Mon Feb 03 2025 NetKnights GmbH <release@netknights.it> 3.11dev2
+
+  Features:
+  * Passkeys (#4024)
+
 * Tue Dec 17 2024 NetKnights GmbH <release@netknights.it> 3.10.2
 
   Fixes:
