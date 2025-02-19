@@ -1,4 +1,6 @@
-* Mon Feb 03 2025 NetKnights GmbH <release@netknights.it> 3.11dev2
+* Wed Feb 19 2025 NetKnights GmbH <release@netknights.it> 3.11dev3
+- Update version number
+
 - Update version number
 
 * Tue Dec 17 2024 NetKnights GmbH <release@netknights.it> 3.10.2

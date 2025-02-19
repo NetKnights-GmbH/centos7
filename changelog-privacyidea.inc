@@ -1,7 +1,37 @@
-* Mon Feb 03 2025 NetKnights GmbH <release@netknights.it> 3.11dev2
+* Wed Feb 19 2025 NetKnights GmbH <release@netknights.it> 3.11dev3
 
   Features:
   * Passkeys (#4024)
+  * New pi-token-janitor (#3955)
+    * Add ability to remove tokeninfo attribute with token janitor (#3736)
+    * Allow token janitor to run token owner queries (#3830)
+    * Match/Export range of token serials (#3949)
+    * Preliminary Token janitor functions for containers (#4033)
+  * Containers Part 2 (#3950)
+    * Synchronize Smartphone Container with Server
+    * Rollover a Smartphone Container
+    * Container templates
+
+  Enhancements:
+  * Health check API endpoint (#1115)
+  * UI: Notification for new versions in the UI/Dashboard (#2560)
+  * Allow the "," sign to be used in a text field of a policy (#3667)
+  * PUSH: Send PUSH QR Code Image via UserNotification Handler (#4069)
+  * PUSH: Add push require-presence answer as tag for challenge text (#4135)
+  * Change AUTHTYPE.SASL_KERBEROS behaviour if upn is present in userinfo values (#4008)
+  * Add otpauth link to returned data when using `enroll_via_multichallenge` (#4156)
+  * Improve LDAP-resolver error handling and logging and add timing information (#4219)
+
+  Fixes:
+  * WebAuthn: Better error message for users - enrolling the same webauth token twice (#3807)
+  * WebAuthn: Token that require user for enrollment (webauthn) are created after error (#4133)
+  * Fix typo in Webhook event handler content type (#4119)
+  * Add option to token-janitor to avoid marking tokens as orphaned on resolver error (#4204)
+  * Allow RequestMangler Handler to update the user object in the request (#3845)
+  * UI: Fix Lost token functionality in UI (#4196)
+  * `check_base_action` pre-policy only evaluates the first realm of a token (#4011)
+  * Fix that deleting a policy results in a 'failed' audit log entry (#1720)
+  * Max token policy ignored with enroll via multi challenge (#4146)
 
 * Tue Dec 17 2024 NetKnights GmbH <release@netknights.it> 3.10.2
 
