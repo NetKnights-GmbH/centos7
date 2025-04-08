@@ -1,4 +1,4 @@
-* Fri Apr 04 2025 NetKnights GmbH <release@netknights.it> 3.11.1dev1
+* Wed Apr 09 2025 NetKnights GmbH <release@netknights.it> 3.11.1
 
   Fixes:
   * UI: Reload of user list, doubled delete button, container pagination (#4277)
