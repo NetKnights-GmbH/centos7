@@ -1,3 +1,12 @@
+* Tue Apr 29 2025 NetKnights GmbH <release@netknights.it> 3.11.2
+
+  Fixes:
+  * API: `/validate/initialize` require `type` parameter and add transaction id to details (#4366)
+  * UI: Fix pre-filled user for assigning tokens during rollout (#4355)
+  * WebAuthn: Correct format for evaluation of userHandle parameter (#4357)
+  * Add creation date to token and container info (#4360, #4376)
+  * Fix broken audit entry during enrollment via validate (#4362)
+
 * Wed Apr 09 2025 NetKnights GmbH <release@netknights.it> 3.11.1
 
   Fixes:
