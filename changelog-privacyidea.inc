@@ -1,3 +1,12 @@
+* Wed Jul 02 2025 NetKnights GmbH <release@netknights.it> 3.11.4
+
+  Fixes:
+  * Fix wrong token assignment view tokens when using the usercache (#4454)
+  * Remove superfluous error message when max_token_user/realm is set (#4434)
+  * Fix logging passwords in debug mode with some specific token tpes (#4457)
+  * Fix error when wrong key is used in SQL-resolver mapping  (#4461)
+  * Fix error when listing containers with non-existing users/resolver errors (#4464)
+
 * Wed May 28 2025 NetKnights GmbH <release@netknights.it> 3.11.3
 
   Enhancements:
