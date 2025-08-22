@@ -125,7 +125,7 @@ fi
 ####################################################
 # Update DB
 # Upgrade the database
-/opt/privacyidea/bin/privacyidea-schema-upgrade /opt/privacyidea/lib/privacyidea/migrations 2>&1 > /dev/null
+/opt/privacyidea/bin/privacyidea-schema-upgrade
 
 ###################################################
 # The webserver
