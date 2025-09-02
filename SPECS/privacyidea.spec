@@ -51,7 +51,7 @@ git clone --recurse-submodules --branch v%{version} --depth 1 https://github.com
 pushd %{_tmp_build_dir}/privacyidea/privacyidea/static_new
 npm ci
 npm run-script ng build
-rm -rf node_modules
+find . -mindepth 1 -maxdepth 1 ! -name 'dist' -exec rm -rf {} +
 popd
 
 %if %{rhel} < 9
