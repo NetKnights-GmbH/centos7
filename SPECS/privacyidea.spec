@@ -23,7 +23,7 @@ Packager:       NetKnights GmbH <release@netknights.it>
 ExclusiveArch:  x86_64
 AutoReqProv:    no
 %if 0%{?rhel} < 9
-BuildRequires:  python3-virtualenv, nodejs, npm, git
+BuildRequires:  python3-virtualenv
 %endif
 BuildRequires:  nodejs, npm, git 
 
