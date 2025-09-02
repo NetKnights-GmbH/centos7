@@ -23,9 +23,9 @@ Packager:       NetKnights GmbH <release@netknights.it>
 ExclusiveArch:  x86_64
 AutoReqProv:    no
 %if 0%{?rhel} < 9
-BuildRequires:  python3-virtualenv, git
+BuildRequires:  python3-virtualenv
 %endif
-BuildRequires:  git
+BuildRequires:  nodejs, npm, git 
 
 %description
  privacyIDEA: identity, multifactor authentication, authorization.
@@ -47,6 +47,13 @@ mkdir -p %{_tmp_build_dir}
 git clone --recurse-submodules --branch v%{version} --depth 1 https://github.com/privacyidea/privacyidea.git %{_tmp_build_dir}/privacyidea
 
 %build
+#  npm ci && ng build
+pushd %{_tmp_build_dir}/privacyidea/privacyidea/static_new
+npm ci
+npm run-script ng build
+find . -mindepth 1 -maxdepth 1 ! -name 'dist' -exec rm -rf {} +
+popd
+
 %if %{rhel} < 9
 python3.9 -m venv /opt/privacyidea
 %else
