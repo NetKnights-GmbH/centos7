@@ -1,0 +1,4 @@
+# -*- text -*-
+#
+$INCLUDE dictionary.rfc2865
+$INCLUDE dictionary.rfc2869

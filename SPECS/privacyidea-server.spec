@@ -26,6 +26,10 @@ Source1: pi.cfg
 Source2: privacyideaapp.wsgi
 Source3: privacyidea.conf
 Source4: privacyidea-cron
+Source5: dictionary
+Source6: dictionary.rfc2865
+Source7: dictionary.rfc2869
+Source8: NetKnights.pem
 # BuildRequires:
 
 %description
@@ -48,11 +52,11 @@ install -m 640 %{SOURCE1} $RPM_BUILD_ROOT/etc/privacyidea
 install -m 644 %{SOURCE2} $RPM_BUILD_ROOT/etc/privacyidea
 install -m 644 %{SOURCE3} $RPM_BUILD_ROOT/etc/httpd/conf.d/
 install -m 644 %{SOURCE4} $RPM_BUILD_ROOT/etc/cron.d/
+install -m 644 %{SOURCE5} $RPM_BUILD_ROOT/etc/privacyidea
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT/etc/privacyidea
+install -m 644 %{SOURCE7} $RPM_BUILD_ROOT/etc/privacyidea
+install -m 644 %{SOURCE8} $RPM_BUILD_ROOT/etc/privacyidea
 ##################################################
-# Get the NetKnights public key and other configs
-curl https://raw.githubusercontent.com/privacyidea/privacyidea/master/deploy/privacyidea/NetKnights.pem -o $RPM_BUILD_ROOT/etc/privacyidea/NetKnights.pem
-curl https://raw.githubusercontent.com/privacyidea/privacyidea/master/deploy/privacyidea/dictionary -o $RPM_BUILD_ROOT/etc/privacyidea/dictionary
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
