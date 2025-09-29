@@ -1,4 +1,4 @@
-* Sep Mon 29 2025 NetKnights GmbH <release@netknights.it> 3.12
+* Mon Sep 29 2025 NetKnights GmbH <release@netknights.it> 3.12
 
   Features:
   * Entra ID and Keycloak resolver (#4217)
