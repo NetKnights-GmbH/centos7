@@ -63,7 +63,7 @@ python3 -m venv /opt/privacyidea
 source /opt/privacyidea/bin/activate
 pip install --upgrade pip setuptools
 pip install -r %{_tmp_build_dir}/privacyidea/requirements.txt
-pip install %{_tmp_build_dir}/privacyidea/
+SETUPTOOLS_SCM_PRETEND_VERSION_FOR_PRIVACYIDEA=v%{version} pip install %{_tmp_build_dir}/privacyidea/
 
 %install
 mkdir -p $RPM_BUILD_ROOT/opt
