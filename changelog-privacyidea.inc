@@ -1,3 +1,8 @@
+* Fri Mar 13 2026 NetKnights GmbH <release@netknights.it> 3.12.3
+
+   Fixes:
+  * Fixed a bug that caused the user_verification to not be loaded correctly when authenticating with a WebAuthn token.
+
 * Thu Dec 11 2025 NetKnights GmbH <release@netknights.it> 3.12.2
 
   Enhancements:
