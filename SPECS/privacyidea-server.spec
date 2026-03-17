@@ -153,6 +153,7 @@ chown -R $USERNAME /etc/privacyidea/gpg
 ln -sf /opt/privacyidea/bin/pi-manage /usr/bin/
 ln -sf /opt/privacyidea/bin/privacyidea-diag /usr/bin/
 ln -sf /opt/privacyidea/bin/privacyidea-token-janitor /usr/bin/
+ln -sf /opt/privacyidea/bin/pi-tokenjanitor /usr/bin/
 
 %changelog
 %include %{_topdir}/changelog-server.inc
