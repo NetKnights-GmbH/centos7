@@ -54,8 +54,8 @@ npm run-script ng build
 find . -mindepth 1 -maxdepth 1 ! -name 'dist' -exec rm -rf {} +
 popd
 
-%if %{rhel} < 9
-python3.9 -m venv /opt/privacyidea
+%if %{rhel} < 10
+python3.11 -m venv /opt/privacyidea
 %else
 python3 -m venv /opt/privacyidea
 %endif
