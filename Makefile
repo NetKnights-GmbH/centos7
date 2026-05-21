@@ -1,5 +1,5 @@
 # variable for holding OS level RedHat-based Linux Distributions
-	OS=$(source /etc/os-release && echo "${VERSION_ID%%.*}")
+	OS=$(shell . /etc/os-release && echo $${VERSION_ID%%.*})
 
 info:
 	@echo "buildrpm          - build a new RPM from a GitHub tag"
