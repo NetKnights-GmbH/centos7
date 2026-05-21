@@ -1,4 +1,4 @@
-* Thu May 07 2026 NetKnights GmbH <release@netknights.it> 3.13.1dev3
+* Thu May 21 2026 NetKnights GmbH <release@netknights.it> 3.13.1
 
   * The new WebUI beta has been updated to the current state of development. The menu is now back to the known top
     side menu with slightly optimized menu structure, because having the horizontal space is better for displaying our
