@@ -1,3 +1,11 @@
+* Wed Jun 10 2026 NetKnights GmbH <release@netknights.it> 3.13.2
+
+  Fixes:
+  * Fixed migration script of 3.13.1 to be compatible with Galera
+
+  Enhancements:
+  * Security enhancements
+
 * Thu May 21 2026 NetKnights GmbH <release@netknights.it> 3.13.1
 
   * The new WebUI beta has been updated to the current state of development. The menu is now back to the known top
