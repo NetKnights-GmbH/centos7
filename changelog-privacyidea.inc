@@ -1,3 +1,11 @@
+* Wed Jun 24 2026 NetKnights GmbH <release@netknights.it> 3.13.3
+
+  Fixes:
+  * Fixed migration scripts to be compatible with Oracle (tested with 21c).
+  * Fixed interaction of reset_all_user_tokens with FIDO2 token. (#5340)
+  * Fixed an issue that would cause /healthz/resolversz to return HTTP error 500. (#5459)
+  * Fixed encoding of parameters in the HTTP resolvers. (#5455)
+
 * Wed Jun 10 2026 NetKnights GmbH <release@netknights.it> 3.13.2
 
   Fixes:
