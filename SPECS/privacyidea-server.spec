@@ -15,7 +15,7 @@ URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 ExclusiveArch:  x86_64
 
-Requires:       privacyidea = %{version}, mariadb-server, httpd, mod_ssl, shadow-utils, rng-tools
+Requires:       privacyidea = %{version}, mariadb-server, httpd, mod_ssl, openssl, shadow-utils, rng-tools
 %if 0%{?rhel} < 10
 Requires: python3.11-mod_wsgi, python3.11
 %else
@@ -133,13 +133,98 @@ fi
 
 ###################################################
 # The webserver
-# first we need to create the self-signed certificates on CentOS 8.
-[[ -x /usr/libexec/httpd-ssl-gencerts ]] && /usr/libexec/httpd-ssl-gencerts
-# then we can disable the default configurations
-cp /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable 2>&1 || true > /dev/null
-cp /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable 2>&1 || true > /dev/null
+
+SSL_CERT="/etc/pki/tls/certs/localhost.crt"
+SSL_KEY="/etc/pki/tls/private/localhost.key"
+
+#
+# RHEL 8 / CentOS 8 may provide httpd-ssl-gencerts.
+# Use it if available to preserve the old behaviour.
+#
+if [ ! -s "$SSL_CERT" ] || [ ! -s "$SSL_KEY" ]; then
+    if [ -x /usr/libexec/httpd-ssl-gencerts ]; then
+        /usr/libexec/httpd-ssl-gencerts || true
+    fi
+fi
+
+#
+# RHEL 9 and RHEL 10 do not reliably provide/use
+# /usr/libexec/httpd-ssl-gencerts.
+#
+# Create the traditional mod_ssl localhost certificate ourselves
+# if no certificate/key pair was created by the distribution.
+#
+# IMPORTANT:
+# Never replace an existing certificate. The administrator may already
+# have installed a production certificate at these locations.
+#
+if [ ! -s "$SSL_CERT" ] || [ ! -s "$SSL_KEY" ]; then
+
+    echo "Creating self-signed Apache TLS certificate..."
+
+    mkdir -p /etc/pki/tls/certs
+    mkdir -p /etc/pki/tls/private
+
+    HOSTNAME_SHORT="$(hostname -s 2>/dev/null || hostname)"
+    HOSTNAME_FQDN="$(hostname -f 2>/dev/null || hostname)"
+
+    # hostname -f can return an empty value on systems without working DNS
+    if [ -z "$HOSTNAME_FQDN" ]; then
+        HOSTNAME_FQDN="$HOSTNAME_SHORT"
+    fi
+
+    # If only one half of an incomplete certificate/key pair exists,
+    # remove it before generating a matching new pair.
+    rm -f "$SSL_CERT" "$SSL_KEY"
+
+    umask 077
+
+    openssl req \
+        -x509 \
+        -newkey rsa:3072 \
+        -sha256 \
+        -nodes \
+        -days 3650 \
+        -keyout "$SSL_KEY" \
+        -out "$SSL_CERT" \
+        -subj "/CN=${HOSTNAME_FQDN}" \
+        -addext "subjectAltName=DNS:${HOSTNAME_FQDN},DNS:${HOSTNAME_SHORT},DNS:localhost"
+
+    chmod 600 "$SSL_KEY"
+    chmod 644 "$SSL_CERT"
+
+    # Restore SELinux contexts if SELinux is installed/enabled.
+    if command -v restorecon >/dev/null 2>&1; then
+        restorecon "$SSL_KEY" "$SSL_CERT" || true
+    fi
+fi
+
+#
+# Disable the default mod_ssl configuration because privacyidea.conf
+# provides the HTTPS VirtualHost.
+#
+# Preserve the original configuration only once. On package upgrades
+# ssl.conf may already contain our placeholder.
+#
+if [ -f /etc/httpd/conf.d/ssl.conf ]; then
+    if [ ! -f /etc/httpd/conf.d/ssl.conf.disable ]; then
+        cp -a /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.disable
+    fi
+fi
+
+if [ -f /etc/httpd/conf.d/welcome.conf ]; then
+    if [ ! -f /etc/httpd/conf.d/welcome.conf.disable ]; then
+        cp -a /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.disable
+    fi
+fi
+
 echo "# placeholder to avoid conflict with privacyidea.conf" > /etc/httpd/conf.d/ssl.conf
 echo "# placeholder to avoid conflict with privacyidea.conf" > /etc/httpd/conf.d/welcome.conf
+
+# Verify Apache configuration before restarting.
+# Do not hide configuration errors.
+httpd -t
+
 # finally restart the webserver
 systemctl restart httpd
 
