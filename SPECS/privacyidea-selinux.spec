@@ -1,7 +1,7 @@
 %global selinuxtype	targeted
 %global moduletype	services
 %global modulenames	privacyidea-selinux	
-%define release 3
+%define release 4
 
 # Usage: _format var format
 # Expand 'modulenames' into various formats as needed
