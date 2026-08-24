@@ -59,6 +59,10 @@ install -m 0644 $MODULES %{buildroot}%{_datadir}/selinux/packages
 %_format MODULES %{_datadir}/selinux/packages/$x.pp.bz2
 %selinux_modules_install -s %{selinuxtype} $MODULES
 
+if [ -d /var/log/privacyidea ]; then
+    restorecon -R /var/log/privacyidea || :
+fi
+
 %postun
 # Uninstall module
 [[ $1 -eq 0 ]] && %selinux_modules_uninstall -s %{selinuxtype} privacyidea-selinux
