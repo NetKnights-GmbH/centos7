@@ -5,7 +5,6 @@ require {
         type httpd_t;
         type mysqld_port_t;
         class tcp_socket name_connect;
-        class file open;
 }
 
 #============= httpd_t ==============
