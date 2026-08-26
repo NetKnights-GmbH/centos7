@@ -75,8 +75,8 @@ mkdir -p /var/log/privacyidea
 mkdir -p /var/lib/privacyidea
 touch /var/log/privacyidea/privacyidea.log
 source /opt/privacyidea/bin/activate
-pi-manage create_enckey 2>&1 || true
-pi-manage create_audit_keys 2>&1 || true
+pi-manage setup create_enckey 2>&1 || true
+pi-manage setup create_audit_keys 2>&1 || true
 chown -R $USERNAME /var/log/privacyidea
 chown -R $USERNAME /var/lib/privacyidea
 chown -R $USERNAME /etc/privacyidea
@@ -122,8 +122,7 @@ if [ -z "$(grep ^SQLALCHEMY_DATABASE_URI /etc/privacyidea/pi.cfg)" ]; then
     fi
     mysql -e "grant all privileges on pi.* to 'pi'@'localhost' identified by '$NPW';"
     echo "SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://pi:$NPW@localhost/pi'" >> /etc/privacyidea/pi.cfg
-    # pi-manage create_tables 2>&1 || true > /dev/null
-    pi-manage createdb 2>&1 || true > /dev/null
+    pi-manage setup create_tables 2>&1 || true > /dev/null
 fi
 
 ####################################################
@@ -231,7 +230,7 @@ systemctl restart httpd
 ######################################################
 # Create PGP key
 mkdir -p /etc/privacyidea/gpg
-pi-manage create_pgp_keys || true
+pi-manage setup create_pgp_keys || true
 chown -R $USERNAME /etc/privacyidea/gpg
 
 # Create symlinks for the easy life of the admin
