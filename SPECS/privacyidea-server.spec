@@ -15,7 +15,7 @@ URL:            https://www.privacyidea.org
 Packager:       Cornelius Kölbel <cornelius.koelbel@netknights.it>
 ExclusiveArch:  x86_64
 
-Requires:       privacyidea = %{version}, mariadb-server, httpd, mod_ssl, openssl, shadow-utils, rng-tools
+Requires:       privacyidea = %{version}, mariadb-server, httpd, mod_ssl, openssl, shadow-utils, rng-tools, gnupg2
 %if 0%{?rhel} < 10
 Requires: python3.11-mod_wsgi, python3.11
 %else
