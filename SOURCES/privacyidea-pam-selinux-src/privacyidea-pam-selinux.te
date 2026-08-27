@@ -1,21 +1,38 @@
-# Type Enforcement-Regeln für pam_privacyidea.so
+policy_module(privacyidea-pam-selinux, 1.0)
 
-module privacyidea-pam-selinux 1.0;
+########################################
+#
+# Declarations
+#
+
+type privacyidea_pam_offline_t;
+files_type(privacyidea_pam_offline_t)
+
+########################################
+#
+# Requirements
+#
 
 require {
-    type admin_home_t;
-    type etc_t;
     type sshd_t;
     type http_port_t;
-    class file { read getattr open create write };
-    class tcp_socket name_connect;
 }
 
-# Rule 1: Allow the process with type "sshd_t" to read and open the file "pam_privacyidea.so" with context "admin_home_t".
-allow sshd_t admin_home_t:file { read getattr open };
+########################################
+#
+# privacyIDEA PAM policy
+#
 
-# Rule 2: Allow the process with type "sshd_t" to connect to TCP port 443 (http_port_t).
+# Allow privacyIDEA PAM running in the SSH daemon
+# domain to connect to the privacyIDEA server
+# via HTTP/HTTPS.
 allow sshd_t http_port_t:tcp_socket name_connect;
 
-# Rule 3: Allow the process with type "sshd_t" to read and open the file "pam.txt" with context "etc_t".
-allow sshd_t etc_t:file { read open create write };
+# Allow privacyIDEA PAM running in the SSH daemon
+# domain to read and update the offline token file.
+allow sshd_t privacyidea_pam_offline_t:file {
+    getattr
+    open
+    read
+    write
+};

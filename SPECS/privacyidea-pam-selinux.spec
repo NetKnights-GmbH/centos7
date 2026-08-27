@@ -1,79 +1,83 @@
-%global selinuxtype	targeted
-%global moduletype	services
-%global modulenames	privacyidea-pam-selinux
-%define release 1
+%global selinuxtype targeted
+%global modulename privacyidea-pam-selinux
+%global release 2
 
-# Usage: _format var format
-# Expand 'modulenames' into various formats as needed
-# Format must contain '$x' somewhere to do anything useful
-%global _format() export %1=""; for x in %{modulenames}; do %1+=%2; %1+=" "; done;
+Name:           privacyidea-pam-selinux
+Version:        1.0
+Release:        %{release}%{?dist}
+Summary:        SELinux policy for privacyIDEA PAM
+License:        GPLv2
+URL:            https://privacyidea.org
+BuildArch:      noarch
 
-# Package information
-Name:			privacyidea-pam-selinux
-Version:		1.0	
-Release:		%{release}%{?dist}
-License:		GPLv2
-Group:			System Environment/Base
-Summary:		SELinux Policy for pam-privacyidea.so module 
-BuildArch:		noarch
-URL:			https://privacyidea.org
-Requires(post):		selinux-policy-base >= %{selinux_policyver}, selinux-policy-targeted >= %{selinux_policyver}, policycoreutils, libselinux-utils
-BuildRequires:		selinux-policy selinux-policy-devel
-Source1:		privacyidea-pam-selinux-src
+Source0:        privacyidea-pam-selinux-src
+
+BuildRequires:  selinux-policy
+BuildRequires:  selinux-policy-devel
+
+# Runtime dependencies required by the SELinux RPM scriptlet macros.
+Requires:       selinux-policy-%{selinuxtype}
+Requires(post): selinux-policy-%{selinuxtype}
+
+# Adds the appropriate SELinux userspace dependencies when the macro
+# is available. Using ? keeps the SPEC compatible with future/older EL.
+%{?selinux_requires}
 
 %description
-privacyidea-pam-selinux provides an SELinux policy module
-for use with the privacyIDEA server that allows the pam module 
-to communicate correctly with the privacyIDEA sever.
+privacyidea-pam-selinux provides an SELinux policy module for
+privacyIDEA PAM. It allows PAM consumers to communicate with a
+privacyIDEA server and to access the privacyIDEA offline token data.
 
 %prep
 rm -rf %{_builddir}/%{name}-%{version}
-cp -r %{SOURCE1} %{_builddir}/%{name}-%{version}
+cp -a %{SOURCE0} %{_builddir}/%{name}-%{version}
 
 %build
 cd %{_builddir}/%{name}-%{version}
-make SHARE="%{_datadir}" TARGETS="%{modulenames}"
+
+make -f %{_datadir}/selinux/devel/Makefile \
+    %{modulename}.pp
+
+bzip2 -9 %{modulename}.pp
 
 %pre
 %selinux_relabel_pre -s %{selinuxtype}
 
 %install
-# Create directories where SELinux polies will be installed
-install -d %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
-install -d %{buildroot}%{_datadir}/selinux/packages
-
-# Install SELinux interfaces
-%_format INTERFACES $x.if
-cd %{_builddir}/%{name}-%{version}
-install -p -m 644 $INTERFACES %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
-
-# Install policy modules
-%_format MODULES $x.pp.bz2
-cd %{_builddir}/%{name}-%{version}
-install -m 0644 $MODULES %{buildroot}%{_datadir}/selinux/packages
+install -D -m 0644 \
+    %{_builddir}/%{name}-%{version}/%{modulename}.pp.bz2 \
+    %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 
 %post
-# Install all modules in a single transaction
-# use selinux_set_booleans after custom SELinux module is loaded.
-%_format MODULES %{_datadir}/selinux/packages/$x.pp.bz2
-%selinux_modules_install -s %{selinuxtype} $MODULES
+%selinux_modules_install \
+    -s %{selinuxtype} \
+    %{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
+
+# Apply file contexts from the newly installed policy immediately.
+if [ -e /etc/privacyidea/pam.txt ]; then
+    restorecon /etc/privacyidea/pam.txt >/dev/null 2>&1 || :
+fi
 
 %postun
-# Uninstall module
-[[ $1 -eq 0 ]] && %selinux_modules_uninstall -s %{selinuxtype} privacyidea-pam-selinux
-[[ -e /var/log/privacyidea ]] && restorecon -R -v /var/log/privacyidea > /dev/null 2>&1
+if [ "$1" -eq 0 ]; then
+    %selinux_modules_uninstall \
+        -s %{selinuxtype} \
+        %{modulename}
+fi
 
 %posttrans
 %selinux_relabel_post -s %{selinuxtype}
 
-%clean
-rm -rf %{_builddir}
-
 %files
-%defattr(0644,root,root,0755)
-%{_datadir}/selinux/packages/*.pp.bz2
-%{_datadir}/selinux/devel/include/%{moduletype}/*.if
+%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 
 %changelog
-* Tue Sep 26 2023 Julio Storch <julio.storch@netknights.it> - 1.0.0-1
-- SElinux PAM build release
+* Thu Aug 27 2026 Julio Storch <julio.storch@netknights.it> - 1.0-2
+- Clean up SELinux policy packaging
+- Support current Enterprise Linux releases
+- Use standard SELinux policy packaging macros
+- Remove unnecessary PAM library file context
+- Remove privacyIDEA server log relabeling
+
+* Tue Sep 26 2023 Julio Storch <julio.storch@netknights.it> - 1.0-1
+- Initial SELinux PAM policy release
