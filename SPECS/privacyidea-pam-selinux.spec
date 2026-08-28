@@ -49,9 +49,7 @@ install -D -m 0644 \
     %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 
 %post
-%selinux_modules_install \
-    -s %{selinuxtype} \
-    %{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
+%selinux_modules_install -s %{selinuxtype} %{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 
 # Apply file contexts from the newly installed policy immediately.
 if [ -e /etc/privacyidea/pam.txt ]; then
@@ -60,9 +58,7 @@ fi
 
 %postun
 if [ "$1" -eq 0 ]; then
-    %selinux_modules_uninstall \
-        -s %{selinuxtype} \
-        %{modulename}
+    %selinux_modules_uninstall -s %{selinuxtype} %{modulename}
 fi
 
 %posttrans

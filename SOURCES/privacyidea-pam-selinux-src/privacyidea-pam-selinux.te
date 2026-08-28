@@ -20,19 +20,34 @@ require {
 
 ########################################
 #
-# privacyIDEA PAM policy
+# RHEL 8 / RHEL 9
 #
 
-# Allow privacyIDEA PAM running in the SSH daemon
-# domain to connect to the privacyIDEA server
-# via HTTP/HTTPS.
 allow sshd_t http_port_t:tcp_socket name_connect;
 
-# Allow privacyIDEA PAM running in the SSH daemon
-# domain to read and update the offline token file.
 allow sshd_t privacyidea_pam_offline_t:file {
     getattr
     open
     read
     write
 };
+
+########################################
+#
+# RHEL 10
+#
+
+optional_policy(`
+    gen_require(`
+        type sshd_session_t;
+    ')
+
+    allow sshd_session_t http_port_t:tcp_socket name_connect;
+
+    allow sshd_session_t privacyidea_pam_offline_t:file {
+        getattr
+        open
+        read
+        write
+    };
+')

@@ -1,3 +1,2 @@
 # privacyIDEA PAM offline token data
-/etc/privacyidea/pam\.txt \
-    -- gen_context(system_u:object_r:privacyidea_pam_offline_t,s0)
+/etc/privacyidea/pam\.txt -- gen_context(system_u:object_r:privacyidea_pam_offline_t,s0)
