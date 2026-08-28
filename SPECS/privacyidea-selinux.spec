@@ -1,37 +1,29 @@
 %global selinuxtype targeted
-%global moduletype services
-%global modulenames privacyidea-selinux
+%global modulename privacyidea-selinux
 %global release 4
-
-# Usage: _format var format
-# Expand 'modulenames' into various formats as needed.
-# Format must contain '$x'.
-%global _format() export %1=""; for x in %{modulenames}; do %1+="%2 "; done
 
 Name:           privacyidea-selinux
 Version:        1.0
 Release:        %{release}%{?dist}
 License:        GPLv2
-Group:          System Environment/Base
 Summary:        SELinux policy for privacyIDEA
 BuildArch:      noarch
 URL:            https://privacyidea.org
 
+Requires(post): selinux-policy-base
+Requires(post): selinux-policy-targeted
+Requires(post): policycoreutils
+Requires(post): libselinux-utils
+
 BuildRequires:  selinux-policy
 BuildRequires:  selinux-policy-devel
-
-%{?selinux_requires}
 
 Source1:        privacyidea-selinux-src
 
 %description
-privacyidea-selinux provides an SELinux policy module for
-privacyIDEA running on Red Hat Enterprise Linux and compatible
-distributions.
-
-The policy allows privacyIDEA running in the httpd_t domain
-to connect to LDAP and MySQL/MariaDB services and assigns
-the correct SELinux file context to /var/log/privacyidea.
+SELinux policy for privacyIDEA allowing the web server
+to communicate with LDAP and database services and providing
+the required file contexts for privacyIDEA log files.
 
 %prep
 rm -rf %{_builddir}/%{name}-%{version}
@@ -39,59 +31,57 @@ cp -r %{SOURCE1} %{_builddir}/%{name}-%{version}
 
 %build
 cd %{_builddir}/%{name}-%{version}
-make SHARE="%{_datadir}" TARGETS="%{modulenames}"
 
-%pre
-%selinux_relabel_pre -s %{selinuxtype}
+# Build the SELinux policy module using the distribution-provided
+# SELinux development Makefile.
+make -f %{_datadir}/selinux/devel/Makefile %{modulename}.pp
+
+# SELinux policy packages are installed compressed.
+bzip2 -f %{modulename}.pp
 
 %install
-# Create directories for SELinux policy modules and interfaces.
-install -d %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
-install -d %{buildroot}%{_datadir}/selinux/packages
+# Install the compiled SELinux policy module.
+install -d %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}
 
-# Install SELinux interfaces.
-%_format INTERFACES $x.if
-cd %{_builddir}/%{name}-%{version}
-install -p -m 0644 $INTERFACES \
-    %{buildroot}%{_datadir}/selinux/devel/include/%{moduletype}
+install -m 0644 %{_builddir}/%{name}-%{version}/%{modulename}.pp.bz2 %{buildroot}%{_datadir}/selinux/packages/%{selinuxtype}/
 
-# Install SELinux policy modules.
-%_format MODULES $x.pp.bz2
-cd %{_builddir}/%{name}-%{version}
-install -m 0644 $MODULES \
-    %{buildroot}%{_datadir}/selinux/packages
+%pre
+# Save the current file-context configuration before installing
+# the new SELinux policy.
+%selinux_relabel_pre -s %{selinuxtype}
 
 %post
-# Install the SELinux policy module.
-%_format MODULES %{_datadir}/selinux/packages/$x.pp.bz2
-%selinux_modules_install -s %{selinuxtype} $MODULES
+# Install and load the privacyIDEA SELinux policy module.
+%selinux_modules_install -s %{selinuxtype} %{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 
-# Apply the newly installed file context to an existing privacyIDEA
-# log directory and its files.
+# Apply the file contexts provided by the policy immediately.
+# This is especially important for existing privacyIDEA log directories
+# and files that may have been created with another SELinux context.
 if [ -d /var/log/privacyidea ]; then
-    restorecon -R /var/log/privacyidea || :
+    restorecon -R /var/log/privacyidea >/dev/null 2>&1 || :
 fi
 
 %postun
 # Remove the SELinux policy module only when the package itself
 # is removed, not during an upgrade.
 if [ "$1" -eq 0 ]; then
-    %selinux_modules_uninstall -s %{selinuxtype} privacyidea-selinux
+    %selinux_modules_uninstall -s %{selinuxtype} %{modulename}
 fi
 
 %posttrans
+# Relabel files whose expected contexts changed as part of this
+# policy installation or upgrade.
 %selinux_relabel_post -s %{selinuxtype}
 
 %files
-%defattr(0644,root,root,0755)
-%{_datadir}/selinux/packages/*.pp.bz2
-%{_datadir}/selinux/devel/include/%{moduletype}/*.if
+%{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 
 %changelog
-* Wed Aug 26 2026 Julio Storch <julio.storch@netknights.it> - 1.0-4
-- Ensure /var/log/privacyidea is relabeled after policy installation
-- Remove unnecessary httpd executable file context
-- Clean up SELinux policy for RHEL 8, 9 and 10
+* Fri Aug 28 2026 NetKnights GmbH <info@netknights.it> - 1.0-4
+- Modernize SELinux policy packaging for RHEL 8, 9 and 10
+- Build policy using the distribution SELinux development Makefile
+- Remove unused interface file and policy declarations
+- Improve privacyIDEA log file context handling
 
-* Fri Jun 19 2020 Julio Storch <julio.storch@netknights.it> - 1.0-1
+* Fri Jun 19 2020 Julio Storch <info@netknights.it> - 1.0-1
 - SELinux build release

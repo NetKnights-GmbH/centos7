@@ -1,18 +1,26 @@
-module privacyidea-selinux 1.0;
+policy_module(privacyidea-selinux, 1.0)
+
+########################################
+#
+# Requirements
+#
 
 require {
-        type ldap_port_t;
-        type httpd_t;
-        type mysqld_port_t;
-        class tcp_socket name_connect;
+    type httpd_t;
+    type ldap_port_t;
+    type mysqld_port_t;
+    class tcp_socket name_connect;
 }
 
-#============= httpd_t ==============
+########################################
+#
+# privacyIDEA server policy
+#
 
-#!!!! This avc can be allowed using one of the these booleans:
-#     httpd_can_network_connect, httpd_can_connect_ldap, authlogin_nsswitch_use_ldap, nis_enabled
+# Allow privacyIDEA running in the Apache HTTPD domain
+# to connect to LDAP servers.
 allow httpd_t ldap_port_t:tcp_socket name_connect;
 
-#!!!! This avc can be allowed using one of the these booleans:
-#     httpd_can_network_connect, httpd_can_network_connect_db
+# Allow privacyIDEA running in the Apache HTTPD domain
+# to connect to MySQL/MariaDB servers.
 allow httpd_t mysqld_port_t:tcp_socket name_connect;
