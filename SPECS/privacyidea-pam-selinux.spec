@@ -56,6 +56,11 @@ if [ -e /etc/privacyidea/pam.txt ]; then
     restorecon /etc/privacyidea/pam.txt >/dev/null 2>&1 || :
 fi
 
+# Restore the distribution-provided SELinux context for the PAM module.
+if [ -e /usr/lib64/security/pam_privacyidea.so ]; then
+    restorecon -F /usr/lib64/security/pam_privacyidea.so || :
+fi
+
 %postun
 if [ "$1" -eq 0 ]; then
     %selinux_modules_uninstall -s %{selinuxtype} %{modulename}
