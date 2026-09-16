@@ -1,3 +1,12 @@
+* Wed Sep 16 2026 NetKnights GmbH <release@netknights.it> 3.13.4
+
+  Enhancements:
+  * Updated grpcio to 1.81.1 for compatibility with Python 3.14 on Ubuntu 26.04.
+
+  Fixes:
+  * Speed up /auth for administrators by counting the users with active tokens in the database
+    and only once per request. (#5959)
+
 * Wed Jun 24 2026 NetKnights GmbH <release@netknights.it> 3.13.3
 
   Fixes:
