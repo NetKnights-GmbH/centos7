@@ -34,7 +34,7 @@ buildselinux:
 buildpamselinux:
 	rpmbuild --define "_topdir `pwd`" -ba SPECS/privacyidea-pam-selinux.spec
 
-signrpm: buildrpm
+signrpm:
 	find RPMS/ -name *.rpm -exec 'rpmsign' '--addsign' '{}' ';'
 
 fill-release-repo: signrpm

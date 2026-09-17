@@ -1,9 +1,9 @@
 %global selinuxtype targeted
 %global modulename privacyidea-selinux
-%global release 4
+%global release 1
 
 Name:           privacyidea-selinux
-Version:        1.0
+Version:        1.1
 Release:        %{release}%{?dist}
 License:        GPLv2
 Summary:        SELinux policy for privacyIDEA
