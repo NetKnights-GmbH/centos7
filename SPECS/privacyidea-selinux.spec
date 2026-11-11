@@ -77,7 +77,7 @@ fi
 %{_datadir}/selinux/packages/%{selinuxtype}/%{modulename}.pp.bz2
 
 %changelog
-* Fri Aug 28 2026 NetKnights GmbH <info@netknights.it> - 1.0-4
+* Fri Aug 28 2026 NetKnights GmbH <info@netknights.it> - 1.1-1
 - Modernize SELinux policy packaging for RHEL 8, 9 and 10
 - Build policy using the distribution SELinux development Makefile
 - Remove unused interface file and policy declarations
