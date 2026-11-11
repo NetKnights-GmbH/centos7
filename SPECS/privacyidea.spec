@@ -48,7 +48,7 @@ git clone --recurse-submodules --branch v%{version} --depth 1 https://github.com
 
 %build
 #  npm ci && ng build
-pushd %{_tmp_build_dir}/privacyidea/privacyidea/static_new
+pushd %{_tmp_build_dir}/privacyidea/privacyidea/static
 npm ci
 npm run-script ng build
 find . -mindepth 1 -maxdepth 1 ! -name 'dist' -exec rm -rf {} +
